@@ -1,0 +1,15 @@
+Install Node
+- install node 12.14.1 (node -v)
+- npm version 8.1.2 (npm -v)
+
+For Angular
+- npm install @angular/client (ng v should give 12.2.12)
+
+For Oracle connection
+- Download oracle thin client from https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html
+
+** Please get all the versions right
+
+Remaining
+- Merge DB
+- Add data in the db
