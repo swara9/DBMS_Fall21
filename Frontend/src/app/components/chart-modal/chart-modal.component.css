@@ -1,0 +1,15 @@
+:host {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: yellow;
+    position: absolute;
+    top: 5em;
+    bottom: 10em;
+    left: 10em;
+    right: 10em;
+    width: 80%;
+    height: 80%;
+    box-shadow: 0 0 5px rgb(0, 0, 0, 0.27);
+    backdrop-filter: 'backdropBackground';
+}
