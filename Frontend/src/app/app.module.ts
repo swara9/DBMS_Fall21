@@ -8,6 +8,7 @@ import { StocksComponent } from './components/stocks/stocks.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartModalComponent } from './components/chart-modal/chart-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
