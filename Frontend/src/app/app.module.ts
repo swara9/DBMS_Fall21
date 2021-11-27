@@ -9,10 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartModalComponent } from './components/chart-modal/chart-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgApexchartsModule } from "ng-apexcharts";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule} from '@angular/material/toolbar';
+import { MatButtonModule} from '@angular/material/button';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
@@ -27,8 +26,7 @@ import { TradehistoryComponent } from './components/tradehistory/tradehistory.co
     NavbarComponent,
     ProfileComponent,
     PortfolioComponent,
-    TradehistoryComponent,
-
+    TradehistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -44,4 +42,5 @@ import { TradehistoryComponent } from './components/tradehistory/tradehistory.co
   bootstrap: [AppComponent],
   entryComponents : [ChartModalComponent]
 })
+
 export class AppModule { }
