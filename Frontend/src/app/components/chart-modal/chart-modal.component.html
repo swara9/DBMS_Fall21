@@ -2,7 +2,7 @@
 
 <mat-dialog-content>
   
-   <div id="chart">
+  <div id="chart">
     <apx-chart
       [series]="chartOptions.series"
       [chart]="chartOptions.chart"
@@ -11,7 +11,20 @@
       [title]="chartOptions.title"
     ></apx-chart>
   </div>
- 
+  <div id="lineChart">
+    <apx-chart
+      [series]="lineChartOptions.series"
+      [chart]="lineChartOptions.chart"
+      [dataLabels]="lineChartOptions.dataLabels"
+      [markers]="lineChartOptions.markers"
+      [title]="lineChartOptions.title"
+      [fill]="lineChartOptions.fill"
+      [yaxis]="lineChartOptions.yaxis"
+      [xaxis]="lineChartOptions.xaxis"
+      [tooltip]="lineChartOptions.tooltip"
+      [autoUpdateSeries]="true"
+    ></apx-chart>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
