@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 
+
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
@@ -24,4 +25,5 @@ export class StocksComponent implements OnInit {
     
     this.dialog.open(ChartModalComponent, dialogConfig);
   }
+
 }
