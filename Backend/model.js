@@ -14,19 +14,7 @@ let db = (async function() {
         });
         console.log("Successfully connected to Oracle!")
         return connection;
-        // module.exports = connection;
-        // connection.execute(
-        // `SELECT *
-        // FROM ANIMAL_SHELTER`,
-        // [],  
-        // function(err, result) {
-        // if (err) {
-        //     console.error(err.message);
-        //     return;
-        // }
-        // console.log(result.rows);
-    // });
-    
+       
     } catch(err) {
         console.log("Error: ", err);
     } finally {
@@ -42,12 +30,6 @@ let db = (async function() {
 
 console.log(db)
 module.exports = db; 
-// export default async () => {
-//     return await getDbConnection
-// }
-// module.exports.dbConnection = async function() {
-//     await getDbConnection();
-// }
 
 
  

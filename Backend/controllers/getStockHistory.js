@@ -1,4 +1,4 @@
-const getStock = (client) => (req, res) => {
+const getStockHistory = (client) => (req, res) => {
     const { ISIN } = req.body;
     if (!ISIN) {
       return res.status(400).json('No ISIN provided');
@@ -42,5 +42,5 @@ const getStock = (client) => (req, res) => {
   }
   */
   module.exports = {
-    getStock: getStock
+    getStockHistory: getStockHistory
   }

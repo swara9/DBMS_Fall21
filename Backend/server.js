@@ -90,6 +90,6 @@ try{
   }
 });
 
-app.post('/getStock',(req, res) => {conn(1,req, res)});
+app.post('/getStockHistory',(req, res) => {conn(1,req, res)});
 app.post('/stockDetails',(req, res) => {conn(2,req, res)});
 app.post('/getUser',(req, res) => {conn(3,req, res)});
