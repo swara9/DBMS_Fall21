@@ -44,6 +44,8 @@ try{
    });
    console.log("Successfully connected to Oracle!")
    var query;
+
+
    if(flag==1){
     const { ISIN } = req.body;
      query=
@@ -55,6 +57,15 @@ try{
     `SELECT *
     FROM stocks`
    }
+   else if(flag==3){
+    const { SSN } = req.body;
+    query=
+   `SELECT *
+   FROM users
+   where SSN='${SSN}'`
+  }
+
+
    connection.execute(
      query,[],  
    function(err, result) {
@@ -81,3 +92,4 @@ try{
 
 app.post('/getStock',(req, res) => {conn(1,req, res)});
 app.post('/stockDetails',(req, res) => {conn(2,req, res)});
+app.post('/getUser',(req, res) => {conn(3,req, res)});
