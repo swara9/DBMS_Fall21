@@ -32,7 +32,7 @@ app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}.`);
 });
 
- var conn = (async function(req,res) {
+ var conn = (async function(flag,req,res) {
 try{
    connection = await oracledb.getConnection({
         user : 'lawande.s',
@@ -43,12 +43,20 @@ try{
         connectString : "oracle.cise.ufl.edu:1521/orcl"
    });
    console.log("Successfully connected to Oracle!")
-   const { ISIN } = req.body;
-   connection.execute(
+   var query;
+   if(flag==1){
+    const { ISIN } = req.body;
+     query=
     `SELECT *
      FROM STOCK_HISTORY
-     where ISIN='${ISIN}'`,
-    [],  
+     where ISIN='${ISIN}'`}
+   else if(flag==2){
+     query=
+    `SELECT *
+    FROM stocks`
+   }
+   connection.execute(
+     query,[],  
    function(err, result) {
       if (err) {
         console.error(err.message);
@@ -62,7 +70,7 @@ try{
     console.log("Error: ", err);
   } finally {
     if (connection) {
-      try {
+      try { 
         await connection.close();
       } catch(err) {
         console.log("Error when closing the database connection: ", err);
@@ -71,4 +79,5 @@ try{
   }
 });
 
-app.post('/getStock',(req, res) => {conn(req, res)})
+app.post('/getStock',(req, res) => {conn(1,req, res)});
+app.post('/stockDetails',(req, res) => {conn(2,req, res)});
