@@ -14,7 +14,7 @@
     backdrop-filter: 'backdropBackground';
 }
 
-#chart {
+#chart, #lineChart {
     width: 600px;
     height: 450px;
     /* max-width: 650px; */
