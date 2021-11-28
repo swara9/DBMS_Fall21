@@ -32,7 +32,7 @@ app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}.`);
 });
 
- var conn = (async function(req,res) {
+(async function() {
 try{
    connection = await oracledb.getConnection({
         user : 'lawande.s',
@@ -43,11 +43,10 @@ try{
         connectString : "oracle.cise.ufl.edu:1521/orcl"
    });
    console.log("Successfully connected to Oracle!")
-   const { ISIN } = req.body;
+
    connection.execute(
     `SELECT *
-     FROM STOCK_HISTORY
-     where ISIN='${ISIN}'`,
+     FROM ANIMAL_SHELTER`,
     [],  
    function(err, result) {
       if (err) {
@@ -55,7 +54,6 @@ try{
         return;
       }
       console.log(result.rows);
-      res.json(result.rows);
 });
 
 } catch(err) {
@@ -69,6 +67,5 @@ try{
       }
     }
   }
-});
+})()
 
-app.post('/getStock',(req, res) => {conn(req, res)})
