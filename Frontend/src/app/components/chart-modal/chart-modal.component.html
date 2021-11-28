@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{message}}</h2>
+
+<mat-dialog-content>
+  
+  <div id="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [title]="chartOptions.title"
+    ></apx-chart>
+  </div>
+  <div id="lineChart">
+    <apx-chart
+      [series]="lineChartOptions.series"
+      [chart]="lineChartOptions.chart"
+      [dataLabels]="lineChartOptions.dataLabels"
+      [markers]="lineChartOptions.markers"
+      [title]="lineChartOptions.title"
+      [fill]="lineChartOptions.fill"
+      [yaxis]="lineChartOptions.yaxis"
+      [xaxis]="lineChartOptions.xaxis"
+      [tooltip]="lineChartOptions.tooltip"
+      [autoUpdateSeries]="true"
+    ></apx-chart>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <!-- <button class="mat-raised-button mat-primary"(click)="save()">Save</button> -->
+</mat-dialog-actions>
