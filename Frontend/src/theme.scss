@@ -7,3 +7,4 @@ $my-accent: mat-palette($mat-lime, A700);
 $my-theme: mat-light-theme($my-primary, $my-accent);
 
 @include angular-material-theme($my-theme)
+
