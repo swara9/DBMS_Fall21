@@ -11,7 +11,10 @@ import {
   ApexDataLabels,
   ApexFill,
   ApexMarkers,
-  ApexTooltip
+  ApexTooltip,
+  ApexLegend,
+  ApexGrid,
+  ApexStroke
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -34,6 +37,20 @@ export type lineChartOptions = {
   tooltip: ApexTooltip;
 }
 
+export type macdChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  dataLabels: ApexDataLabels;
+  markers: ApexMarkers;
+  tooltip: any; // ApexTooltip;
+  yaxis: ApexYAxis;
+  grid: ApexGrid;
+  legend: ApexLegend;
+  title: ApexTitleSubtitle;
+};
+
 @Component({
   selector: 'app-chart-modal',
   templateUrl: './chart-modal.component.html',
@@ -45,12 +62,14 @@ export class ChartModalComponent implements OnInit {
   chart: ChartComponent = new ChartComponent;
   public chartOptions: Partial<ChartOptions> | any;
   public lineChartOptions: Partial<ChartOptions> | any;
+  public macdChartOptions: Partial<ChartOptions> | any;
+
   selectedIndicator: string = '';
   showChart: boolean = true;
 
   indicators: any[] = [
     {value: 'rsi', viewValue: 'Relative Strength Index'},
-    {value: 'rsi', viewValue: 'Moving Average Convergence Divergence'},
+    {value: 'macd', viewValue: 'Moving Average Convergence Divergence'},
     {value: 'pg', viewValue: 'Percent Growth'},
     {value: 'obv', viewValue: 'On-balance Volume'},
     {value: 'ad', viewValue: 'Accumulation/Distribution Indicator'},
@@ -1513,6 +1532,7 @@ export class ChartModalComponent implements OnInit {
       this.initHistory(data.history);
       this.initCandleChart();
       this.initLineChart();
+      this.initMacdChart();
   }
 
   initHistory(historySeries: any[][]){
@@ -1569,6 +1589,89 @@ export class ChartModalComponent implements OnInit {
     };
   }
 
+  initMacdChart(){
+    this.macdChartOptions = {
+      series: [
+        {
+          name: "MACD",
+          data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+        },
+        {
+          name: "Signal",
+          data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+        }
+      ],
+      chart: {
+        height: 200,
+        type: "line"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        width: 5,
+        curve: "straight"
+      },
+      title: {
+        text: "Moving Average Convergence Divergence",
+        align: "left"
+      },
+      markers: {
+        size: 0,
+        hover: {
+          sizeOffset: 6
+        }
+      },
+      xaxis: {
+        labels: {
+          trim: false
+        },
+        categories: [
+          "01 Jan",
+          "02 Jan",
+          "03 Jan",
+          "04 Jan",
+          "05 Jan",
+          "06 Jan",
+          "07 Jan",
+          "08 Jan",
+          "09 Jan",
+          "10 Jan",
+          "11 Jan",
+          "12 Jan"
+        ]
+      },
+      tooltip: {
+        y: [
+          {
+            title: {
+              formatter: function(val: string) {
+                return val + " (mins)";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val: string) {
+                return val + " per session";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val: any) {
+                return val;
+              }
+            }
+          }
+        ]
+      },
+      grid: {
+        borderColor: "#f1f1f1"
+      }
+    };
+  
+  }
   ngOnInit(): void {
   }
 

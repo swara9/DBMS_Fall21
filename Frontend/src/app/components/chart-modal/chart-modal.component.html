@@ -38,6 +38,21 @@
       [autoUpdateSeries]="true"
     ></apx-chart>
   </div>
+  <div *ngIf="selectedIndicator=='macd'" id="macdChart">
+      <apx-chart
+        [series]="macdChartOptions.series"
+        [chart]="macdChartOptions.chart"
+        [xaxis]="macdChartOptions.xaxis"
+        [stroke]="macdChartOptions.stroke"
+        [tooltip]="macdChartOptions.tooltip"
+        [dataLabels]="macdChartOptions.dataLabels"
+        [legend]="macdChartOptions.legend"
+        [markers]="macdChartOptions.markers"
+        [grid]="macdChartOptions.grid"
+        [yaxis]="macdChartOptions.yaxis"
+        [title]="macdChartOptions.title"
+      ></apx-chart>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
