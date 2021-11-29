@@ -46,7 +46,7 @@ SELECT avg.*,
             Decode(rownum, 1, 0, close - LAG(close, 1, 0 ) OVER (ORDER BY sh_date)) as change    
             from (select sh_date, close from stock_history where isin = 'US0185811082' order by sh_date) sh) ch) gl) avg;
             
---RSI
+--FINAL QUERY RSI
 SELECT rs.*,
     ROUND(100-(100/(1+RS)),2) AS RSI
     FROM
@@ -63,7 +63,7 @@ SELECT rs.*,
         FROM
         ( select sh.*, 
             Decode(rownum, 1, 0, close - LAG(close, 1, 0 ) OVER (ORDER BY sh_date)) as change    
-            from (select sh_date, close from stock_history where isin = 'US0185811082' order by sh_date) sh) ch) gl) avg);
+            from (select sh_date, close from stock_history_weekly where isin = 'US0185811082' order by sh_date) sh) ch) gl) avg) rs;
             
 --rsi check
 SELECT MIN(RSI) from 

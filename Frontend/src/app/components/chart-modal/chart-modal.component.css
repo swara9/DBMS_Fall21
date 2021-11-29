@@ -3,12 +3,12 @@
     justify-content: center;
     align-items: center;
     background-color: white;
-    position: absolute;
+    /* position: absolute;
     top: 5em;
     bottom: 10em;
     left: 10em;
-    right: 10em;
-    width: 80%;
+    right: 10em; */
+    width: 100%;
     height: 80%;
     box-shadow: 0 0 5px rgb(0, 0, 0, 0.27);
     backdrop-filter: 'backdropBackground';
@@ -16,9 +16,9 @@
 
 #chart, #lineChart {
     width: 700px;
-    height: 450px;
+    height: 420px;
     /* max-width: 650px; */
-    margin: 35px auto;
+    /* margin: 35px auto; */
 }
 
 apx-chart {
@@ -28,3 +28,17 @@ apx-chart {
 .mat-dialog-actions{
     margin-bottom : 10px;
 }
+
+.container {
+    display: inline-block; 
+    width: 100%;
+  }
+  .heading {
+    float: left;
+    padding-top: 10px; 
+  }
+  .indSelect {
+    float: right;
+    padding: 5px;
+    font-size: 12px
+  }

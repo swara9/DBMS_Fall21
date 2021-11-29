@@ -1,7 +1,20 @@
-<h2 mat-dialog-title>Charts</h2>
+<div class="container">
+  <div class="heading">
+      <h1 mat-dialog-title>Charts</h1>
+  </div>
+  <div class="indSelect">
+    <mat-form-field appearance="fill">
+        <mat-label>Select indicator</mat-label>
+        <mat-select [(ngModel)]="selectedIndicator" name="indicator">
+          <mat-option *ngFor="let ind of indicators" [value]="ind.value">
+            {{ind.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </div>
+</div>
 
 <mat-dialog-content>
-  
   <div id="chart">
     <apx-chart
       [series]="chartOptions.series"
@@ -11,7 +24,7 @@
       [title]="chartOptions.title"
     ></apx-chart>
   </div>
-  <div id="lineChart">
+  <div *ngIf="selectedIndicator=='rsi'" id="lineChart">
     <apx-chart
       [series]="lineChartOptions.series"
       [chart]="lineChartOptions.chart"
