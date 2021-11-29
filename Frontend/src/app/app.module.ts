@@ -17,7 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
-
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,8 @@ import { TradehistoryComponent } from './components/tradehistory/tradehistory.co
     MatToolbarModule,
     MatButtonModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    AgGridModule.withComponents([])
   ],
   providers: [],
   bootstrap: [AppComponent],
