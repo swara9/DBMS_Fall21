@@ -32,7 +32,7 @@ app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}.`);
 });
 
-(async function() {
+ var conn = (async function(flag,req,res) {
 try{
    connection = await oracledb.getConnection({
         user : 'lawande.s',
@@ -43,29 +43,59 @@ try{
         connectString : "oracle.cise.ufl.edu:1521/orcl"
    });
    console.log("Successfully connected to Oracle!")
+   var query;
+
+
+   if(flag==1){
+    const { ISIN } = req.body;
+     query=
+    `SELECT sh_date, 
+     round(open, 2), 
+     round(high,2), 
+     round(low, 2), 
+     round(close,2)
+     FROM STOCK_HISTORY_WEEKLY
+     where ISIN='${ISIN}'
+     ORDER BY sh_date ASC`}
+
+   else if(flag==2){
+     query=
+    `SELECT *
+    FROM stocks`
+   }
+   else if(flag==3){
+    const { SSN } = req.body;
+    query=
+   `SELECT *
+   FROM users
+   where SSN='${SSN}'`
+  }
+
 
    connection.execute(
-    `SELECT *
-     FROM ANIMAL_SHELTER`,
-    [],  
+     query,[],  
    function(err, result) {
       if (err) {
         console.error(err.message);
         return;
       }
       console.log(result.rows);
+      res.json(result.rows);
 });
 
 } catch(err) {
     console.log("Error: ", err);
   } finally {
     if (connection) {
-      try {
+      try { 
         await connection.close();
       } catch(err) {
         console.log("Error when closing the database connection: ", err);
       }
     }
   }
-})()
+});
 
+app.post('/getStockHistory',(req, res) => {conn(1,req, res)});
+app.post('/stockDetails',(req, res) => {conn(2,req, res)});
+app.post('/getUser',(req, res) => {conn(3,req, res)});
