@@ -14,7 +14,8 @@ import {
   ApexTooltip,
   ApexLegend,
   ApexGrid,
-  ApexStroke
+  ApexStroke,
+  ApexAnnotations
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -28,6 +29,7 @@ export type ChartOptions = {
 export type lineChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
+  annotations: ApexAnnotations;
   dataLabels: ApexDataLabels;
   markers: ApexMarkers;
   title: ApexTitleSubtitle;
@@ -1610,7 +1612,7 @@ export class ChartModalComponent implements OnInit {
       },
       stroke: {
         width: 5,
-        curve: "straight"
+        curve: "straight"        
       },
       title: {
         text: "Moving Average Convergence Divergence",
@@ -1701,6 +1703,35 @@ export class ChartModalComponent implements OnInit {
         toolbar: {
           autoSelected: "zoom"
         }
+      },
+      annotations: {
+        position: 'front',
+        yaxis: [
+          {
+            y: 98000000,
+            borderColor: "#00E396",
+            label: {
+              borderColor: "#00E396",
+              style: {
+                color: "#fff",
+                background: "#00E396"
+              },
+              text: "90"
+            }
+          },
+          {
+            y: 220000000,
+            borderColor: "#775DD0",
+            label: {
+              borderColor: "#775DD0",
+              style: {
+                color: "#fff",
+                background: "#775DD0"
+              },
+              text: "220"
+            }
+          }
+        ]
       },
       dataLabels:{
         enabled: false
