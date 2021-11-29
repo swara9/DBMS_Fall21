@@ -3,7 +3,7 @@ const getStockHistory = (client) => (req, res) => {
     if (!ISIN) {
       return res.status(400).json('No ISIN provided');
     }
-    const query=`SELECT * FROM stockhistory 
+    const query=`SELECT sh_date, round(open,2), round(high, 2), round(low, 2), round(close,2) FROM stockhistory 
     WHERE ISIN='${ISIN};`;
     
     client.query(query)

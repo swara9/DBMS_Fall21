@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../../services/http-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
   }
 
+  callStockHistory(){
+    var isin = 'US0185811082';
+    this.http.getStockHistory(isin)
+    .subscribe(data => console.log(data));
+  }
 }

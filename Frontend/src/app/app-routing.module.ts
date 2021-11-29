@@ -11,9 +11,9 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   { path: 'dashboard', component: DashboardComponent },
   { path: 'stocks', component: StocksComponent },
-  { path: 'pro', component:ProfileComponent},
-  { path: 'portf', component:PortfolioComponent },
-  { path: 'th', component:TradehistoryComponent }
+  { path: 'profile', component:ProfileComponent},
+  { path: 'portfolio', component:PortfolioComponent },
+  { path: 'tradeHistory', component:TradehistoryComponent }
 ];
 
 @NgModule({

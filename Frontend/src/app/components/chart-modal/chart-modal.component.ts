@@ -45,7 +45,7 @@ export class ChartModalComponent implements OnInit {
   chart: ChartComponent = new ChartComponent;
   public chartOptions: Partial<ChartOptions> | any;
   public lineChartOptions: Partial<ChartOptions> | any;
-  message: string;
+  history: any[]= [];
   dataSeries = [
     [
     {
@@ -1740,10 +1740,28 @@ export class ChartModalComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<ChartModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: any,
-    ) { 
-      this.message = data.message;
+    ) {       
+      console.log(this.list.length)
+      this.initHistory(data.history);
       this.initCandleChart();
       this.initLineChart();
+  }
+
+  initHistory(historySeries: any[][]){
+    for(var entry of historySeries){
+      let date = new Date(entry[0].substring(0,10));
+      let ohlc = [entry[1], entry[2], entry[3], entry[4]];
+      let listObj = {
+        x: date,
+        y: ohlc
+      }
+      this.history.push(listObj);
+    }
+    // console.log(historySeries[0][0].substring(0,10));
+    // let date = new Date(historySeries[0][0].substring(0,10));
+    // let obj = [historySeries[0][1], historySeries[0][2], historySeries[0][3], historySeries[0][4]]
+    // let newObj = {x: date, y: obj}
+    console.log(this.history);
   }
 
   initCandleChart(): void {
@@ -1751,7 +1769,7 @@ export class ChartModalComponent implements OnInit {
       series: [
         {
           name: "candle",
-          data: this.list
+          data: this.history
         }
       ],
       chart: {
@@ -1766,9 +1784,19 @@ export class ChartModalComponent implements OnInit {
         type: "datetime"
       },
       yaxis: {
+        labels: {
+          formatter: function (value: number) {
+            return value.toFixed(2);
+          }
+        },
+        title: {
+          text: "Price"
+        },
+      
         tooltip: {
           enabled: true
         }
+      
       }
     };
   }
