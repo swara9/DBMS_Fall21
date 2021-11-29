@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,8 +11,9 @@ import { ChartModalComponent } from './components/chart-modal/chart-modal.compon
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { MatToolbarModule} from '@angular/material/toolbar';
-import { MatButtonModule} from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
@@ -36,7 +38,9 @@ import { TradehistoryComponent } from './components/tradehistory/tradehistory.co
     MatDialogModule,
     NgApexchartsModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -23,6 +23,7 @@ export class StocksComponent implements OnInit {
     .subscribe(history => {
       console.log(history)
       dialogConfig.autoFocus = true;
+      dialogConfig.width = '1000px';
       dialogConfig.data = {
         history : history
       };      
