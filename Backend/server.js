@@ -1,22 +1,15 @@
-//for db connection
-// const db = require("./model.js");
-// const connection = db.dbConnection;
+//for db
 var oracledb = require('oracledb');
+const queries = require('./sql/queries');
 
 //for server creation
 const express = require("express");
 const cors = require("cors");
 var app = express();
 
-// var corsOptions = {
-//     origin: "http://localhost:8081"
-// };
-  
- app.use(cors());
-  
+app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
@@ -48,16 +41,8 @@ try{
 
    if(flag==1){
     const { ISIN } = req.body;
-     query=
-    `SELECT sh_date, 
-     round(open, 2), 
-     round(high,2), 
-     round(low, 2), 
-     round(close,2)
-     FROM STOCK_HISTORY_WEEKLY
-     where ISIN='${ISIN}'
-     ORDER BY sh_date ASC`}
-
+     query = queries.getStockHistory.replace("${ISIN}", ISIN);
+   }
    else if(flag==2){
      query=
     `SELECT *
