@@ -71,7 +71,7 @@ SELECT ema.*, DECODE(SIGN(rownum-26), -1, 0, ema12-ema26) as MACD FROM
         ema26[26] = sma26[cv()]
     )) ema;
     
---macdSMA THIS IS FINAL
+--FINAL QUERY FOR MACD
 SELECT macd.*, DECODE(SIGN(rownum-26), -1, 0, ROUND(AVG(MACD) OVER(ORDER BY sh_date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW),3)) AS signal FROM
 (SELECT ema.*, DECODE(SIGN(rownum-26), -1, 0, ema12-ema26) as MACD  FROM
     (select sh_date, close, sma12, sma26, round(ema12,3) as ema12, round(ema26, 3) as ema26
@@ -79,7 +79,7 @@ SELECT macd.*, DECODE(SIGN(rownum-26), -1, 0, ROUND(AVG(MACD) OVER(ORDER BY sh_d
         DECODE(SIGN(rownum-12), -1, 0, ROUND(AVG(CLOSE) OVER(ORDER BY sh_date ROWS BETWEEN 12 PRECEDING AND CURRENT ROW),3)) AS SMA12,
         DECODE(SIGN(rownum-26), -1, 0, ROUND(AVG(CLOSE) OVER(ORDER BY sh_date ROWS BETWEEN 26 PRECEDING AND CURRENT ROW),3)) AS SMA26
         from
-        (select sh_date, close from stock_history where isin = 'US0185811082' order by sh_date) sh) sma
+        (select sh_date, close from stock_history_weekly where isin = 'US0185811082' order by sh_date) sh) sma
     model 
       dimension by ( row_number() over (order by sh_date) rn )
       measures ( sh_date, close, sma12, sma26, close ema12, close ema26)

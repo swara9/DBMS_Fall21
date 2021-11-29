@@ -26,7 +26,7 @@ from (select sh_date, close from stock_history where isin = 'US0185811082' order
 -- on-balance volume
  select sh_date, close, volume, obv 
  FROM 
- ( select sh_date, close, volume from stock_history where isin = 'US0185811082' order by sh_date) sh
+ ( select sh_date, close, volume from stock_history_weekly where isin = 'US0185811082' order by sh_date) sh
  model 
       dimension by ( row_number() over (order by sh_date) rn )
       measures ( sh_date, close, volume, 0 obv)
@@ -45,10 +45,10 @@ from (select sh_date, close from stock_history where isin = 'US0185811082' order
         
         
        
---obv case
+--FINAL QUERY OBV
  select sh_date, close, volume, obv 
  FROM 
- ( select sh_date, close, volume from stock_history where isin = 'US0185811082' order by sh_date) sh
+ ( select sh_date, close, volume from stock_history_weekly where isin = 'US0185811082' order by sh_date) sh
  model 
       dimension by ( row_number() over (order by sh_date) rn )
       measures ( sh_date, close, volume, 0 obv)
