@@ -1,1 +1,90 @@
 Yo what up?
+
+//NEED TO ADD
+1. getAllStocks() - get request
+   returns : [[ISIN, Symbol, CMP, Open, Close, High, Low], []]
+   query : select * from stocks;
+   
+2. getStockByISIN() - post request
+   input - {ISIN}
+   query : select * from stocks where isin='isin';
+   
+3. getStockBySymbol() - post request
+   input - {symbol}
+   query : select * from stocks where symbol='symbol';
+   
+4. getTotalTuples() - get request
+   returns total tuples in our database
+   query example : (we need to add all tables)
+   select sum(tuples) from(
+      select count(*) as tuples from stock_history
+      union
+      select count(*) as tuples from stock_history_weekly);
+   
+5. getUserProfile() - postRequest
+   input - SSN
+   output:
+   {
+      'netPL': net_profit_loss
+      'totalInv': totalInvestment
+      'currentValue': currentValue   //this will be derived as totalInv+netPL
+      'funds': funds
+   }
+   
+5. getUserPortfolio() - postRequest     **BETTER TO WRITE A SEPARATE FUNCTION AND CALL IN THE ENDPOINT
+   input - {SSN}
+   returns entire portfolio, will use multiple queries with joins
+   output (what the endpoint should return): 
+   {
+      'netPL': net_profit_loss
+      'totalInv': totalInvestment
+      'currentValue': currentValue   //this will be derived as totalInv+netPL
+      'funds': funds
+      'portfolio' : [
+        {
+          'symbol': symbol    //derived from isin
+          'qty': qty
+          'avgPrice': avg_price        
+        },
+        ....
+      ]
+   }
+   
+ 6. makeTrade() - post request
+    input: {ssn, type(buy/sell),  symbol, price, qty}
+    // assign random tradeID (prolly incremental)
+    // get isin from symbol
+    // compute amt as price*qty
+    // date will be current date
+    ** MAKE AN ENTRY IN THE TRADE TABLE
+    ** CHECK IF STOCK IS ALREADY PRESENT IN THE USER'S PORTFOLIO
+        if not present{
+          // MAKE AN ENTRY IN PORTFOLIO with avgPrice as price by calculating net_p&L 
+          with respect to cmp of that stock          
+        } else{
+          //compute the new avgPrice as : 
+          qty = current qty + new qty
+          avgPrice = (current avgPrice * current qty + new Price * new qty) / (current qty + new qty)
+          calculate new p&L = (avgPrice-CMP) * qty
+        }
+    ** CALCULATE NEW NET_P&l for entire profile w.r.t new entry 
+    ** UPDATE PROFILE BY ADDING price to totalInvestment, and update net_PL according to calculated value and subtract that price from funds
+    
+    output:       //basically invoke the getPortfolio function
+    {
+      'netPL': net_profit_loss
+      'totalInv': totalInvestment
+      'currentValue': currentValue   //this will be derived as totalInv+netPL
+      'funds': funds
+      'portfolio' : [                 // from updated portfolio
+        {
+          'symbol': symbol    //derived from isin
+          'qty': qty
+          'avgPrice': avg_price        
+        },
+        ....
+      ]
+   }
+    
+   
+   
