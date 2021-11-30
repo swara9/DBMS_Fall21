@@ -1539,7 +1539,7 @@ export class ChartModalComponent implements OnInit {
       this.isin = data.isin;
       this.symbol = data.symbol;
       this.initCandleChart();
-      // this.initRSIChart();
+      this.initRSIChart();
       this.initMacdChart();
   }
 
@@ -1680,102 +1680,111 @@ export class ChartModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // public initRSIChart(): void {
-  //   this.http.getRSI(isin)
-  //   .subscribe(rsiSeries => {
-  //   }
-
-  //   this.lineChartOptions = {
-  //     series: [
-  //       {
-  //         name: "AAPL",
-  //         data: dates
-  //       }
-  //     ],
-  //     chart: {
-  //       type: "area",
-  //       height: 350,
-  //       zoom: {
-  //         type: "x",
-  //         enabled: true,
-  //         autoScaleYaxis: true
-  //       },
-  //       toolbar: {
-  //         autoSelected: "zoom"
-  //       }
-  //     },
-  //     annotations: {
-  //       position: 'front',
-  //       yaxis: [
-  //         {
-  //           y: 98000000,
-  //           borderColor: "#00E396",
-  //           label: {
-  //             borderColor: "#00E396",
-  //             style: {
-  //               color: "#fff",
-  //               background: "#00E396"
-  //             },
-  //             text: "90"
-  //           }
-  //         },
-  //         {
-  //           y: 220000000,
-  //           borderColor: "#775DD0",
-  //           label: {
-  //             borderColor: "#775DD0",
-  //             style: {
-  //               color: "#fff",
-  //               background: "#775DD0"
-  //             },
-  //             text: "220"
-  //           }
-  //         }
-  //       ]
-  //     },
-  //     dataLabels:{
-  //       enabled: false
-  //     },
-  //     markers : {
-  //       size: 0 
-  //     },
-  //     title: {
-  //       text: "Line Chart",
-  //       align: "left"
-  //     },
-  //     fill: {
-  //       type: "gradient",
-  //       gradient: {
-  //         shadeIntensity: 1,
-  //         inverseColors: false,
-  //         opacityFrom: 0.5,
-  //         opacityTo: 0,
-  //         stops: [0, 90, 100]
-  //       }
-  //     },
-  //     yaxis: {
-  //       labels: {
-  //         formatter: function(val: number) {
-  //           return (val / 1000000).toFixed(0);
-  //         }
-  //       },
-  //       title: {
-  //         text: "Price"
-  //       }
-  //     },
-  //     xaxis: {
-  //       type: "datetime"
-  //     },
-  //     tooltip: {
-  //       shared: false,
-  //       y: {
-  //         formatter: function(val: number) {
-  //           return (val / 1000000).toFixed(0);
-  //         }
-  //       }
-  //     }  
-  //   };
-  // }
+  public initRSIChart(): void {
+    this.http.getRSI(this.isin)
+    .subscribe(rsiSeries => {
+      console.log(rsiSeries);
+      let rsiList: any[] = []
+      let dates= []
+      for(var entry of rsiSeries){
+      
+        let date = new Date(entry[0].substring(0,10));
+        let rsi = entry[1];
+        dates.push(date);
+        rsiList.push([date, rsi]);
+      }       
+      this.rsiChartOptions = {
+        series: [
+          {
+            name: this.symbol,
+            data: rsiList
+          }
+        ],
+        chart: {
+          type: "area",
+          height: 350,
+          zoom: {
+            type: "x",
+            enabled: true,
+            autoScaleYaxis: true
+          },
+          toolbar: {
+            autoSelected: "zoom"
+          }
+        },
+        annotations: {
+          position: 'front',
+          yaxis: [
+            {
+              y: 98000000,
+              borderColor: "#00E396",
+              label: {
+                borderColor: "#00E396",
+                style: {
+                  color: "#fff",
+                  background: "#00E396"
+                },
+                text: "90"
+              }
+            },
+            {
+              y: 220000000,
+              borderColor: "#775DD0",
+              label: {
+                borderColor: "#775DD0",
+                style: {
+                  color: "#fff",
+                  background: "#775DD0"
+                },
+                text: "220"
+              }
+            }
+          ]
+        },
+        dataLabels:{
+          enabled: false
+        },
+        markers : {
+          size: 0 
+        },
+        title: {
+          text: "Line Chart",
+          align: "left"
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100]
+          }
+        },
+        yaxis: {
+          label:{
+            formatter: function(val: number) {
+              return (val).toFixed(2);
+            }
+          },
+          title: {
+            text: "Price"
+          }
+        },
+        xaxis: {
+          type: "datetime"
+        },
+        tooltip: {
+          shared: false,
+          y: {
+            formatter: function(val: number) {
+              return (val).toFixed(2);
+            }
+          }
+        }  
+      };
+    });
+  }
 
   public generateDayWiseTimeSeries(baseval: number, count: number, yrange: { max: number; min: number; }) {
     var i = 0;
