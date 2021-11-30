@@ -59,6 +59,22 @@ try{
     const { ISIN } = req.body;
     query=queries.percent_change.replace("${ISIN}", ISIN);
   }
+  else if(flag==5){
+    const { ISIN } = req.body;
+    query=queries.RSI.replace("${ISIN}", ISIN);
+  }
+  else if(flag==6){
+    const { ISIN } = req.body;
+    query=queries.OBV.replace("${ISIN}", ISIN);
+  }
+  else if(flag==7){
+    const { ISIN } = req.body;
+    query=queries.MACD.replace("${ISIN}", ISIN);
+  }else if(flag==8){
+    const { ISIN } = req.body;
+    query=queries.AD.replace("${ISIN}", ISIN);
+  }
+
 
 
    connection.execute(
@@ -89,3 +105,7 @@ app.post('/getStockHistory',(req, res) => {conn(1,req, res)});
 app.post('/getStockDetails',(req, res) => {conn(2,req, res)});
 app.post('/getUser',(req, res) => {conn(3,req, res)});
 app.post('/getPercentChange',(req, res) => {conn(4,req, res)});
+app.post('/getRSI',(req, res) => {conn(5,req, res)});
+app.post('/getOBV',(req, res) => {conn(6,req, res)});
+app.post('/getMACD',(req, res) => {conn(7,req, res)});
+app.post('/getAccumulationDistribution',(req, res) => {conn(8,req, res)});
