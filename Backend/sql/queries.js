@@ -22,7 +22,7 @@ module.exports = {
         FROM\
         ( select sh.*, \
             Decode(rownum, 1, 0, close - LAG(close, 1, 0 ) OVER (ORDER BY sh_date)) as change    \
-            from (select sh_date, close from stock_history where isin = '${ISIN}' order by sh_date) sh) ch) gl) avg",
+            from (select sh_date, close from stock_history_weekly where isin = '${ISIN}' order by sh_date) sh) ch) gl) avg",
 
     OBV: "select sh_date, close, volume, obv \
     FROM \

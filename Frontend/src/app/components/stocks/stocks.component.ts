@@ -68,7 +68,7 @@ export class StocksComponent implements OnInit {
       headerClass:"h1"
     }
   ];
-  
+
   rowData=[
     {stock:'aapl', net_profit_loss:'111',},
     {stock:'jj', net_profit_loss:'1411',},
@@ -81,7 +81,7 @@ export class StocksComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     //should come from row
-    var isin = 'US0185811082';
+    var isin = 'US0378331005';
     var symbol = 'ABCD';
     this.http.getStockHistory(isin)
     .subscribe(history => {
