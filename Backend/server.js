@@ -39,38 +39,38 @@ try{
    var query;
 
 
-   if(flag==1){
+   if(flag=='getStockHistory'){
     const { ISIN } = req.body;
      query = queries.getStockHistory.replace("${ISIN}", ISIN);
    }
-   else if(flag==2){
+   else if(flag=='getStockDetails'){
      query=
     `SELECT *
     FROM stocks`
    }
-   else if(flag==3){
+   else if(flag=='getUser'){
     const { SSN } = req.body;
     query=
    `SELECT *
    FROM users
    where SSN='${SSN}'`
   }
-  else if(flag==4){
+  else if(flag=='getPercentChange'){
     const { ISIN } = req.body;
     query=queries.percent_change.replace("${ISIN}", ISIN);
   }
-  else if(flag==5){
+  else if(flag=='getRSI'){
     const { ISIN } = req.body;
     query=queries.RSI.replace("${ISIN}", ISIN);
   }
-  else if(flag==6){
+  else if(flag=='getOBV'){
     const { ISIN } = req.body;
     query=queries.OBV.replace("${ISIN}", ISIN);
   }
-  else if(flag==7){
+  else if(flag=='getMACD'){
     const { ISIN } = req.body;
     query=queries.MACD.replace("${ISIN}", ISIN);
-  }else if(flag==8){
+  }else if(flag=='getAccumulationDistribution'){
     const { ISIN } = req.body;
     query=queries.AD.replace("${ISIN}", ISIN);
   }
@@ -101,11 +101,11 @@ try{
   }
 });
 
-app.post('/getStockHistory',(req, res) => {conn(1,req, res)});
-app.post('/getStockDetails',(req, res) => {conn(2,req, res)});
-app.post('/getUser',(req, res) => {conn(3,req, res)});
-app.post('/getPercentChange',(req, res) => {conn(4,req, res)});
-app.post('/getRSI',(req, res) => {conn(5,req, res)});
-app.post('/getOBV',(req, res) => {conn(6,req, res)});
-app.post('/getMACD',(req, res) => {conn(7,req, res)});
-app.post('/getAccumulationDistribution',(req, res) => {conn(8,req, res)});
+app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
+app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
+app.post('/getUser',(req, res) => {conn('getUser',req, res)});
+app.post('/getPercentChange',(req, res) => {conn('getPercentChange',req, res)});
+app.post('/getRSI',(req, res) => {conn('getRSI',req, res)});
+app.post('/getOBV',(req, res) => {conn('getOBV',req, res)});
+app.post('/getMACD',(req, res) => {conn('getMACD',req, res)});
+app.post('/getAccumulationDistribution',(req, res) => {conn('getAccumulationDistribution',req, res)});
