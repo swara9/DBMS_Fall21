@@ -1594,87 +1594,84 @@ export class ChartModalComponent implements OnInit {
   }
 
   initMacdChart(){
-    this.macdChartOptions = {
-      series: [
-        {
-          name: "MACD",
-          data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
-        },
-        {
-          name: "Signal",
-          data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
-        }
-      ],
-      chart: {
-        height: 200,
-        type: "line"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        width: 5,
-        curve: "straight"        
-      },
-      title: {
-        text: "Moving Average Convergence Divergence",
-        align: "left"
-      },
-      markers: {
-        size: 0,
-        hover: {
-          sizeOffset: 6
-        }
-      },
-      xaxis: {
-        labels: {
-          trim: false
-        },
-        categories: [
-          "01 Jan",
-          "02 Jan",
-          "03 Jan",
-          "04 Jan",
-          "05 Jan",
-          "06 Jan",
-          "07 Jan",
-          "08 Jan",
-          "09 Jan",
-          "10 Jan",
-          "11 Jan",
-          "12 Jan"
-        ]
-      },
-      tooltip: {
-        y: [
+    this.http.getMACD(this.isin)
+    .subscribe(macdSeries => {
+      let dates = [];
+      let macdList = [];
+      let signalList: any[] = [];
+      for(var entry of macdSeries){      
+        let date = new Date(entry[0].substring(0,10));
+        let macd = entry[1];
+        let signal = entry[2];
+        dates.push(date);
+        macdList.push([date,macd]);
+        signalList.push([date,signal]);
+
+      }     
+      this.macdChartOptions = {
+       
+        series: [
           {
-            title: {
-              formatter: function(val: string) {
-                return val + " (mins)";
-              }
-            }
+            name: "MACD",
+            data: macdList
           },
           {
-            title: {
-              formatter: function(val: string) {
-                return val + " per session";
-              }
-            }
-          },
-          {
-            title: {
-              formatter: function(val: any) {
-                return val;
-              }
-            }
+            name: "Signal",
+            data: signalList
           }
-        ]
-      },
-      grid: {
-        borderColor: "#f1f1f1"
-      }
-    };
-  
+        ],
+        chart: {
+          height: 500,
+          type: "line"
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: 5,
+          curve: "straight"        
+        },
+        title: {
+          text: "Moving Average Convergence Divergence",
+          align: "left"
+        },
+        markers: {
+          size: 0,
+          hover: {
+            sizeOffset: 6
+          }
+        },
+        xaxis: {
+          type:"datetime",
+          labels: {
+            trim: false
+          }
+          // categories: dates
+        },
+        tooltip: {
+          y: [
+            {
+              title: {
+                formatter: function(val: number) {
+                  return val.toFixed(2);
+                }
+              }
+            },
+            {
+              title: {
+                formatter: function(val: number) {
+                  return val;
+                }
+              }
+            }
+          ]
+        },
+        grid: {
+          borderColor: "#f1f1f1"
+        }
+      };
+    
+    });    
   }
 
   ngOnInit(): void {
@@ -1716,7 +1713,7 @@ export class ChartModalComponent implements OnInit {
           position: 'front',
           yaxis: [
             {
-              y: 98000000,
+              y: 80,
               borderColor: "#00E396",
               label: {
                 borderColor: "#00E396",
@@ -1724,11 +1721,11 @@ export class ChartModalComponent implements OnInit {
                   color: "#fff",
                   background: "#00E396"
                 },
-                text: "90"
+                text: "80 - overbought"
               }
             },
             {
-              y: 220000000,
+              y: 20,
               borderColor: "#775DD0",
               label: {
                 borderColor: "#775DD0",
@@ -1736,7 +1733,7 @@ export class ChartModalComponent implements OnInit {
                   color: "#fff",
                   background: "#775DD0"
                 },
-                text: "220"
+                text: "20 - underbought"
               }
             }
           ]
@@ -1778,26 +1775,12 @@ export class ChartModalComponent implements OnInit {
           shared: false,
           y: {
             formatter: function(val: number) {
-              return (val).toFixed(2);
+              return Number(val).toFixed(2);
             }
           }
         }  
       };
     });
-  }
-
-  public generateDayWiseTimeSeries(baseval: number, count: number, yrange: { max: number; min: number; }) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-
-      series.push([baseval, y]);
-      baseval += 86400000;
-      i++;
-    }
-    return series;
   }
   
   close() {

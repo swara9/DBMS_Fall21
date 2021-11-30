@@ -42,7 +42,7 @@ module.exports = {
            )\
        order by sh_date",
 
-    MACD: "SELECT macd.*, DECODE(SIGN(rownum-26), -1, 0, ROUND(AVG(MACD) OVER(ORDER BY sh_date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW),3)) AS signal FROM \
+    MACD: "SELECT macd.sh_date, macd.macd, DECODE(SIGN(rownum-26), -1, 0, ROUND(AVG(MACD) OVER(ORDER BY sh_date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW),3)) AS signal FROM \
        (SELECT ema.*, DECODE(SIGN(rownum-26), -1, 0, ema12-ema26) as MACD  FROM\
            (select sh_date, close, sma12, sma26, round(ema12,3) as ema12, round(ema26, 3) as ema26\
            from   (select sh.*,\
