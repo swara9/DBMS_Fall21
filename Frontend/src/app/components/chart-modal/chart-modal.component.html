@@ -26,16 +26,16 @@
   </div>
   <div *ngIf="selectedIndicator=='rsi'" id="lineChart">
     <apx-chart
-      [series]="lineChartOptions.series"
-      [chart]="lineChartOptions.chart"
-      [dataLabels]="lineChartOptions.dataLabels"
-      [markers]="lineChartOptions.markers"
-      [title]="lineChartOptions.title"
-      [fill]="lineChartOptions.fill"
-      [yaxis]="lineChartOptions.yaxis"
-      [xaxis]="lineChartOptions.xaxis"
-      [tooltip]="lineChartOptions.tooltip"
-      [annotations]="lineChartOptions.annotations"
+      [series]="rsiChartOptions.series"
+      [chart]="rsiChartOptions.chart"
+      [dataLabels]="rsiChartOptions.dataLabels"
+      [markers]="rsiChartOptions.markers"
+      [title]="rsiChartOptions.title"
+      [fill]="rsiChartOptions.fill"
+      [yaxis]="rsiChartOptions.yaxis"
+      [xaxis]="rsiChartOptions.xaxis"
+      [tooltip]="rsiChartOptions.tooltip"
+      [annotations]="rsiChartOptions.annotations"
       [autoUpdateSeries]="true"
     ></apx-chart>
   </div>

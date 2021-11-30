@@ -36,5 +36,30 @@ export class HttpService {
     return this.http.post(`${url}`, {"ISIN": isin});
   }
 
+  getRSI(isin: string): Observable<any>{
+    let url = baseUrl+ APIurls.getRSI;
+    return this.http.post(`${url}`, {"ISIN": isin});
+  }
+
+  getMACD(isin: string): Observable<any>{
+    let url = baseUrl+ APIurls.getMACD;
+    return this.http.post(`${url}`, {"ISIN": isin});
+  }
+
+  getOBV(isin: string): Observable<any>{
+    let url = baseUrl+ APIurls.getOBV;
+    return this.http.post(`${url}`, {"ISIN": isin});
+  }
+
+  getAD(isin: string): Observable<any>{
+    let url = baseUrl+ APIurls.getAD;
+    return this.http.post(`${url}`, {"ISIN": isin});
+  }
+
+  getPercentChange(isin: string): Observable<any>{
+    let url = baseUrl+ APIurls.getPC;
+    return this.http.post(`${url}`, {"ISIN": isin});
+  }
+
 
 }
