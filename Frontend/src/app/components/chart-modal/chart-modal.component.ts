@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HttpService } from '../../services/http-service.service';
 
 import {
   ChartComponent,
@@ -26,7 +27,7 @@ export type ChartOptions = {
   title: ApexTitleSubtitle;  
 };
 
-export type lineChartOptions = {
+export type rsiChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   annotations: ApexAnnotations;
@@ -63,11 +64,13 @@ export class ChartModalComponent implements OnInit {
   @ViewChild("chart")
   chart: ChartComponent = new ChartComponent;
   public chartOptions: Partial<ChartOptions> | any;
-  public lineChartOptions: Partial<ChartOptions> | any;
+  public rsiChartOptions: Partial<ChartOptions> | any;
   public macdChartOptions: Partial<ChartOptions> | any;
 
   selectedIndicator: string = '';
   showChart: boolean = true;
+  isin: string = '';
+  symbol: string = '';
 
   indicators: any[] = [
     {value: 'rsi', viewValue: 'Relative Strength Index'},
@@ -1530,10 +1533,13 @@ export class ChartModalComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<ChartModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: any,
+    private http: HttpService
     ) {       
       this.initHistory(data.history);
+      this.isin = data.isin;
+      this.symbol = data.symbol;
       this.initCandleChart();
-      this.initLineChart();
+      // this.initRSIChart();
       this.initMacdChart();
   }
 
@@ -1547,10 +1553,6 @@ export class ChartModalComponent implements OnInit {
       }
       this.history.push(listObj);
     }
-    // console.log(historySeries[0][0].substring(0,10));
-    // let date = new Date(historySeries[0][0].substring(0,10));
-    // let obj = [historySeries[0][1], historySeries[0][2], historySeries[0][3], historySeries[0][4]]
-    // let newObj = {x: date, y: obj}
     console.log(this.history);
   }
 
@@ -1674,108 +1676,106 @@ export class ChartModalComponent implements OnInit {
     };
   
   }
+
   ngOnInit(): void {
   }
 
-  public initLineChart(): void {
-    let ts2 = 1484418600000;
-    let dates = [];
-    for (let i = 0; i < 120; i++) {
-      ts2 = ts2 + 86400000;
-      dates.push([ts2, this.dataSeries[1][i].value]);
-    }
+  // public initRSIChart(): void {
+  //   this.http.getRSI(isin)
+  //   .subscribe(rsiSeries => {
+  //   }
 
-    this.lineChartOptions = {
-      series: [
-        {
-          name: "AAPL",
-          data: dates
-        }
-      ],
-      chart: {
-        type: "area",
-        height: 350,
-        zoom: {
-          type: "x",
-          enabled: true,
-          autoScaleYaxis: true
-        },
-        toolbar: {
-          autoSelected: "zoom"
-        }
-      },
-      annotations: {
-        position: 'front',
-        yaxis: [
-          {
-            y: 98000000,
-            borderColor: "#00E396",
-            label: {
-              borderColor: "#00E396",
-              style: {
-                color: "#fff",
-                background: "#00E396"
-              },
-              text: "90"
-            }
-          },
-          {
-            y: 220000000,
-            borderColor: "#775DD0",
-            label: {
-              borderColor: "#775DD0",
-              style: {
-                color: "#fff",
-                background: "#775DD0"
-              },
-              text: "220"
-            }
-          }
-        ]
-      },
-      dataLabels:{
-        enabled: false
-      },
-      markers : {
-        size: 0 
-      },
-      title: {
-        text: "Line Chart",
-        align: "left"
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shadeIntensity: 1,
-          inverseColors: false,
-          opacityFrom: 0.5,
-          opacityTo: 0,
-          stops: [0, 90, 100]
-        }
-      },
-      yaxis: {
-        labels: {
-          formatter: function(val: number) {
-            return (val / 1000000).toFixed(0);
-          }
-        },
-        title: {
-          text: "Price"
-        }
-      },
-      xaxis: {
-        type: "datetime"
-      },
-      tooltip: {
-        shared: false,
-        y: {
-          formatter: function(val: number) {
-            return (val / 1000000).toFixed(0);
-          }
-        }
-      }  
-    };
-  }
+  //   this.lineChartOptions = {
+  //     series: [
+  //       {
+  //         name: "AAPL",
+  //         data: dates
+  //       }
+  //     ],
+  //     chart: {
+  //       type: "area",
+  //       height: 350,
+  //       zoom: {
+  //         type: "x",
+  //         enabled: true,
+  //         autoScaleYaxis: true
+  //       },
+  //       toolbar: {
+  //         autoSelected: "zoom"
+  //       }
+  //     },
+  //     annotations: {
+  //       position: 'front',
+  //       yaxis: [
+  //         {
+  //           y: 98000000,
+  //           borderColor: "#00E396",
+  //           label: {
+  //             borderColor: "#00E396",
+  //             style: {
+  //               color: "#fff",
+  //               background: "#00E396"
+  //             },
+  //             text: "90"
+  //           }
+  //         },
+  //         {
+  //           y: 220000000,
+  //           borderColor: "#775DD0",
+  //           label: {
+  //             borderColor: "#775DD0",
+  //             style: {
+  //               color: "#fff",
+  //               background: "#775DD0"
+  //             },
+  //             text: "220"
+  //           }
+  //         }
+  //       ]
+  //     },
+  //     dataLabels:{
+  //       enabled: false
+  //     },
+  //     markers : {
+  //       size: 0 
+  //     },
+  //     title: {
+  //       text: "Line Chart",
+  //       align: "left"
+  //     },
+  //     fill: {
+  //       type: "gradient",
+  //       gradient: {
+  //         shadeIntensity: 1,
+  //         inverseColors: false,
+  //         opacityFrom: 0.5,
+  //         opacityTo: 0,
+  //         stops: [0, 90, 100]
+  //       }
+  //     },
+  //     yaxis: {
+  //       labels: {
+  //         formatter: function(val: number) {
+  //           return (val / 1000000).toFixed(0);
+  //         }
+  //       },
+  //       title: {
+  //         text: "Price"
+  //       }
+  //     },
+  //     xaxis: {
+  //       type: "datetime"
+  //     },
+  //     tooltip: {
+  //       shared: false,
+  //       y: {
+  //         formatter: function(val: number) {
+  //           return (val / 1000000).toFixed(0);
+  //         }
+  //       }
+  //     }  
+  //   };
+  // }
 
   public generateDayWiseTimeSeries(baseval: number, count: number, yrange: { max: number; min: number; }) {
     var i = 0;
