@@ -1,9 +1,9 @@
 module.exports = {
-    "getStockHistory" : "SELECT sh_date, round(open, 2), round(high,2), round(low, 2), round(close,2) \
+    getStockHistory : "SELECT sh_date, round(open, 2), round(high,2), round(low, 2), round(close,2) \
      FROM STOCK_HISTORY_WEEKLY where ISIN='${ISIN}' ORDER BY sh_date ASC",
 
 
-     "percent_change" : "select pch.sh_date, ROUND(AVG(percent_change) OVER(ORDER BY sh_date ROWS BETWEEN 10 PRECEDING AND CURRENT ROW),3) as avg_change \
+    percent_change : "select pch.sh_date, ROUND(AVG(percent_change) OVER(ORDER BY sh_date ROWS BETWEEN 10 PRECEDING AND CURRENT ROW),3) as avg_change \
      FROM \
      (select ch.sh_date, \
      ch.close, \
@@ -11,7 +11,7 @@ module.exports = {
      FROM (select sh.*, Decode(rownum, 1, 0, close - LAG(close, 1, 0 ) OVER (ORDER BY sh_date))  as change\
          FROM (select sh_date, close from STOCK_HISTORY_WEEKLY where isin = '${ISIN}' order by sh_date) sh) ch) pch",
 
-    "RSI": "SELECT avg.sh_date, ROUND(DECODE(AVG_LOSS, 0, 0, AVG_GAIN/AVG_LOSS),2) AS RS FROM \
+    RSI: "SELECT avg.sh_date, ROUND(DECODE(AVG_LOSS, 0, 0, AVG_GAIN/AVG_LOSS),2) AS RS FROM \
     (select gl.*,\
     DECODE(SIGN(rownum-15), -1, 0, ROUND(AVG(Gain) OVER(ORDER BY sh_date ROWS BETWEEN 14 PRECEDING AND CURRENT ROW),3)) AS AVG_GAIN,\
     DECODE(SIGN(rownum-15), -1, 0, ROUND(AVG(Loss) OVER(ORDER BY sh_date ROWS BETWEEN 14 PRECEDING AND CURRENT ROW),3)) AS AVG_LOSS\
@@ -24,7 +24,7 @@ module.exports = {
             Decode(rownum, 1, 0, close - LAG(close, 1, 0 ) OVER (ORDER BY sh_date)) as change    \
             from (select sh_date, close from stock_history where isin = '${ISIN}' order by sh_date) sh) ch) gl) avg",
 
-    "OBV": "select sh_date, close, volume, obv \
+    OBV: "select sh_date, close, volume, obv \
     FROM \
     ( select sh_date, close, volume from stock_history_weekly where isin = '${ISIN}' order by sh_date) sh\
     model \
@@ -42,7 +42,7 @@ module.exports = {
            )\
        order by sh_date",
 
-       "MACD": "SELECT macd.*, DECODE(SIGN(rownum-26), -1, 0, ROUND(AVG(MACD) OVER(ORDER BY sh_date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW),3)) AS signal FROM \
+    MACD: "SELECT macd.*, DECODE(SIGN(rownum-26), -1, 0, ROUND(AVG(MACD) OVER(ORDER BY sh_date ROWS BETWEEN 9 PRECEDING AND CURRENT ROW),3)) AS signal FROM \
        (SELECT ema.*, DECODE(SIGN(rownum-26), -1, 0, ema12-ema26) as MACD  FROM\
            (select sh_date, close, sma12, sma26, round(ema12,3) as ema12, round(ema26, 3) as ema26\
            from   (select sh.*,\
@@ -60,7 +60,7 @@ module.exports = {
                ema26[26] = sma26[cv()]\
            )) ema) macd",
 
-    "AD": "SELECT sh_date, open, close, high, low, volume, round(ad, 3) as ad, mf\
+    AD: "SELECT sh_date, open, close, high, low, volume, round(ad, 3) as ad, mf\
     from \
         (select sh_date, open,close, high, low, volume \
         from stock_history_weekly where isin = '${ISIN}' order by sh_date) sh\
