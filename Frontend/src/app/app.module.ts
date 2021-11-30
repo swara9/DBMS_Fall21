@@ -18,6 +18,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { BtnCellRenderer } from './button-cell-renderer.component';
+import { TradeComponent } from './components/trade/trade.component';
+import { ChartBtnRenderer } from './chart-btn-renderer.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { AgGridModule } from 'ag-grid-angular';
     NavbarComponent,
     ProfileComponent,
     PortfolioComponent,
-    TradehistoryComponent
+    TradehistoryComponent,
+    BtnCellRenderer,
+    TradeComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +46,7 @@ import { AgGridModule } from 'ag-grid-angular';
     MatButtonModule,
     MatSelectModule,
     FormsModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([BtnCellRenderer])
   ],
   providers: [],
   bootstrap: [AppComponent],
