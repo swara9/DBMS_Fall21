@@ -9,7 +9,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 
 export class TradehistoryComponent implements OnInit {
-
   
   columnDefs=[
     {headerName:"Trade ID", field:"tradeID", headerClass:"h1", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},

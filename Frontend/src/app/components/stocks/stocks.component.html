@@ -1,3 +1,15 @@
-<p>stocks works!</p>
 <button (click)="openDialog()">Popup</button>
 
+<div style="position: relative;">
+    <div style="position: absolute; top:50px; left:30px ">
+        <ag-grid-angular
+        style="height:450px; width:1200px;"
+        class="ag-theme-balham"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [animateRows]="true"
+        [frameworkComponents]="frameworkComponents">
+        </ag-grid-angular>
+    </div>
+    </div>
+    
