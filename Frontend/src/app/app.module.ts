@@ -39,7 +39,7 @@ import { TradeModalComponent } from './components/trade-modal/trade-modal.compon
     BtnCellRenderer,
     ChartBtnRenderer,
     SellBtnRenderer,
-    LoginComponent
+    LoginComponent,
     TradeModalComponent
   ],
   imports: [
