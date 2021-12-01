@@ -73,6 +73,7 @@ export class StocksComponent implements OnInit {
       clicked: function(field: any) {
       }
     }},
+    
   ];
 
   rowData=[
