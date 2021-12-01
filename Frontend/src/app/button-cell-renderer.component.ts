@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'btn-cell-renderer',
     template: `
-      <button class="btn" (click)="btnClickedHandler()">Click me!</button>
+      <button class="btn" (click)="btnClickedHandler()">Buy</button>
     `,
   })
   export class BtnCellRenderer implements ICellRendererAngularComp{
