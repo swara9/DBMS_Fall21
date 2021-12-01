@@ -50,10 +50,10 @@ try{
     `SELECT *
     FROM stocks`
    }
-   else if(flag=='getUser'){
+   else if(flag=='getUserProfile'){
     const { SSN } = req.body;
     query=
-   `SELECT *
+   `SELECT SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds
    FROM investors
    where SSN='${SSN}'`
   }
@@ -117,7 +117,7 @@ try{
 
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
-app.post('/getUser',(req, res) => {conn('getUser',req, res)});
+app.post('/getUserProfile',(req, res) => {conn('getUserProfile',req, res)});
 app.post('/getPercentChange',(req, res) => {conn('getPercentChange',req, res)});
 app.post('/getRSI',(req, res) => {conn('getRSI',req, res)});
 app.post('/getOBV',(req, res) => {conn('getOBV',req, res)});
