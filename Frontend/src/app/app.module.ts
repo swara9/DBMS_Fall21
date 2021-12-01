@@ -22,6 +22,7 @@ import { TradeComponent } from './components/trade/trade.component';
 import { BtnCellRenderer } from './button-cell-renderer.component';
 import { ChartBtnRenderer } from './chart-btn-renderer.component';
 import { SellBtnRenderer } from './sell-btn-renderer.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { SellBtnRenderer } from './sell-btn-renderer.component';
     BtnCellRenderer,
     TradeComponent,
     ChartBtnRenderer,
-    SellBtnRenderer
+    SellBtnRenderer,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

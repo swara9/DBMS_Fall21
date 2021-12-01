@@ -8,6 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
 import { TradeComponent } from './components/trade/trade.component';
 import { ChartModalComponent } from './components/chart-modal/chart-modal.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
@@ -17,7 +18,9 @@ const routes: Routes = [
   { path: 'portf', component:PortfolioComponent },
   { path: 'th', component:TradehistoryComponent },
   { path: 'trade', component:TradeComponent },
-  { path: 'chart', component:ChartModalComponent}
+  { path: 'chart', component:ChartModalComponent},
+  { path: 'login', component:LoginComponent },
+
 ];
 
 @NgModule({
