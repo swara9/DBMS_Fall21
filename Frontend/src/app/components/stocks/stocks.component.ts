@@ -4,6 +4,8 @@ import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { HttpService } from '../../services/http-service.service';
 import { BtnCellRenderer} from 'src/app/button-cell-renderer.component';
 import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
+import { SellBtnRenderer} from 'src/app/sell-btn-renderer.component';
+
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
@@ -19,54 +21,59 @@ export class StocksComponent implements OnInit {
     private http: HttpService) { 
       this.frameworkComponents = {
         btnCellRenderer: BtnCellRenderer,
-        chartBtnRenderer: ChartBtnRenderer
+        chartBtnRenderer: ChartBtnRenderer,
+        sellBtnRenderer:SellBtnRenderer
       }
     }
 
     
   columnDefs=[
-    {
-      headerName:"Stock", 
-      field:"stock", 
-      headerClass:"h1", 
-      filter:true
+
+    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
+    
+    {headerName:"Buy", 
+    field:"buy", 
+    width:100,
+    cellRenderer: "btnCellRenderer",
+    cellRendererParams: {
+      clicked: function(field: any) {
+        //alert(`${field} was clicked`);
+      }
     },
-    {
-      headerName:"Buy/Sell", 
-      field:"qty", 
-      cellRenderer: "btnCellRenderer",
-      cellRendererParams: {
-        clicked: function(field: any) {
-          //alert(`${field} was clicked`);
-        }
-      },
-      headerClass:"h1"
+    headerClass:"h1"},
+
+    {headerName:"Sell", 
+    field:"sell", 
+    width:100,
+    cellRenderer: "sellBtnRenderer",
+    cellRendererParams: {
+      clicked: function(field: any) {
+        //alert(`${field} was clicked`);
+      }
     },
-    {
-      headerName:"Current Market Price", 
-      field:"cmp", 
-      headerClass:"h1"
-    },
-    {
-      headerName:"High", 
-      field:"high", 
-      headerClass:"h1"
-    },
-    { 
-      headerName:"Low", 
-      field:"low", 
-      headerClass:"h1"
-    },
-    {
-      headerName:"Chart", 
-      field:"chart",   
-      cellRenderer: "chartBtnRenderer",  
-      cellRendererParams: {
-        clicked: function(field: any) {
-        }
-      },
-      headerClass:"h1"
-    }
+    headerClass:"h1"},
+
+    {headerName:"Current Market Price", 
+    field:"cmp", 
+    headerClass:"h1"},
+
+    {headerName:"High", 
+    field:"high", 
+    headerClass:"h1"},
+
+    {headerName:"Low", 
+    field:"low", 
+    headerClass:"h1"},
+
+    {headerName:"Chart", 
+    field:"chart", 
+    width:100,   
+    cellRenderer: "chartBtnRenderer",  
+    cellRendererParams: {
+      clicked: function(field: any) {
+      }
+    }},
+    
   ];
 
   rowData=[
