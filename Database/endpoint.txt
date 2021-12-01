@@ -1,19 +1,19 @@
 Yo what up?
 
 //NEED TO ADD
-1. getAllStocks() - get request
+1. getAllStocks() - get request        (Done)
    returns : [[ISIN, Symbol, CMP, Open, Close, High, Low], []]
    query : select * from stocks;
    
-2. getStockByISIN() - post request
+2. getStockByISIN() - post request     (Done)
    input - {ISIN}
    query : select * from stocks where isin='isin';
    
-3. getStockBySymbol() - post request
+3. getStockBySymbol() - post request   (Done)
    input - {symbol}
    query : select * from stocks where symbol='symbol';
    
-4. getTotalTuples() - get request
+4. getTotalTuples() - get request      (Done)
    returns total tuples in our database
    query example : (we need to add all tables)
    select sum(tuples) from(

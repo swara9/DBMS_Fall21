@@ -27,6 +27,7 @@ console.log(`Server is running on port ${PORT}.`);
 
  var conn = (async function(flag,req,res) {
 try{
+  console.log('Reached First function');
    connection = await oracledb.getConnection({
         user : 'lawande.s',
         password : '384RwI5dGKdQT1Ek3yFKECYI',
@@ -44,6 +45,7 @@ try{
      query = queries.getStockHistory.replace("${ISIN}", ISIN);
    }
    else if(flag=='getStockDetails'){
+     console.log('Reached IF')
      query=
     `SELECT *
     FROM stocks`
@@ -74,9 +76,21 @@ try{
     const { ISIN } = req.body;
     query=queries.AD.replace("${ISIN}", ISIN);
   }
-
-
-
+  else if(flag=='getAllStocks'){
+    query=`Select * from stocks`;
+  }
+  else if(flag=='getStockByISIN'){
+    const { ISIN } = req.body;
+    query=`select * from stocks where isin='${ISIN}'`;
+  }
+  else if(flag=='getStockBySymbol'){
+    const { symbol } = req.body;
+    query=`select * from stocks where symbol='${symbol}'`;
+  }
+  else if(flag=='getTotalTuples'){
+    console.log('Reached here');
+    query=`select Count(stock_history.ISIN) from stocks,stock_history,trade,investors,email,portfolio`;
+  }
    connection.execute(
      query,[],  
    function(err, result) {
@@ -109,3 +123,7 @@ app.post('/getRSI',(req, res) => {conn('getRSI',req, res)});
 app.post('/getOBV',(req, res) => {conn('getOBV',req, res)});
 app.post('/getMACD',(req, res) => {conn('getMACD',req, res)});
 app.post('/getAccumulationDistribution',(req, res) => {conn('getAccumulationDistribution',req, res)});
+app.post('/getAllStock',(req, res) => {conn('getAllStock',req, res)});
+app.post('/getStockByISIN',(req, res) => {conn('getStockByISIN',req, res)});
+app.post('/getStockBySymbol',(req, res) => {conn('getStockBySymbol',req, res)});
+app.post('/getTotalTuples',(req, res) => {conn('getTotalTuples',req, res)});
