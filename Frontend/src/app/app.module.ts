@@ -21,7 +21,10 @@ import { AgGridModule } from 'ag-grid-angular';
 import { BtnCellRenderer } from './button-cell-renderer.component';
 import { ChartBtnRenderer } from './chart-btn-renderer.component';
 import { SellBtnRenderer } from './sell-btn-renderer.component';
+import { LoginComponent } from './components/login/login.component';
+
 import { TradeModalComponent } from './components/trade-modal/trade-modal.component';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { TradeModalComponent } from './components/trade-modal/trade-modal.compon
     BtnCellRenderer,
     ChartBtnRenderer,
     SellBtnRenderer,
+    LoginComponent
     TradeModalComponent
   ],
   imports: [
