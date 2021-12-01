@@ -31,7 +31,9 @@ export class StocksComponent implements OnInit {
 
     {headerName:"Stock", field:"stock", headerClass:"h1", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
     
-    {headerName:"Buy", field:"buy", width:100,
+    {headerName:"Buy", 
+    field:"buy", 
+    width:100,
     cellRenderer: "btnCellRenderer",
     cellRendererParams: {
       clicked: function(field: any) {
@@ -39,7 +41,10 @@ export class StocksComponent implements OnInit {
       }
     },
     headerClass:"h1"},
-    {headerName:"Sell", field:"sell", width:100,
+
+    {headerName:"Sell", 
+    field:"sell", 
+    width:100,
     cellRenderer: "sellBtnRenderer",
     cellRendererParams: {
       clicked: function(field: any) {
@@ -47,58 +52,27 @@ export class StocksComponent implements OnInit {
       }
     },
     headerClass:"h1"},
-    {headerName:"Current Market Price", field:"cmp", headerClass:"h1"},
-    {headerName:"High", field:"high", headerClass:"h1"},
-    {headerName:"Low", field:"low", headerClass:"h1"},
-    {headerName:"Chart", field:"chart", width:100,   
+
+    {headerName:"Current Market Price", 
+    field:"cmp", 
+    headerClass:"h1"},
+
+    {headerName:"High", 
+    field:"high", 
+    headerClass:"h1"},
+
+    {headerName:"Low", 
+    field:"low", 
+    headerClass:"h1"},
+
+    {headerName:"Chart", 
+    field:"chart", 
+    width:100,   
     cellRenderer: "chartBtnRenderer",  
     cellRendererParams: {
       clicked: function(field: any) {
       }
-
-    {
-      headerName:"Stock", 
-      field:"stock", 
-      headerClass:"h1", 
-      filter:true
-    },
-    {
-      headerName:"Buy/Sell", 
-      field:"qty", 
-      cellRenderer: "btnCellRenderer",
-      cellRendererParams: {
-        clicked: function(field: any) {
-          //alert(`${field} was clicked`);
-        }
-      },
-      headerClass:"h1"
-
-    },
-    {
-      headerName:"Current Market Price", 
-      field:"cmp", 
-      headerClass:"h1"
-    },
-    {
-      headerName:"High", 
-      field:"high", 
-      headerClass:"h1"
-    },
-    { 
-      headerName:"Low", 
-      field:"low", 
-      headerClass:"h1"
-    },
-    {
-      headerName:"Chart", 
-      field:"chart",   
-      cellRenderer: "chartBtnRenderer",  
-      cellRendererParams: {
-        clicked: function(field: any) {
-        }
-      },
-      headerClass:"h1"
-    }
+    }},
   ];
 
   rowData=[
