@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TradeComponent } from './trade.component';
+import { TradeModalComponent } from './trade-modal.component';
 
-describe('TradeComponent', () => {
-  let component: TradeComponent;
-  let fixture: ComponentFixture<TradeComponent>;
+describe('TradeModalComponent', () => {
+  let component: TradeModalComponent;
+  let fixture: ComponentFixture<TradeModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TradeComponent ]
+      declarations: [ TradeModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TradeComponent);
+    fixture = TestBed.createComponent(TradeModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
