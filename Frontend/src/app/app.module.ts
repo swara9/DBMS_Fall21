@@ -18,11 +18,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { TradeComponent } from './components/trade/trade.component';
 import { BtnCellRenderer } from './button-cell-renderer.component';
 import { ChartBtnRenderer } from './chart-btn-renderer.component';
 import { SellBtnRenderer } from './sell-btn-renderer.component';
 import { LoginComponent } from './components/login/login.component';
+
+import { TradeModalComponent } from './components/trade-modal/trade-modal.component';
+
 
 @NgModule({
   declarations: [
@@ -35,10 +37,10 @@ import { LoginComponent } from './components/login/login.component';
     PortfolioComponent,
     TradehistoryComponent,
     BtnCellRenderer,
-    TradeComponent,
     ChartBtnRenderer,
     SellBtnRenderer,
     LoginComponent
+    TradeModalComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,10 @@ import { LoginComponent } from './components/login/login.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents : [ChartModalComponent]
+  entryComponents : [
+    ChartModalComponent,
+    TradeModalComponent
+  ]
 })
 
 export class AppModule { }

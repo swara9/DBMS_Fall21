@@ -85,7 +85,7 @@ export class StocksComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openDialog() {
+  openChartDialog() {
     const dialogConfig = new MatDialogConfig();
     //should come from row
     var isin = 'US0378331005';
