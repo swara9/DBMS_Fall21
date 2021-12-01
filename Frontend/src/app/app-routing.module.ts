@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'pro', component:ProfileComponent},
   { path: 'portf', component:PortfolioComponent },
   { path: 'th', component:TradehistoryComponent },
-  { path: 'trade', component:TradeComponent },
+  { path: 'trade', component:TradeModalComponent },
   { path: 'chart', component:ChartModalComponent},
   { path: 'login', component:LoginComponent },
   { path: 'profile', component:ProfileComponent},
