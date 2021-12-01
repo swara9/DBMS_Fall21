@@ -11,13 +11,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .btn{
     background-color: whitesmoke;
     border: 1px solid #1597E5;
-    border-radius: 6px;
-    margin-left: 50px;
+    border-radius: 4px;
+    margin-left:20px;
 }
 
 .btnchart{
     background-color: whitesmoke;
     border: 1px solid green;
-    border-radius: 6px;
-    margin-left: 50px;
+    border-radius: 4px;
+    margin-left: 20px;
+}
+
+.btnsell{
+    background-color: whitesmoke;
+    border: 1px solid red;
+    border-radius: 4px;
+    margin-left: 20px;
 }

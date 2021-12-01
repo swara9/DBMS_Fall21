@@ -3,12 +3,12 @@ import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'chart-btn-renderer',
+    selector: 'sell-btn-renderer',
     template: `
-      <button class="btnchart" (click)="btnClickedHandler()">Chart</button>
+      <button class="btnsell" (click)="btnClickedHandler()">Sell</button>
     `,
   })
-  export class ChartBtnRenderer implements ICellRendererAngularComp{
+  export class SellBtnRenderer implements ICellRendererAngularComp{
     private params: any;
 
     constructor(private router: Router){ }
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   
     btnClickedHandler() {
       //this.params.clicked(this.params.value);
-      const navigationDetails: string[] = ['/chart'];
+      const navigationDetails: string[] = ['/trade'];
       if(this.params.length) {
         navigationDetails.push(this.params);
       }
