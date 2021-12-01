@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HttpService } from '../../services/http-service.service';
 
 import {
   ChartComponent,
@@ -11,7 +12,11 @@ import {
   ApexDataLabels,
   ApexFill,
   ApexMarkers,
-  ApexTooltip
+  ApexTooltip,
+  ApexLegend,
+  ApexGrid,
+  ApexStroke,
+  ApexAnnotations
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -22,9 +27,10 @@ export type ChartOptions = {
   title: ApexTitleSubtitle;  
 };
 
-export type lineChartOptions = {
+export type rsiChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
+  annotations: ApexAnnotations;
   dataLabels: ApexDataLabels;
   markers: ApexMarkers;
   title: ApexTitleSubtitle;
@@ -33,6 +39,20 @@ export type lineChartOptions = {
   xaxis: ApexXAxis;
   tooltip: ApexTooltip;
 }
+
+export type macdChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  dataLabels: ApexDataLabels;
+  markers: ApexMarkers;
+  tooltip: any; // ApexTooltip;
+  yaxis: ApexYAxis;
+  grid: ApexGrid;
+  legend: ApexLegend;
+  title: ApexTitleSubtitle;
+};
 
 @Component({
   selector: 'app-chart-modal',
@@ -44,13 +64,17 @@ export class ChartModalComponent implements OnInit {
   @ViewChild("chart")
   chart: ChartComponent = new ChartComponent;
   public chartOptions: Partial<ChartOptions> | any;
-  public lineChartOptions: Partial<ChartOptions> | any;
+  public rsiChartOptions: Partial<ChartOptions> | any;
+  public macdChartOptions: Partial<ChartOptions> | any;
+
   selectedIndicator: string = '';
   showChart: boolean = true;
+  isin: string = '';
+  symbol: string = '';
 
   indicators: any[] = [
     {value: 'rsi', viewValue: 'Relative Strength Index'},
-    {value: 'rsi', viewValue: 'Moving Average Convergence Divergence'},
+    {value: 'macd', viewValue: 'Moving Average Convergence Divergence'},
     {value: 'pg', viewValue: 'Percent Growth'},
     {value: 'obv', viewValue: 'On-balance Volume'},
     {value: 'ad', viewValue: 'Accumulation/Distribution Indicator'},
@@ -1509,10 +1533,14 @@ export class ChartModalComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<ChartModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: any,
+    private http: HttpService
     ) {       
       this.initHistory(data.history);
+      this.isin = data.isin;
+      this.symbol = data.symbol;
       this.initCandleChart();
-      this.initLineChart();
+      this.initRSIChart();
+      this.initMacdChart();
   }
 
   initHistory(historySeries: any[][]){
@@ -1525,10 +1553,6 @@ export class ChartModalComponent implements OnInit {
       }
       this.history.push(listObj);
     }
-    // console.log(historySeries[0][0].substring(0,10));
-    // let date = new Date(historySeries[0][0].substring(0,10));
-    // let obj = [historySeries[0][1], historySeries[0][2], historySeries[0][3], historySeries[0][4]]
-    // let newObj = {x: date, y: obj}
     console.log(this.history);
   }
 
@@ -1569,78 +1593,197 @@ export class ChartModalComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
-  }
-
-  public initLineChart(): void {
-    let ts2 = 1484418600000;
-    let dates = [];
-    for (let i = 0; i < 120; i++) {
-      ts2 = ts2 + 86400000;
-      dates.push([ts2, this.dataSeries[1][i].value]);
-    }
-
-    this.lineChartOptions = {
+  initMacdChart(){
+    this.macdChartOptions = {
       series: [
         {
-          name: "AAPL",
-          data: dates
+          name: "MACD",
+          data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+        },
+        {
+          name: "Signal",
+          data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
         }
       ],
       chart: {
-        type: "area",
-        height: 350,
-        zoom: {
-          type: "x",
-          enabled: true,
-          autoScaleYaxis: true
-        },
-        toolbar: {
-          autoSelected: "zoom"
-        }
+        height: 200,
+        type: "line"
       },
-      dataLabels:{
+      dataLabels: {
         enabled: false
       },
-      markers : {
-        size: 0 
+      stroke: {
+        width: 5,
+        curve: "straight"        
       },
       title: {
-        text: "Line Chart",
+        text: "Moving Average Convergence Divergence",
         align: "left"
       },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shadeIntensity: 1,
-          inverseColors: false,
-          opacityFrom: 0.5,
-          opacityTo: 0,
-          stops: [0, 90, 100]
-        }
-      },
-      yaxis: {
-        labels: {
-          formatter: function(val: number) {
-            return (val / 1000000).toFixed(0);
-          }
-        },
-        title: {
-          text: "Price"
+      markers: {
+        size: 0,
+        hover: {
+          sizeOffset: 6
         }
       },
       xaxis: {
-        type: "datetime"
+        labels: {
+          trim: false
+        },
+        categories: [
+          "01 Jan",
+          "02 Jan",
+          "03 Jan",
+          "04 Jan",
+          "05 Jan",
+          "06 Jan",
+          "07 Jan",
+          "08 Jan",
+          "09 Jan",
+          "10 Jan",
+          "11 Jan",
+          "12 Jan"
+        ]
       },
       tooltip: {
-        shared: false,
-        y: {
-          formatter: function(val: number) {
-            return (val / 1000000).toFixed(0);
+        y: [
+          {
+            title: {
+              formatter: function(val: string) {
+                return val + " (mins)";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val: string) {
+                return val + " per session";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val: any) {
+                return val;
+              }
+            }
           }
-        }
-      }  
+        ]
+      },
+      grid: {
+        borderColor: "#f1f1f1"
+      }
     };
+  
+  }
+
+  ngOnInit(): void {
+  }
+
+  public initRSIChart(): void {
+    this.http.getRSI(this.isin)
+    .subscribe(rsiSeries => {
+      console.log(rsiSeries);
+      let rsiList: any[] = []
+      let dates= []
+      for(var entry of rsiSeries){
+      
+        let date = new Date(entry[0].substring(0,10));
+        let rsi = entry[1];
+        dates.push(date);
+        rsiList.push([date, rsi]);
+      }       
+      this.rsiChartOptions = {
+        series: [
+          {
+            name: this.symbol,
+            data: rsiList
+          }
+        ],
+        chart: {
+          type: "area",
+          height: 350,
+          zoom: {
+            type: "x",
+            enabled: true,
+            autoScaleYaxis: true
+          },
+          toolbar: {
+            autoSelected: "zoom"
+          }
+        },
+        annotations: {
+          position: 'front',
+          yaxis: [
+            {
+              y: 98000000,
+              borderColor: "#00E396",
+              label: {
+                borderColor: "#00E396",
+                style: {
+                  color: "#fff",
+                  background: "#00E396"
+                },
+                text: "90"
+              }
+            },
+            {
+              y: 220000000,
+              borderColor: "#775DD0",
+              label: {
+                borderColor: "#775DD0",
+                style: {
+                  color: "#fff",
+                  background: "#775DD0"
+                },
+                text: "220"
+              }
+            }
+          ]
+        },
+        dataLabels:{
+          enabled: false
+        },
+        markers : {
+          size: 0 
+        },
+        title: {
+          text: "Line Chart",
+          align: "left"
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100]
+          }
+        },
+        yaxis: {
+          label:{
+            formatter: function(val: number) {
+              return (val).toFixed(2);
+            }
+          },
+          title: {
+            text: "Price"
+          }
+        },
+        xaxis: {
+          type: "datetime"
+        },
+        tooltip: {
+          shared: false,
+          y: {
+            formatter: function(val: number) {
+              return (val).toFixed(2);
+            }
+          }
+        }  
+      };
+    });
   }
 
   public generateDayWiseTimeSeries(baseval: number, count: number, yrange: { max: number; min: number; }) {
