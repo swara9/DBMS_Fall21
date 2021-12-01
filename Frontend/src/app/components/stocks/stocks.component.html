@@ -1,9 +1,29 @@
-<button (click)="openChartDialog()">Popup</button>
+<button (click)="openDialog()">Popup</button>
+
+<div class="form-group">
+   <label for ="Stocks">
+    Stocks
+   </label>
+   
+   <select id= "Stocks" name="Stocks"
+        [(ngModel)]="Stocks" (change)="navigateTo()" class="form-control">
+   
+        <option *ngFor=" let sto of stocks" [value] = "sto.id">
+            {{sto.name}}
+        </option>
+    
+    
+    </select>
+   <button >Search</button>
+    
+</div>
+
+
 
 <div style="position: relative;">
-    <div style="position: absolute; top:40px; left:90px ">
+    <div style="position: absolute; top:50px; left:30px ">
         <ag-grid-angular
-        style="height:450px; width:1102px;"
+        style="height:450px; width:1200px;"
         class="ag-theme-balham"
         [rowData]="rowData"
         [columnDefs]="columnDefs"

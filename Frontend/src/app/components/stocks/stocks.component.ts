@@ -4,7 +4,9 @@ import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { HttpService } from '../../services/http-service.service';
 import { BtnCellRenderer} from 'src/app/button-cell-renderer.component';
 import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
-import { SellBtnRenderer} from 'src/app/sell-btn-renderer.component';
+import { FormsModule } from '@angular/forms'; 
+import {Router} from  '@angular/router';
+import{StocksModule} from 'src/app/components/stocks/stocks.module';
 
 @Component({
   selector: 'app-stocks',
@@ -14,66 +16,77 @@ import { SellBtnRenderer} from 'src/app/sell-btn-renderer.component';
 })
 
 export class StocksComponent implements OnInit {
- 
+  stocks: StocksModule[]= [
+
+    {id: 1, name:'Apple'},
+    {id:2, name: 'Google'},
+    {id:3, name: 'Tesla'},
+    {id:4, name:'Microsoft'},
+    {id:5, name: 'Tesla'},
+    {id:6, name:'Amazon.com'},
+    {id:7, name: 'Tesla'},
+    {id:8, name:'JP Morgan'},
+    {id:9, name: 'Walmart'},
+    {id:10, name:'Bank Of America'},
+    {id:11, name: 'Tesla'},
+    {id:12, name:'Adobe'}
+  
+  ];
+  Stocks:any;
   frameworkComponents: any;
 
   constructor(private dialog: MatDialog,
-    private http: HttpService) { 
+    private http: HttpService, private router: Router) { 
       this.frameworkComponents = {
         btnCellRenderer: BtnCellRenderer,
-        chartBtnRenderer: ChartBtnRenderer,
-        sellBtnRenderer:SellBtnRenderer
+        chartBtnRenderer: ChartBtnRenderer
       }
     }
-
+   
     
   columnDefs=[
-
-    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
-    
-    {headerName:"Buy", 
-    field:"buy", 
-    width:100,
-    cellRenderer: "btnCellRenderer",
-    cellRendererParams: {
-      clicked: function(field: any) {
-        //alert(`${field} was clicked`);
-      }
+    {
+      headerName:"Stock", 
+      field:"stock", 
+      headerClass:"h1", 
+      filter:true
     },
-    headerClass:"h1"},
-
-    {headerName:"Sell", 
-    field:"sell", 
-    width:100,
-    cellRenderer: "sellBtnRenderer",
-    cellRendererParams: {
-      clicked: function(field: any) {
-        //alert(`${field} was clicked`);
-      }
+    {
+      headerName:"Buy/Sell", 
+      field:"qty", 
+      cellRenderer: "btnCellRenderer",
+      cellRendererParams: {
+        clicked: function(field: any) {
+          //alert(`${field} was clicked`);
+        }
+      },
+      headerClass:"h1"
     },
-    headerClass:"h1"},
-
-    {headerName:"Current Market Price", 
-    field:"cmp", 
-    headerClass:"h1"},
-
-    {headerName:"High", 
-    field:"high", 
-    headerClass:"h1"},
-
-    {headerName:"Low", 
-    field:"low", 
-    headerClass:"h1"},
-
-    {headerName:"Chart", 
-    field:"chart", 
-    width:100,   
-    cellRenderer: "chartBtnRenderer",  
-    cellRendererParams: {
-      clicked: function(field: any) {
-      }
-    }},
-    
+    {
+      headerName:"Current Market Price", 
+      field:"cmp", 
+      headerClass:"h1"
+    },
+    {
+      headerName:"High", 
+      field:"high", 
+      headerClass:"h1"
+    },
+    { 
+      headerName:"Low", 
+      field:"low", 
+      headerClass:"h1"
+    },
+    {
+      headerName:"Chart", 
+      field:"chart",   
+      cellRenderer: "chartBtnRenderer",  
+      cellRendererParams: {
+        clicked: function(field: any) {
+        }
+      },
+      headerClass:"h1"
+    }
   ];
 
   rowData=[
@@ -85,7 +98,7 @@ export class StocksComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openChartDialog() {
+  openDialog() {
     const dialogConfig = new MatDialogConfig();
     //should come from row
     var isin = 'US0378331005';
@@ -107,4 +120,11 @@ export class StocksComponent implements OnInit {
    
   }
 
+  navigateTo() {
+    this.router.navigate(['/sinfo'])
+  }
+  
+
+  
+  
 }

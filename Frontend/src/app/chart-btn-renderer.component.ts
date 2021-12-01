@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'chart-btn-renderer',
     template: `
-      <button class="btnchart" (click)="btnClickedHandler()">Chart</button>
+      <button class="btnchart" (click)="btnClickedHandler()">Click me!</button>
     `,
   })
   export class ChartBtnRenderer implements ICellRendererAngularComp{
