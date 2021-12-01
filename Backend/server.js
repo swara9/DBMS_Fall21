@@ -89,7 +89,7 @@ try{
   }
   else if(flag=='getTotalTuples'){
     console.log('Reached here');
-    query=`select Count(stock_history.ISIN) from stocks,stock_history,trade,investors,email,portfolio`;
+    query=`Select sum(data) from (select Count(*) as data from stock_history UNION select Count(*) as data from stocks UNION select Count(*) as data from trade UNION select Count(*) as data from investors UNION select Count(*) as data from email UNION select Count(*) as data from portfolio)`
   }
    connection.execute(
      query,[],  
