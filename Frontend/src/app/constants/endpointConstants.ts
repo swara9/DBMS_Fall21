@@ -5,5 +5,7 @@ export const APIurls = {
     getOBV : 'getOBV',
     getMACD : 'getMACD',
     getAD : 'getAccumulationDistribution',
-    getPC : 'getPercentChange'
+    getPC : 'getPercentChange',
+    getUserProfile : 'getUserProfile',
+    getAllStocks : 'getStockBasic'
 }

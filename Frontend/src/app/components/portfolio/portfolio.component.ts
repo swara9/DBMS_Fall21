@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { BtnCellRenderer} from 'src/app/button-cell-renderer.component';
-import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
+import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
+import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn-renderer.component';
+import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
+import { ProfileService } from "../../services/profile-service.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio',
@@ -11,34 +14,46 @@ import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
 export class PortfolioComponent implements OnInit {
 
   frameworkComponents: any;
+  profile: any;
+  allStocks : any;
+  subscription: Subscription = new Subscription;
+  stocksSubscription: Subscription = new Subscription;
 
-  constructor() { 
+  constructor(private profileService: ProfileService) { 
     this.frameworkComponents = {
-      btnCellRenderer: BtnCellRenderer,
-      chartBtnRenderer: ChartBtnRenderer
+      btnCellRenderer: BuyBtnRendererComponent,
+      chartBtnRenderer: ChartBtnRendererComponent,
+      sellBtnRenderer: SellBtnRendererComponent
     }
   }
 
   columnDefs=[
-    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
-    {headerName:"Net Profit & Loss", field:"net_profit_loss", headerClass:"h1"},
+    {headerName:"Stock", field:"stock", headerClass:"sell", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
+    {headerName:"Net Profit & Loss", field:"net_profit_loss", headerClass:"sell"},
     
-    {headerName:"Buy/Sell", field:"qty", 
-    cellRenderer: "btnCellRenderer",
+    {field:"buy",
+    headerClass:"sell", 
+    cellRenderer: "btnCellRenderer", width:200,
     cellRendererParams: {
       clicked: function(field: any) {
         //alert(`${field} was clicked`);
       }
-    },
-    headerClass:"h1"},
+    }},
+    {field:"sell", width:200,
+    headerClass:"sell", 
+      cellRenderer: "sellBtnRenderer",  
+      cellRendererParams: {
+      clicked: function(field: any) {
+      }
+    }},
 
-    {headerName:"Chart", field:"chart",   
+    {headerName:"Chart", field:"chart",  width:200, 
     cellRenderer: "chartBtnRenderer",  
     cellRendererParams: {
       clicked: function(field: any) {
       }
     },
-    headerClass:"h1"}
+    headerClass:"sell"}
   ];
 
   rowData=[
@@ -46,10 +61,21 @@ export class PortfolioComponent implements OnInit {
     {stock:'jj', net_profit_loss:'1411'},
 
   ];
-  
-
+  rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
   ngOnInit(): void {
+    this.subscription = this.profileService.currentProfile.subscribe(
+      profile => this.profile = profile
+    )
+    this.stocksSubscription = this.profileService.currAllStocks.subscribe(
+      allStocks => this.allStocks = allStocks
+    )
+    console.log(this.profile.funds+" ===== "+this.profile.SSN)   
+    console.log("All stocks " + this.allStocks[0].ISIN)
+  }
+
+  changeProfile(){
+    this.profileService.changeProfile("12456987");
   }
 
 }

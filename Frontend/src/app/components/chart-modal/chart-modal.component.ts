@@ -1535,6 +1535,7 @@ export class ChartModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: any,
     private http: HttpService
     ) {       
+      console.log("From chart modal "+data.histoy)
       this.initHistory(data.history);
       this.isin = data.isin;
       this.symbol = data.symbol;

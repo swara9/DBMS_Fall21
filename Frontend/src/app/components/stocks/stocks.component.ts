@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { HttpService } from '../../services/http-service.service';
-import { BtnCellRenderer} from 'src/app/button-cell-renderer.component';
-import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
-import { FormsModule } from '@angular/forms'; 
 import {Router} from  '@angular/router';
 import{StocksModule} from 'src/app/components/stocks/stocks.module';
+import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
+import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn-renderer.component';
+import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
 
 @Component({
   selector: 'app-stocks',
@@ -38,93 +37,73 @@ export class StocksComponent implements OnInit {
   constructor(private dialog: MatDialog,
     private http: HttpService, private router: Router) { 
       this.frameworkComponents = {
-        btnCellRenderer: BtnCellRenderer,
-        chartBtnRenderer: ChartBtnRenderer
+        btnCellRenderer: BuyBtnRendererComponent,
+        chartBtnRenderer: ChartBtnRendererComponent,
+        sellBtnRenderer: SellBtnRendererComponent
       }
     }
-   
     
   columnDefs=[
-    {
-      headerName:"Stock", 
-      field:"stock", 
-      headerClass:"h1", 
-      filter:true
+
+    {headerName:"Stock", field:"stock", headerClass:"head", filter:true},
+    
+    {headerName:"Current Market Price", 
+    field:"cmp", 
+    headerClass:"head"},
+
+    {headerName:"High", 
+    field:"high", 
+    width:100,
+    headerClass:"head"},
+
+    {headerName:"Low", 
+    field:"low", 
+    width:100,
+    headerClass:"head"},
+
+    {headerName:"Buy", 
+    field:"buy", 
+    width:200,
+    cellRenderer: "btnCellRenderer",
+    cellRendererParams: {
+      clicked: function(field: any) {
+        //alert(`${field} was clicked`);
+      }
     },
-    {
-      headerName:"Buy/Sell", 
-      field:"qty", 
-      cellRenderer: "btnCellRenderer",
-      cellRendererParams: {
-        clicked: function(field: any) {
-          //alert(`${field} was clicked`);
-        }
-      },
-      headerClass:"h1"
+    headerClass:"head"},
+
+    {headerName:"Sell", 
+    field:"sell", 
+    width:200,
+    cellRenderer: "sellBtnRenderer",
+    cellRendererParams: {
+      clicked: function(field: any) {
+        //alert(`${field} was clicked`);
+      }
     },
-    {
-      headerName:"Current Market Price", 
-      field:"cmp", 
-      headerClass:"h1"
+    headerClass:"head"},
+
+    {headerName:"View Chart", 
+    field:"chart", 
+    width:200,   
+    cellRenderer: "chartBtnRenderer",  
+    cellRendererParams: {
+      clicked: function(field: any) {
+      }
     },
-    {
-      headerName:"High", 
-      field:"high", 
-      headerClass:"h1"
-    },
-    { 
-      headerName:"Low", 
-      field:"low", 
-      headerClass:"h1"
-    },
-    {
-      headerName:"Chart", 
-      field:"chart",   
-      cellRenderer: "chartBtnRenderer",  
-      cellRendererParams: {
-        clicked: function(field: any) {
-        }
-      },
-      headerClass:"h1"
-    }
+    headerClass:"head"},
+    
   ];
 
   rowData=[
     {stock:'aapl', net_profit_loss:'111',},
     {stock:'jj', net_profit_loss:'1411',},
   ];
+  
+  rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
 
   ngOnInit(): void {
   }
 
-  openDialog() {
-    const dialogConfig = new MatDialogConfig();
-    //should come from row
-    var isin = 'US0378331005';
-    var symbol = 'ABCD';
-    this.http.getStockHistory(isin)
-    .subscribe(history => {
-      console.log(history)
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '1000px';
-      dialogConfig.data = {
-        history : history,
-        isin : isin,
-        symbol : symbol
-      };      
-      this.dialog.open(ChartModalComponent, dialogConfig);
-    });
-    
-    // dialogConfig.disableClose = true;
-   
-  }
-
-  navigateTo() {
-    this.router.navigate(['/sinfo'])
-  }
-  
-
-  
-  
 }

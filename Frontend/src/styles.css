@@ -2,22 +2,36 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.btn{
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*html { background-color: black; }*/
+.btnbuy{
     background-color: whitesmoke;
-    border: 1px solid #1597E5;
-    border-radius: 6px;
-    margin-left: 50px;
+    border: 1px solid blue;
+    border-radius: 4px;
+    height: 25px;
+    font-family: Sans-serif;
 }
+
 
 .btnchart{
     background-color: whitesmoke;
     border: 1px solid green;
-    border-radius: 6px;
-    margin-left: 50px;
+    border-radius: 4px;
+    height: 25px;
+    font-family: Sans-serif;
+
 }
+
+.btnsell{
+    background-color: whitesmoke;
+    border: 1px solid red;
+    border-radius: 4px;
+    height: 25px;
+    font-family: Sans-serif;
+}
+
