@@ -11,10 +11,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class TradehistoryComponent implements OnInit {
   
   columnDefs=[
-    {headerName:"Trade ID", field:"tradeID", headerClass:"head", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
+    {headerName:"Trade ID", field:"tradeID", headerClass:"head", filter:true,  cellStyle: {borderLeft:"solid 2px #1597E5"}},
     {headerName:"Trade Date ", field:"trade_date", headerClass:"head", filter:"agDateColumnFilter"},
     {headerName:"Quantity", field:"qty", headerClass:"head", filter:"agNumberColumnFilter"},
-    {headerName:"Price", field:"price", headerClass:"head", filter:"agNumberColumnFilter"},
+    {headerName:"Price", field:"price", headerClass:"head", filter:"agNumberColumnFilter", rowClass:"r1"},
 
   ];
 
@@ -23,6 +23,7 @@ export class TradehistoryComponent implements OnInit {
     {tradeID:'MC', trade_date:'B', qty:15, price:38000}
   ];
   
+  rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
   
   constructor() { }
 

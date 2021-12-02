@@ -13,7 +13,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: whitesmoke;
     border: 1px solid blue;
     border-radius: 4px;
-    margin-left: 70px;
     height: 25px;
     font-family: Sans-serif;
 }
@@ -23,7 +22,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: whitesmoke;
     border: 1px solid green;
     border-radius: 4px;
-    margin-left: 70px;
     height: 25px;
     font-family: Sans-serif;
 
@@ -33,7 +31,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: whitesmoke;
     border: 1px solid red;
     border-radius: 4px;
-    margin-left: 70px;
     height: 25px;
     font-family: Sans-serif;
 }

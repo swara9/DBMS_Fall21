@@ -17,9 +17,14 @@ export class PortfolioComponent implements OnInit {
   profile: any;
   allStocks = [];
   subscription: Subscription = new Subscription;
+<<<<<<< HEAD
   stocksSubscription : Subscription = new Subscription;
+=======
+  allStocks = [];
+  stocksSubscription: Subscription = new Subscription;
+>>>>>>> ce7b006e2f850d8b6135a39b4f07d3b3ce627971
 
-  constructor(private profleService: ProfileService) { 
+  constructor(private profileService: ProfileService) { 
     this.frameworkComponents = {
       btnCellRenderer: BuyBtnRendererComponent,
       chartBtnRenderer: ChartBtnRendererComponent,
@@ -62,21 +67,30 @@ export class PortfolioComponent implements OnInit {
     {stock:'jj', net_profit_loss:'1411'},
 
   ];
+  rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
   ngOnInit(): void {
-    this.subscription = this.profleService.currentProfile.subscribe(
+    this.subscription = this.profileService.currentProfile.subscribe(
       profile => this.profile = profile
     )
+<<<<<<< HEAD
     this.stocksSubscription = this.profleService.currAllStocks.subscribe(
       allStocks => this.allStocks = allStocks
     )
     console.log(this.profile.funds+" ===== "+this.profile.SSN)   
     console.log(this.allStocks[0])   
     
+=======
+    this.stocksSubscription = this.profileService.currAllStocks.subscribe(
+      allStocks => this.allStocks = allStocks
+    )
+    console.log(this.profile.funds+" ===== "+this.profile.SSN)   
+    console.log("All stocks " + this.allStocks[0])
+>>>>>>> ce7b006e2f850d8b6135a39b4f07d3b3ce627971
   }
 
   changeProfile(){
-    this.profleService.changeProfile("12456987");
+    this.profileService.changeProfile("12456987");
   }
 
 }
