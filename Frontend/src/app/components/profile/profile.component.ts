@@ -15,13 +15,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(private profileService: ProfileService) { }
 
-<<<<<<< HEAD
-  constructor(private httpClient:HttpClient) { 
-  }
-  
-=======
-
->>>>>>> 61602567d75c7dc4581aac5d0107722507db7aa6
   ngOnInit(): void {
     this.subscription = this.profileService.currentProfile.subscribe(
       profile => this.profile = profile
