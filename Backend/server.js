@@ -148,7 +148,7 @@ var UserConn = (async function(flag,req,res) {
     if(flag=='getUserProfile'){
       const { SSN } = req.body;
       query=
-     `SELECT SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds
+     `SELECT SSN,name,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds
      FROM investors
      where SSN='${SSN}'`
     }
@@ -159,7 +159,7 @@ var UserConn = (async function(flag,req,res) {
           console.error(err.message);
           return;
         }
-        var JsonUser={"SSN":result.rows[0][0],"net_profit_loss":result.rows[0][1],"totalInv":result.rows[0][2],"currentValue":result.rows[0][3],"funds":result.rows[0][4]}
+        var JsonUser={"SSN":result.rows[0][0],"name":result.rows[0][1],"net_profit_loss":result.rows[0][2],"totalInv":result.rows[0][3],"currentValue":result.rows[0][4],"funds":result.rows[0][5]}
         console.log(JsonUser);
         res.json(JsonUser);
   });
