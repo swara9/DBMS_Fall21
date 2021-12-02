@@ -27,50 +27,53 @@ export class StocksComponent implements OnInit {
     
   columnDefs=[
 
-    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true},
+    {headerName:"Stock", field:"stock", headerClass:"head", filter:true},
     
     {headerName:"Current Market Price", 
     field:"cmp", 
-    headerClass:"h1"},
+    headerClass:"head"},
 
     {headerName:"High", 
     field:"high", 
-    headerClass:"h1"},
+    width:100,
+    headerClass:"head"},
 
     {headerName:"Low", 
     field:"low", 
-    headerClass:"h1"},
+    width:100,
+    headerClass:"head"},
 
     {headerName:"Buy", 
     field:"buy", 
-    width:100,
+    width:200,
     cellRenderer: "btnCellRenderer",
     cellRendererParams: {
       clicked: function(field: any) {
         //alert(`${field} was clicked`);
       }
     },
-    headerClass:"h1"},
+    headerClass:"head"},
 
     {headerName:"Sell", 
     field:"sell", 
-    width:100,
+    width:200,
     cellRenderer: "sellBtnRenderer",
     cellRendererParams: {
       clicked: function(field: any) {
         //alert(`${field} was clicked`);
       }
     },
-    headerClass:"h1"},
+    headerClass:"head"},
 
     {headerName:"View Chart", 
     field:"chart", 
-    width:100,   
+    width:200,   
     cellRenderer: "chartBtnRenderer",  
     cellRendererParams: {
       clicked: function(field: any) {
       }
-    }},
+    },
+    headerClass:"head"},
     
   ];
 
