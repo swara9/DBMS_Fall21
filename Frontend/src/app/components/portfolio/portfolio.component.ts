@@ -15,7 +15,7 @@ export class PortfolioComponent implements OnInit {
 
   frameworkComponents: any;
   profile: any;
-  allStocks = [];
+  allStocks : any;
   subscription: Subscription = new Subscription;
   stocksSubscription: Subscription = new Subscription;
 
@@ -72,7 +72,7 @@ export class PortfolioComponent implements OnInit {
       allStocks => this.allStocks = allStocks
     )
     console.log(this.profile.funds+" ===== "+this.profile.SSN)   
-    console.log("All stocks " + this.allStocks[0])
+    console.log("All stocks " + this.allStocks[0].ISIN)
   }
 
   changeProfile(){
