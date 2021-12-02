@@ -7,4 +7,5 @@ export const APIurls = {
     getAD : 'getAccumulationDistribution',
     getPC : 'getPercentChange',
     getUserProfile : 'getUserProfile'
+
 }

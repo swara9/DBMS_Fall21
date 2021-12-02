@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-// import { HttpService } from 'src/app/services/http-service.service';
 import { ProfileService } from "../../services/profile-service.service";
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -32,7 +31,6 @@ export class LoginComponent implements OnInit {
 
   loginUser(){
     this.profileService.changeProfile(this.ssn);
-    // console.log("New Profile " + this.profile.name +", "+this.profile.SSN)
     this.router.navigate(['/portfolio']);
   }
 }

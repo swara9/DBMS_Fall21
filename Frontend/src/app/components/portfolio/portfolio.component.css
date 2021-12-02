@@ -1,11 +1,62 @@
-.h1 .ag-header-cell-label{
+.sell .ag-header-cell-label{
     color:#1597E5;
     text-align: center;
     display: inline-grid;
+    font-family: Sans-serif;
+
 }
-.h2{
+.chart{
     color:green;
     text-align: center;
     display: inline-grid;
-    height:0;
 }
+.username{
+    font-size: 20px;
+    margin: 80px;
+    font-family: Sans-serif;
+    color:black;
+}
+hr{
+    color:darkgrey;
+    text-align: center;
+    width:1100px;
+}
+.t1{
+    font-size: 20px;
+    margin-left: 200px;
+    font-family: Sans-serif;
+    color:black;
+    width:400px;
+}
+
+.t2{
+    font-size: 20px;
+    margin-left: 330px;
+    padding-left: 200px;
+    font-family: Sans-serif;
+    color:black;
+    border-left: darkgrey 1px solid;
+}
+#content { 
+    margin-left:200px;
+    overflow:auto; 
+    font-family: Sans-serif;
+    width: 1100px; 
+  } 
+  
+  #left, #right { 
+    width: 40%; 
+    margin:5px; 
+    padding: 1em; 
+    font-size: 20px;
+  } 
+  #large{
+      color:darkgrey;
+      font-size: 40px;
+    }
+  
+  #left  { 
+    float:left;     
+    border-right: solid 1px grey; 
+  }
+  #right { float:right; } 
