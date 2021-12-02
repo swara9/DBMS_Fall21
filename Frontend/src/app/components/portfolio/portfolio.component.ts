@@ -17,12 +17,7 @@ export class PortfolioComponent implements OnInit {
   profile: any;
   allStocks = [];
   subscription: Subscription = new Subscription;
-<<<<<<< HEAD
-  stocksSubscription : Subscription = new Subscription;
-=======
-  allStocks = [];
   stocksSubscription: Subscription = new Subscription;
->>>>>>> ce7b006e2f850d8b6135a39b4f07d3b3ce627971
 
   constructor(private profileService: ProfileService) { 
     this.frameworkComponents = {
@@ -73,20 +68,11 @@ export class PortfolioComponent implements OnInit {
     this.subscription = this.profileService.currentProfile.subscribe(
       profile => this.profile = profile
     )
-<<<<<<< HEAD
-    this.stocksSubscription = this.profleService.currAllStocks.subscribe(
-      allStocks => this.allStocks = allStocks
-    )
-    console.log(this.profile.funds+" ===== "+this.profile.SSN)   
-    console.log(this.allStocks[0])   
-    
-=======
     this.stocksSubscription = this.profileService.currAllStocks.subscribe(
       allStocks => this.allStocks = allStocks
     )
     console.log(this.profile.funds+" ===== "+this.profile.SSN)   
     console.log("All stocks " + this.allStocks[0])
->>>>>>> ce7b006e2f850d8b6135a39b4f07d3b3ce627971
   }
 
   changeProfile(){
