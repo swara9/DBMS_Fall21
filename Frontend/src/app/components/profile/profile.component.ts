@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProfileService } from "../../services/profile-service.service";
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -14,11 +15,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(private profileService: ProfileService) { }
 
+
   ngOnInit(): void {
     this.subscription = this.profileService.currentProfile.subscribe(
       profile => this.profile = profile
     )
-
     console.log("Current User = " + this.profile.name)
   }
 
