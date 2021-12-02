@@ -12,12 +12,9 @@ import { TradeModalComponent } from './components/trade-modal/trade-modal.compon
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'dashboard', component: DashboardComponent },
   { path: 'stocks', component: StocksComponent },
-  { path: 'pro', component:ProfileComponent},
-  { path: 'portf', component:PortfolioComponent },
-  { path: 'th', component:TradehistoryComponent },
   { path: 'trade', component:TradeModalComponent },
   { path: 'chart', component:ChartModalComponent},
   { path: 'login', component:LoginComponent },
