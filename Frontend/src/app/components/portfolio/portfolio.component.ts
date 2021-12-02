@@ -66,11 +66,12 @@ export class PortfolioComponent implements OnInit {
     this.subscription = this.profleService.currentProfile.subscribe(
       profile => this.profile = profile
     )
-    this.changeProfile();
+    console.log(this.profile.funds+" ===== "+this.profile.SSN)   
+
   }
 
   changeProfile(){
-    this.profleService.changeProfile({'name': "profile has changed"});
+    this.profleService.changeProfile("12456987");
   }
 
 }
