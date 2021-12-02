@@ -67,10 +67,14 @@ export class HttpService {
     return this.http.post(`${url}`, {"ISIN": isin});
   }
 
-  getProfile(ssn: string): Observable<any>{
-    let url = baseUrl+ APIurls.getProfile;
+  getUserProfile(ssn: string): Observable<any>{
+    let url = baseUrl+ APIurls.getUserProfile;
     return this.http.post(`${url}`, {"SSN": ssn});
   }
 
+  getAllStocks(): Observable<any> {
+    let url = baseUrl + APIurls.getAllStocks;
+    return this.http.get(`${url}`);
+  }
 
 }

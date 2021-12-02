@@ -92,25 +92,21 @@ try{
     console.log('Reached here');
     query=`Select sum(data) from (select Count(*) as data from stock_history UNION select Count(*) as data from stocks UNION select Count(*) as data from trade UNION select Count(*) as data from investors UNION select Count(*) as data from email UNION select Count(*) as data from portfolio)`
   }
-  else if(flag=='isUserThere'){
-    const { SSN } = req.body;
-<<<<<<< HEAD
-    console.log('Reached is user there! And SSN is: ',SSN);
-    query=`Select SSN from investors where SSN='${SSN}'`
-=======
-    query=`Select SSN from investors where SSN='${SSN}'`
-  }
   else if(flag=='getUserPortfolio'){
     const { SSN } = req.body;
     console.log('SSN is: ',SSN);
     query=`SELECT investors.SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds, symbol,qty, avg_price
-    FROM investors join (select SSN, symbol, qty, avg_price from stocks join portfolio on stocks.ISIN=portfolio.ISIN) abc on investors.SSN=abc.SSN 
+    FROM investors join (select SSN, symbol, qty, avg_price from stocks join portfolio on stocks.ISIN=portfolio.ISIN) abc on investors.SSN=abc.SSN
     where investors.SSN='${SSN}'`
-  }else if(flag=='getStockBasic'){
-    query=
-   `SELECT ISIN,symbol
-   FROM stocks`
->>>>>>> 61602567d75c7dc4581aac5d0107722507db7aa6
+    }else if(flag=='getStockBasic'){
+        query=
+       `SELECT ISIN,symbol
+       FROM stocks`
+    }
+  else if(flag=='isUserThere'){
+    const { SSN } = req.body;
+    console.log('Reached is user there! And SSN is: ',SSN);
+    query=`Select SSN from investors where SSN='${SSN}'`
   }
    connection.execute(
      query,[],  
@@ -142,9 +138,6 @@ var UserConn = (async function(flag,req,res) {
      connection = await oracledb.getConnection({
           user : 'lawande.s',
           password : '384RwI5dGKdQT1Ek3yFKECYI',
-          //hostname oracle.cise.ufl.edu
-          //port 1521
-          //SID orcl
           connectString : "oracle.cise.ufl.edu:1521/orcl"
      });
      console.log("Successfully connected to Oracle!")
