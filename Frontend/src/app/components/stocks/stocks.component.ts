@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { HttpService } from '../../services/http-service.service';
-import { BtnCellRenderer} from 'src/app/button-cell-renderer.component';
-import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
-import { SellBtnRenderer} from 'src/app/sell-btn-renderer.component';
+import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
+import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn-renderer.component';
+import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
 
 @Component({
   selector: 'app-stocks',
@@ -20,17 +19,28 @@ export class StocksComponent implements OnInit {
   constructor(private dialog: MatDialog,
     private http: HttpService) { 
       this.frameworkComponents = {
-        btnCellRenderer: BtnCellRenderer,
-        chartBtnRenderer: ChartBtnRenderer,
-        sellBtnRenderer:SellBtnRenderer
+        btnCellRenderer: BuyBtnRendererComponent,
+        chartBtnRenderer: ChartBtnRendererComponent,
+        sellBtnRenderer: SellBtnRendererComponent
       }
     }
-
     
   columnDefs=[
 
-    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
+    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true},
     
+    {headerName:"Current Market Price", 
+    field:"cmp", 
+    headerClass:"h1"},
+
+    {headerName:"High", 
+    field:"high", 
+    headerClass:"h1"},
+
+    {headerName:"Low", 
+    field:"low", 
+    headerClass:"h1"},
+
     {headerName:"Buy", 
     field:"buy", 
     width:100,
@@ -53,19 +63,7 @@ export class StocksComponent implements OnInit {
     },
     headerClass:"h1"},
 
-    {headerName:"Current Market Price", 
-    field:"cmp", 
-    headerClass:"h1"},
-
-    {headerName:"High", 
-    field:"high", 
-    headerClass:"h1"},
-
-    {headerName:"Low", 
-    field:"low", 
-    headerClass:"h1"},
-
-    {headerName:"Chart", 
+    {headerName:"View Chart", 
     field:"chart", 
     width:100,   
     cellRenderer: "chartBtnRenderer",  
@@ -83,28 +81,6 @@ export class StocksComponent implements OnInit {
 
 
   ngOnInit(): void {
-  }
-
-  openChartDialog() {
-    const dialogConfig = new MatDialogConfig();
-    //should come from row
-    var isin = 'US0378331005';
-    var symbol = 'ABCD';
-    this.http.getStockHistory(isin)
-    .subscribe(history => {
-      console.log(history)
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '1000px';
-      dialogConfig.data = {
-        history : history,
-        isin : isin,
-        symbol : symbol
-      };      
-      this.dialog.open(ChartModalComponent, dialogConfig);
-    });
-    
-    // dialogConfig.disableClose = true;
-   
   }
 
 }
