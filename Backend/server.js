@@ -25,7 +25,8 @@ app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}.`);
 });
 
- var conn = (async function(flag,req,res) {
+
+var conn = (async function(flag,req,res) {
 try{
   console.log('Reached First function');
    connection = await oracledb.getConnection({
@@ -130,9 +131,55 @@ try{
   }
 });
 
+
+var UserConn = (async function(flag,req,res) {
+  try{
+     connection = await oracledb.getConnection({
+          user : 'lawande.s',
+          password : '384RwI5dGKdQT1Ek3yFKECYI',
+          //hostname oracle.cise.ufl.edu
+          //port 1521
+          //SID orcl
+          connectString : "oracle.cise.ufl.edu:1521/orcl"
+     });
+     console.log("Successfully connected to Oracle!")
+     var query;
+
+    if(flag=='getUserProfile'){
+      const { SSN } = req.body;
+      query=
+     `SELECT SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds
+     FROM investors
+     where SSN='${SSN}'`
+    }
+    connection.execute(
+       query,[],  
+     function(err, result) {
+        if (err) {
+          console.error(err.message);
+          return;
+        }
+        var JsonUser={"SSN":result.rows[0][0],"net_profit_loss":result.rows[0][1],"totalInv":result.rows[0][2],"currentValue":result.rows[0][3],"funds":result.rows[0][4]}
+        console.log(JsonUser);
+        res.json(JsonUser);
+  });
+  
+  } catch(err) {
+      console.log("Error: ", err);
+    } finally {
+      if (connection) {
+        try { 
+          await connection.close();
+        } catch(err) {
+          console.log("Error when closing the database connection: ", err);
+        }
+      }
+    }
+  });
+
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
-app.post('/getUserProfile',(req, res) => {conn('getUserProfile',req, res)});
+app.post('/getUserProfile',(req, res) => {UserConn('getUserProfile',req, res)});
 app.post('/getPercentChange',(req, res) => {conn('getPercentChange',req, res)});
 app.post('/getRSI',(req, res) => {conn('getRSI',req, res)});
 app.post('/getOBV',(req, res) => {conn('getOBV',req, res)});
