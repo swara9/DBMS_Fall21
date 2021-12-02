@@ -27,6 +27,7 @@ console.log(`Server is running on port ${PORT}.`);
 
  var conn = (async function(flag,req,res) {
 try{
+  console.log('Reached First function');
    connection = await oracledb.getConnection({
         user : 'lawande.s',
         password : '384RwI5dGKdQT1Ek3yFKECYI',
@@ -44,15 +45,16 @@ try{
      query = queries.getStockHistory.replace("${ISIN}", ISIN);
    }
    else if(flag=='getStockDetails'){
+     console.log('Reached IF')
      query=
     `SELECT *
     FROM stocks`
    }
-   else if(flag=='getUser'){
+   else if(flag=='getUserProfile'){
     const { SSN } = req.body;
     query=
-   `SELECT *
-   FROM users
+   `SELECT SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds
+   FROM investors
    where SSN='${SSN}'`
   }
   else if(flag=='getPercentChange'){
@@ -74,9 +76,25 @@ try{
     const { ISIN } = req.body;
     query=queries.AD.replace("${ISIN}", ISIN);
   }
-
-
-
+  else if(flag=='getAllStocks'){
+    query=`Select * from stocks`;
+  }
+  else if(flag=='getStockByISIN'){
+    const { ISIN } = req.body;
+    query=`select * from stocks where isin='${ISIN}'`;
+  }
+  else if(flag=='getStockBySymbol'){
+    const { symbol } = req.body;
+    query=`select * from stocks where symbol='${symbol}'`;
+  }
+  else if(flag=='getTotalTuples'){
+    console.log('Reached here');
+    query=`Select sum(data) from (select Count(*) as data from stock_history UNION select Count(*) as data from stocks UNION select Count(*) as data from trade UNION select Count(*) as data from investors UNION select Count(*) as data from email UNION select Count(*) as data from portfolio)`
+  }
+  else if(flag=='isUserThere'){
+    const { SSN } = req.body;
+    query=`Select SSN from investor where SSN='${SSN}'`
+  }
    connection.execute(
      query,[],  
    function(err, result) {
@@ -103,9 +121,14 @@ try{
 
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
-app.post('/getUser',(req, res) => {conn('getUser',req, res)});
+app.post('/getUserProfile',(req, res) => {conn('getUserProfile',req, res)});
 app.post('/getPercentChange',(req, res) => {conn('getPercentChange',req, res)});
 app.post('/getRSI',(req, res) => {conn('getRSI',req, res)});
 app.post('/getOBV',(req, res) => {conn('getOBV',req, res)});
 app.post('/getMACD',(req, res) => {conn('getMACD',req, res)});
 app.post('/getAccumulationDistribution',(req, res) => {conn('getAccumulationDistribution',req, res)});
+app.post('/getAllStock',(req, res) => {conn('getAllStock',req, res)});
+app.post('/getStockByISIN',(req, res) => {conn('getStockByISIN',req, res)});
+app.post('/getStockBySymbol',(req, res) => {conn('getStockBySymbol',req, res)});
+app.post('/getTotalTuples',(req, res) => {conn('getTotalTuples',req, res)});
+app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
