@@ -205,6 +205,9 @@ var UserConn = (async function(flag,req,res) {
             console.error(err.message);
             return;
           }
+          if(result.rows.length==0){
+            res.json('No data, check input');
+          }
           var portf=[];
           for (var i=0;i<result.rows.length;i++){
             portf[i]={"symbol":result.rows[i][5],"qty":result.rows[i][6], "avg_price":result.rows[i][7]};
