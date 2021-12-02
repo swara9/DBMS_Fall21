@@ -28,8 +28,20 @@ export class StocksComponent implements OnInit {
     
   columnDefs=[
 
-    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
+    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true},
     
+    {headerName:"Current Market Price", 
+    field:"cmp", 
+    headerClass:"h1"},
+
+    {headerName:"High", 
+    field:"high", 
+    headerClass:"h1"},
+
+    {headerName:"Low", 
+    field:"low", 
+    headerClass:"h1"},
+
     {headerName:"Buy", 
     field:"buy", 
     width:100,
@@ -52,19 +64,7 @@ export class StocksComponent implements OnInit {
     },
     headerClass:"h1"},
 
-    {headerName:"Current Market Price", 
-    field:"cmp", 
-    headerClass:"h1"},
-
-    {headerName:"High", 
-    field:"high", 
-    headerClass:"h1"},
-
-    {headerName:"Low", 
-    field:"low", 
-    headerClass:"h1"},
-
-    {headerName:"Chart", 
+    {headerName:"View Chart", 
     field:"chart", 
     width:100,   
     cellRenderer: "chartBtnRenderer",  

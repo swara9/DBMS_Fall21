@@ -16,7 +16,7 @@ export class BuyBtnRendererComponent implements ICellRendererAngularComp{
   }
 
   btnClickedHandler() {
-    console.log("buy works!")
+    console.log(this.params)
   }
 
   refresh(params?: any): boolean {

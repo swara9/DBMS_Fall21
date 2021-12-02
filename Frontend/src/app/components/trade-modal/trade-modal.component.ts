@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HttpService } from '../../services/http-service.service';
 
 @Component({
   selector: 'app-trade-modal',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TradeModalComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dialogRef: MatDialogRef<TradeModalComponent>,
+    @Inject(MAT_DIALOG_DATA) data: any,
+    private http: HttpService
+    ) { }
 
   ngOnInit(): void {
   }
