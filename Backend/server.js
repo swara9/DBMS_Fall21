@@ -200,8 +200,8 @@ var UserConn = (async function(flag,req,res) {
         const { SSN } = req.body;
         query=
         `SELECT investors.SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds, symbol,qty, avg_price
-        FROM investors join (select SSN, symbol, qty, avg_price from stocks join portfolio on stocks.ISIN=portfolio.ISIN) abc on investors.SSN=abc.SSN 
-        where investors.SSN='${SSN}'`
+          FROM investors join (select SSN, symbol, qty, avg_price from stocks join portfolio on stocks.ISIN=portfolio.ISIN) abc on investors.SSN=abc.SSN 
+          where investors.SSN='${SSN}'`
       }
       connection.execute(
          query,[],  
@@ -214,12 +214,13 @@ var UserConn = (async function(flag,req,res) {
             res.json('No data, check input');
           }
           var portf=[];
-          for (var i=0;i<result.rows.length;i++){
-            portf[i]={"symbol":result.rows[i][5],"qty":result.rows[i][6], "avg_price":result.rows[i][7]};
-          }
-          var JsonUser={"SSN":result.rows[0][0],"net_profit_loss":result.rows[0][1],"totalInv":result.rows[0][2],"currentValue":result.rows[0][3],"funds":result.rows[0][4],"portfolio":portf};
-          console.log(JsonUser);
-          res.json(JsonUser);
+            for (var i=0;i<result.rows.length;i++){
+              portf[i]={"symbol":result.rows[i][5],"qty":result.rows[i][6], "avg_price":result.rows[i][7]};
+            }
+            var JsonUser={"SSN":result.rows[0][0],"net_profit_loss":result.rows[0][1],"totalInv":result.rows[0][2],"currentValue":result.rows[0][3],"funds":result.rows[0][4],"portfolio":portf};
+            console.log(JsonUser);
+            res.json(JsonUser);
+          
     });
     
     } catch(err) {
@@ -235,6 +236,56 @@ var UserConn = (async function(flag,req,res) {
       }
     });
 
+    var StockBasicConn = (async function(flag,req,res) {
+      try{
+         connection = await oracledb.getConnection({
+              user : 'lawande.s',
+              password : '384RwI5dGKdQT1Ek3yFKECYI',
+              //hostname oracle.cise.ufl.edu
+              //port 1521
+              //SID orcl
+              connectString : "oracle.cise.ufl.edu:1521/orcl"
+         });
+         console.log("Successfully connected to Oracle!")
+         var query;
+    
+        if(flag=='getStockBasic'){
+          const { SSN } = req.body;
+          query=
+          `SELECT ISIN,symbol
+          FROM stocks`
+        }
+        connection.execute(
+           query,[],  
+         function(err, result) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+            if(result.rows.length==0){
+              res.json('No data, check input');
+            }
+            var stock=[];
+          for (var i=0;i<result.rows.length;i++){
+            stock[i]={"ISIN":result.rows[i][0],"Symbol":result.rows[i][1]};
+          }
+          console.log(stock);
+          res.json(stock);
+      });
+      
+      } catch(err) {
+          console.log("Error: ", err);
+        } finally {
+          if (connection) {
+            try { 
+              await connection.close();
+            } catch(err) {
+              console.log("Error when closing the database connection: ", err);
+            }
+          }
+        }
+      });
+
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
 app.post('/getUserProfile',(req, res) => {UserConn('getUserProfile',req, res)});
@@ -249,4 +300,4 @@ app.post('/getStockBySymbol',(req, res) => {conn('getStockBySymbol',req, res)});
 app.post('/getTotalTuples',(req, res) => {conn('getTotalTuples',req, res)});
 app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio',req, res)});
-app.get('/getStockBasic',(req, res) => {conn('getStockBasic',req, res)});
+app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
