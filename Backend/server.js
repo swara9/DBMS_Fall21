@@ -91,6 +91,10 @@ try{
     console.log('Reached here');
     query=`Select sum(data) from (select Count(*) as data from stock_history UNION select Count(*) as data from stocks UNION select Count(*) as data from trade UNION select Count(*) as data from investors UNION select Count(*) as data from email UNION select Count(*) as data from portfolio)`
   }
+  else if(flag=='isUserThere'){
+    const { SSN } = req.body;
+    query=`Select SSN from investor where SSN='${SSN}'`
+  }
    connection.execute(
      query,[],  
    function(err, result) {
@@ -127,3 +131,4 @@ app.post('/getAllStock',(req, res) => {conn('getAllStock',req, res)});
 app.post('/getStockByISIN',(req, res) => {conn('getStockByISIN',req, res)});
 app.post('/getStockBySymbol',(req, res) => {conn('getStockBySymbol',req, res)});
 app.post('/getTotalTuples',(req, res) => {conn('getTotalTuples',req, res)});
+app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
