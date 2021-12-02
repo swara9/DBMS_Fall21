@@ -9,7 +9,7 @@ const baseUrl = APIurls.baseURL;
   providedIn: 'root'
 })
 export class HttpService {
-  private _loginURL="http://localhost:8080/getUser";
+  private _loginURL="http://localhost:8080/isUserThere";
 
 
   constructor(private http: HttpClient) { }

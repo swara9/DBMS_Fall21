@@ -93,7 +93,8 @@ try{
   }
   else if(flag=='isUserThere'){
     const { SSN } = req.body;
-    query=`Select SSN from investor where SSN='${SSN}'`
+    console.log('Reached is user there! And SSN is: ',SSN);
+    query=`Select SSN from investors where SSN='${SSN}'`
   }
    connection.execute(
      query,[],  
