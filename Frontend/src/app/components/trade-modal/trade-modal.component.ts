@@ -28,3 +28,4 @@ export class TradeModalComponent implements OnInit {
     this.dialogRef.close();
   }
 }
+  

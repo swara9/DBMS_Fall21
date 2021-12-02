@@ -67,5 +67,10 @@ export class HttpService {
     return this.http.post(`${url}`, {"ISIN": isin});
   }
 
+  getProfile(ssn: string): Observable<any>{
+    let url = baseUrl+ APIurls.getProfile;
+    return this.http.post(`${url}`, {"SSN": ssn});
+  }
+
 
 }

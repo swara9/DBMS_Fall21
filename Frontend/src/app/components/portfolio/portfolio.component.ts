@@ -24,33 +24,32 @@ export class PortfolioComponent implements OnInit {
 
 
   columnDefs=[
-    {headerName:"Stock", field:"stock", headerClass:"h1", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
-    {headerName:"Net Profit & Loss", field:"net_profit_loss", headerClass:"h1"},
+    {headerName:"Stock", field:"stock", headerClass:"sell", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
+    {headerName:"Net Profit & Loss", field:"net_profit_loss", headerClass:"sell"},
     
     {field:"buy",
-    headerClass:"h1", 
-    cellRenderer: "btnCellRenderer", width:100,
+    headerClass:"sell", 
+    cellRenderer: "btnCellRenderer", width:200,
     cellRendererParams: {
       clicked: function(field: any) {
         //alert(`${field} was clicked`);
       }
     }},
-    {field:"sell", width:100,
-    headerClass:"h1", 
+    {field:"sell", width:200,
+    headerClass:"sell", 
       cellRenderer: "sellBtnRenderer",  
-      headerHeight:0,
       cellRendererParams: {
       clicked: function(field: any) {
       }
     }},
 
-    {headerName:"Chart", field:"chart",  width:100, 
+    {headerName:"Chart", field:"chart",  width:200, 
     cellRenderer: "chartBtnRenderer",  
     cellRendererParams: {
       clicked: function(field: any) {
       }
     },
-    headerClass:"h1"}
+    headerClass:"sell"}
   ];
 
   rowData=[

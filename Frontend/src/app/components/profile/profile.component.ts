@@ -12,18 +12,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private httpClient:HttpClient) { 
   }
-  onNameKeyUp(event:any){
-    this.ssn=event.target.value;
-  }
-
-getProfile(){
-  this.httpClient.get('http://localhost:8080/getUser?SSN=${this.ssn}').
-  subscribe(
-    (data:any )=>{
-      console.log(data);
-    }
-  )
-}
+  
   ngOnInit(): void {
 
   }
