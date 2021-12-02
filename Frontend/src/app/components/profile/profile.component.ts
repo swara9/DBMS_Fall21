@@ -15,7 +15,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(private profileService: ProfileService) { }
 
-
   ngOnInit(): void {
     this.subscription = this.profileService.currentProfile.subscribe(
       profile => this.profile = profile
