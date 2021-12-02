@@ -30,7 +30,12 @@ export class ProfileService {
       this.http.getUserProfile(this.defaultSSN)
         .subscribe(newProfile => {
           this.profile.next(newProfile);
-        });
+      });
+
+      this.http.getAllStocks()
+        .subscribe(allStocks => {
+          this.allStocks.next(allStocks);
+        })
   }
 
   changeProfile(ssn: string){

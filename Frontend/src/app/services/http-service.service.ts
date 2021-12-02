@@ -72,5 +72,9 @@ export class HttpService {
     return this.http.post(`${url}`, {"SSN": ssn});
   }
 
+  getAllStocks(): Observable<any> {
+    let url = baseUrl + APIurls.getAllStocks;
+    return this.http.get(`${url}`);
+  }
 
 }
