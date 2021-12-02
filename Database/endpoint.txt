@@ -21,7 +21,7 @@ Yo what up?
       union
       select count(*) as tuples from stock_history_weekly);
    
-5. getUserProfile() - postRequest
+5. getUserProfile() - postRequest      (Done)
    input - SSN
    output:
    {
@@ -86,5 +86,4 @@ Yo what up?
       ]
    }
     
-   
    

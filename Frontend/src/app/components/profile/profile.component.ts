@@ -1,20 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProfileService } from "../../services/profile-service.service";
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
-  ssn:string='';
+  profile: any;
+  subscription!: Subscription;
 
+  constructor(private profileService: ProfileService) { }
+
+<<<<<<< HEAD
   constructor(private httpClient:HttpClient) { 
   }
   
-  ngOnInit(): void {
+=======
 
+>>>>>>> 61602567d75c7dc4581aac5d0107722507db7aa6
+  ngOnInit(): void {
+    this.subscription = this.profileService.currentProfile.subscribe(
+      profile => this.profile = profile
+    )
+    console.log("Current User = " + this.profile.name)
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
