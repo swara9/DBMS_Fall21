@@ -1,8 +1,9 @@
-import { HighContrastModeDetector } from '@angular/cdk/a11y';
 import { Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
 import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn-renderer.component';
 import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
+import { ProfileService } from "../../services/profile-service.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio',
@@ -13,8 +14,10 @@ import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-
 export class PortfolioComponent implements OnInit {
 
   frameworkComponents: any;
+  profile: any;
+  subscription: Subscription = new Subscription;
 
-  constructor() { 
+  constructor(private profleService: ProfileService) { 
     this.frameworkComponents = {
       btnCellRenderer: BuyBtnRendererComponent,
       chartBtnRenderer: ChartBtnRendererComponent,
@@ -60,6 +63,14 @@ export class PortfolioComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.subscription = this.profleService.currentProfile.subscribe(
+      profile => this.profile = profile
+    )
+    this.changeProfile();
+  }
+
+  changeProfile(){
+    this.profleService.changeProfile({'name': "profile has changed"});
   }
 
 }
