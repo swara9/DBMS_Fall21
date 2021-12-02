@@ -62,6 +62,7 @@ export class PortfolioComponent implements OnInit {
     {stock:'jj', net_profit_loss:'1411'},
 
   ];
+  rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
   ngOnInit(): void {
     this.subscription = this.profileService.currentProfile.subscribe(

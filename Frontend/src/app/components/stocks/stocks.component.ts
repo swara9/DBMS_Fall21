@@ -81,6 +81,8 @@ export class StocksComponent implements OnInit {
     {stock:'aapl', net_profit_loss:'111',},
     {stock:'jj', net_profit_loss:'1411',},
   ];
+  
+  rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
 
   ngOnInit(): void {
