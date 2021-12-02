@@ -16,8 +16,10 @@ export class PortfolioComponent implements OnInit {
   frameworkComponents: any;
   profile: any;
   subscription: Subscription = new Subscription;
+  allStocks = [];
+  stocksSubscription: Subscription = new Subscription;
 
-  constructor(private profleService: ProfileService) { 
+  constructor(private profileService: ProfileService) { 
     this.frameworkComponents = {
       btnCellRenderer: BuyBtnRendererComponent,
       chartBtnRenderer: ChartBtnRendererComponent,
@@ -62,15 +64,18 @@ export class PortfolioComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.subscription = this.profleService.currentProfile.subscribe(
+    this.subscription = this.profileService.currentProfile.subscribe(
       profile => this.profile = profile
     )
+    this.stocksSubscription = this.profileService.currAllStocks.subscribe(
+      allStocks => this.allStocks = allStocks
+    )
     console.log(this.profile.funds+" ===== "+this.profile.SSN)   
-
+    console.log("All stocks " + this.allStocks[0])
   }
 
   changeProfile(){
-    this.profleService.changeProfile("12456987");
+    this.profileService.changeProfile("12456987");
   }
 
 }
