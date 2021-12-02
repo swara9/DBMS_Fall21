@@ -15,7 +15,9 @@ export class PortfolioComponent implements OnInit {
 
   frameworkComponents: any;
   profile: any;
+  allStocks = [];
   subscription: Subscription = new Subscription;
+  stocksSubscription : Subscription = new Subscription;
 
   constructor(private profleService: ProfileService) { 
     this.frameworkComponents = {
@@ -65,8 +67,12 @@ export class PortfolioComponent implements OnInit {
     this.subscription = this.profleService.currentProfile.subscribe(
       profile => this.profile = profile
     )
+    this.stocksSubscription = this.profleService.currAllStocks.subscribe(
+      allStocks => this.allStocks = allStocks
+    )
     console.log(this.profile.funds+" ===== "+this.profile.SSN)   
-
+    console.log(this.allStocks[0])   
+    
   }
 
   changeProfile(){

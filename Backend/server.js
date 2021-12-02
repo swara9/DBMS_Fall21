@@ -94,10 +94,6 @@ try{
   }
   else if(flag=='isUserThere'){
     const { SSN } = req.body;
-<<<<<<< HEAD
-    console.log('Reached is user there! And SSN is: ',SSN);
-    query=`Select SSN from investors where SSN='${SSN}'`
-=======
     query=`Select SSN from investors where SSN='${SSN}'`
   }
   else if(flag=='getUserPortfolio'){
@@ -110,7 +106,6 @@ try{
     query=
    `SELECT ISIN,symbol
    FROM stocks`
->>>>>>> 61602567d75c7dc4581aac5d0107722507db7aa6
   }
    connection.execute(
      query,[],  
