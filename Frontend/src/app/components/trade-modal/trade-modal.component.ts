@@ -9,13 +9,22 @@ import { HttpService } from '../../services/http-service.service';
 })
 export class TradeModalComponent implements OnInit {
 
+  data:any;
+  
   constructor(
     private dialogRef: MatDialogRef<TradeModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: any,
     private http: HttpService
-    ) { }
+    ) { 
+      this.data = data;
+    }
 
   ngOnInit(): void {
+    console.log("from trade modal "+ this.data.symbol)
+
   }
 
+  close() {
+    this.dialogRef.close();
+  }
 }

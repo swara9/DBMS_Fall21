@@ -24,7 +24,6 @@ export class StocksComponent implements OnInit {
         sellBtnRenderer: SellBtnRendererComponent
       }
     }
-
     
   columnDefs=[
 
