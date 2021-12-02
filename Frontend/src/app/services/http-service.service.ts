@@ -9,8 +9,14 @@ const baseUrl = APIurls.baseURL;
   providedIn: 'root'
 })
 export class HttpService {
+  private _loginURL="http://localhost:8080/getUser";
+
 
   constructor(private http: HttpClient) { }
+
+  loginUser(user: any){
+    return this.http.post<any>(this._loginURL, user)
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
