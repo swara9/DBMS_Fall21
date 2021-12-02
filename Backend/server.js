@@ -52,7 +52,7 @@ try{
     const { SSN } = req.body;
     query=
    `SELECT *
-   FROM users
+   FROM investors
    where SSN='${SSN}'`
   }
   else if(flag=='getPercentChange'){
