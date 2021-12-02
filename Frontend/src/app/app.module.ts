@@ -18,12 +18,12 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { BtnCellRenderer } from './button-cell-renderer.component';
-import { ChartBtnRenderer } from './chart-btn-renderer.component';
-import { SellBtnRenderer } from './sell-btn-renderer.component';
 import { LoginComponent } from './components/login/login.component';
 
 import { TradeModalComponent } from './components/trade-modal/trade-modal.component';
+import { ChartBtnRendererComponent } from './components/customCells/chart-btn-renderer/chart-btn-renderer.component';
+import { BuyBtnRendererComponent } from './components/customCells/buy-btn-renderer/buy-btn-renderer.component';
+import { SellBtnRendererComponent } from './components/customCells/sell-btn-renderer/sell-btn-renderer.component';
 
 
 @NgModule({
@@ -36,11 +36,9 @@ import { TradeModalComponent } from './components/trade-modal/trade-modal.compon
     ProfileComponent,
     PortfolioComponent,
     TradehistoryComponent,
-    BtnCellRenderer,
-    ChartBtnRenderer,
-    SellBtnRenderer,
     LoginComponent,
-    TradeModalComponent
+    TradeModalComponent,
+    ChartBtnRendererComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +51,7 @@ import { TradeModalComponent } from './components/trade-modal/trade-modal.compon
     MatButtonModule,
     MatSelectModule,
     FormsModule,
-    AgGridModule.withComponents([BtnCellRenderer])
+    AgGridModule.withComponents([ChartBtnRendererComponent, BuyBtnRendererComponent, SellBtnRendererComponent])
   ],
   providers: [],
   bootstrap: [AppComponent],

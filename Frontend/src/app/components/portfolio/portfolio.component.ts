@@ -1,8 +1,8 @@
 import { HighContrastModeDetector } from '@angular/cdk/a11y';
 import { Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { BtnCellRenderer} from 'src/app/button-cell-renderer.component';
-import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
-import { SellBtnRenderer} from 'src/app/sell-btn-renderer.component';
+import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
+import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn-renderer.component';
+import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
 
 @Component({
   selector: 'app-portfolio',
@@ -16,9 +16,9 @@ export class PortfolioComponent implements OnInit {
 
   constructor() { 
     this.frameworkComponents = {
-      btnCellRenderer: BtnCellRenderer,
-      chartBtnRenderer: ChartBtnRenderer,
-      sellBtnRenderer:SellBtnRenderer
+      btnCellRenderer: BuyBtnRendererComponent,
+      chartBtnRenderer: ChartBtnRendererComponent,
+      sellBtnRenderer: SellBtnRendererComponent
     }
   }
 
@@ -58,8 +58,6 @@ export class PortfolioComponent implements OnInit {
     {stock:'jj', net_profit_loss:'1411'},
 
   ];
-  
-
 
   ngOnInit(): void {
   }
