@@ -191,4 +191,4 @@ app.post('/getStockBySymbol',(req, res) => {conn('getStockBySymbol',req, res)});
 app.post('/getTotalTuples',(req, res) => {conn('getTotalTuples',req, res)});
 app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {conn('getUserPortfolio',req, res)});
-app.post('/getStockBasic',(req, res) => {conn('getStockBasic',req, res)});
+app.get('/getStockBasic',(req, res) => {conn('getStockBasic',req, res)});
