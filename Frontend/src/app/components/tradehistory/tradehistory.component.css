@@ -4,3 +4,7 @@
     display: inline-grid;
     font-family: sans-serif;
 }
+
+.ag-row{
+    height: 40px !important
+}
