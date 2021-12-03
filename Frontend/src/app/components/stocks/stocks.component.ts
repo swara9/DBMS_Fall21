@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HttpService } from '../../services/http-service.service';
 import { Router} from  '@angular/router';
-import { StocksModule} from 'src/app/components/stocks/stocks.module';
 import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
 import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn-renderer.component';
 import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
