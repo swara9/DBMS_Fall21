@@ -10,4 +10,8 @@ export const APIurls = {
     getAllStocks : 'getStockBasic',
     getStockBySymbol: 'getStockBySymbol',
     getUserPortfolio: 'getUserPortfolio'
+    getStockBySymbol:'getStockBySymbol'
+    getUserPortfolio: 'getUserPortfolio',
+    getTopStocks: 'getTopStocks'
+
 }

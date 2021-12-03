@@ -1,7 +1,7 @@
 //for db
 var oracledb = require('oracledb');
 const queries = require('./sql/queries');
-
+const dbconfig = require('./config/dbConfig');
 //for server creation
 const express = require("express");
 const cors = require("cors");
@@ -30,12 +30,10 @@ var conn = (async function(flag,req,res) {
 try{
   console.log('Reached First function');
    connection = await oracledb.getConnection({
-        user : 'lawande.s',
-        password : '384RwI5dGKdQT1Ek3yFKECYI',
-        //hostname oracle.cise.ufl.edu
-        //port 1521
-        //SID orcl
-        connectString : "oracle.cise.ufl.edu:1521/orcl"
+        user : dbconfig.USER,
+        password : dbconfig.PASSWORD,
+        connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+        //"oracle.cise.ufl.edu:1521/orcl"
    });
    console.log("Successfully connected to Oracle!")
    var query;
@@ -104,13 +102,13 @@ try{
     console.log('Reached is user there! And SSN is: ',SSN);
     query=`Select SSN from investors where SSN='${SSN}'`
   }
-  else if(flag=='getStockBySymbol'){
-    const {Symbol}=req.body;
-    query=
-   `SELECT *
-   FROM stocks
-   Where symbol='${Symbol}'`
-  }
+  // else if(flag=='getStockBySymbol'){
+  //   const {Symbol}=req.body;
+  //   query=
+  //  `SELECT *
+  //  FROM stocks
+  //  Where symbol='${Symbol}'`
+  // }
    connection.execute(
      query,[],  
    function(err, result) {
@@ -161,9 +159,9 @@ try{
 var UserConn = (async function(flag,req,res) {
   try{
      connection = await oracledb.getConnection({
-          user : 'lawande.s',
-          password : '384RwI5dGKdQT1Ek3yFKECYI',
-          connectString : "oracle.cise.ufl.edu:1521/orcl"
+        user : dbconfig.USER,
+        password : dbconfig.PASSWORD,
+        connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
      });
      console.log("Successfully connected to Oracle!")
      var query;
@@ -201,15 +199,12 @@ var UserConn = (async function(flag,req,res) {
   });
 
 
-  var UserPortfolioConn = (async function(flag,req,res) {
+var UserPortfolioConn = (async function(flag,req,res) {
     try{
        connection = await oracledb.getConnection({
-            user : 'lawande.s',
-            password : '384RwI5dGKdQT1Ek3yFKECYI',
-            //hostname oracle.cise.ufl.edu
-            //port 1521
-            //SID orcl
-            connectString : "oracle.cise.ufl.edu:1521/orcl"
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
        });
        console.log("Successfully connected to Oracle!")
        var query;
@@ -254,15 +249,12 @@ var UserConn = (async function(flag,req,res) {
       }
     });
 
-    var StockBasicConn = (async function(flag,req,res) {
+var StockBasicConn = (async function(flag,req,res) {
       try{
          connection = await oracledb.getConnection({
-              user : 'lawande.s',
-              password : '384RwI5dGKdQT1Ek3yFKECYI',
-              //hostname oracle.cise.ufl.edu
-              //port 1521
-              //SID orcl
-              connectString : "oracle.cise.ufl.edu:1521/orcl"
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
          });
          console.log("Successfully connected to Oracle!")
          var query;
@@ -302,7 +294,166 @@ var UserConn = (async function(flag,req,res) {
             }
           }
         }
+    });
+
+var makeTrade = (async function(flag,req,res) {
+  const {SSN,type,symbol,price,qty} = req.body;
+  let date_ob = new Date();
+  try{
+         connection = await oracledb.getConnection({
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+         });
+         var query;
+         queries=`Select ISIN from stocks where symbol='${symbol}'`
+        var ISIN=connection.execute(
+           query,[],  
+         function(err, result) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+            return (result.rows[0]);
+          });
+
+          query=`Select * from portfolio where SSN='${SSN}' AND ISIN='${ISIN}'`;
+          var q1=connection.execute(
+            query,[],  
+          function(err, result) {
+             if (err) {
+               console.error(err.message);
+               return;
+             }
+             if(result.rows.length==0){
+              return('NewEntry');
+              }
+              else{
+                return('Update');
+              }
+            });
+            if(q1=='NewEntry'){
+              query=`INSERT INTO TRADE(tradeID,ISIN,SSN,qty,type,trade_date,price,amt)
+                    VALUES(tradeID.nxtvalue,'${ISIN}','${SSN}','${qty}','${type}','${date_ob}','${price}','${price*qty}')`;
+            }
+            connection.execute(
+              query,[],  
+            function(err, result) {
+               if (err) {
+                 console.error(err.message);
+                 return;
+               }
+               else{
+                 console.log('Trade successful!');
+               }
+              });
+            } catch(err) {
+              console.log("Error: ", err);
+            } finally {
+              if (connection) {
+                try { 
+                  await connection.close();
+                } catch(err) {
+                  console.log("Error when closing the database connection: ", err);
+            }
+        }
+      }
+  });
+        
+      
+var getTradeConn = (async function(flag,req,res) {
+    try{
+        connection = await oracledb.getConnection({
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+        });
+        console.log("Successfully connected to Oracle!")
+        var query;
+  
+      
+      const { SSN } = req.body;
+      query= queries.getTrade.replace("${SSN}", SSN);           
+      
+      connection.execute(
+          query,[],  
+        function(err, result) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+          if(result.rows.length==0){
+            res.json('No data, check input');
+          }
+          var trades=[];
+          for (var i=0;i<result.rows.length;i++){
+            trades[i]={"trade_date":result.rows[i][5],"symbol":result.rows[i][8], "qty":result.rows[i][3], 
+            "price":result.rows[i][6], "amt":result.rows[i][7], "type":result.rows[i][4]};              
+          }
+      
+          res.json(trades);
+          
+    });
+    
+    } catch(err) {
+        console.log("Error: ", err);
+      } finally {
+        if (connection) {
+          try { 
+            await connection.close();
+          } catch(err) {
+            console.log("Error when closing the database connection: ", err);
+          }
+        }
+      }
+  });
+
+        
+var getTopStocks = (async function(flag,req,res) {
+  try{
+      connection = await oracledb.getConnection({
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
       });
+    console.log("Successfully connected to Oracle!")
+    var query;
+    var topStocksList = ["Target", "Walmart", "Wells Fargo", "Google", "Amazon", "Apple Inc.","Bank of America", "Cisco", "Ebay", "Facebook", "McDonalds", "Microsoft", "Netflix"];
+   
+    query= queries.getTopStocks;           
+    
+    connection.execute(
+        query,[],  
+      function(err, result) {
+        if (err) {
+          console.error(err.message);
+          return;
+        }
+        if(result.rows.length==0){
+          res.json('No data, check input');
+        }
+        var topStocks = []
+        for (var i=0;i<result.rows.length;i++){
+          topStocks[i]={"stockName":topStocksList[i],"isin":result.rows[i][0],"symbol":result.rows[i][1],"cmp":result.rows[i][2], 
+          "open":result.rows[i][3], "close":result.rows[i][4],"high":result.rows[i][4], "low":result.rows[i][6]};              
+        }
+    
+        res.json(topStocks);
+        
+  });
+  
+  } catch(err) {
+      console.log("Error: ", err);
+    } finally {
+      if (connection) {
+        try { 
+          await connection.close();
+        } catch(err) {
+          console.log("Error when closing the database connection: ", err);
+        }
+      }
+    }
+});
 
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
@@ -320,4 +471,8 @@ app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio',req, res)});
 app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
-app.get('/makeTrade',(req, res) => {StockBasicConn('makeTrade',req, res)});
+app.post('/makeTrade',(req, res) => {makeTrade('makeTrade',req, res)});
+app.post('/getTrade',(req, res) => {getTradeConn('getTrade',req, res)});
+app.get('/getTopStocks',(req, res) => {getTopStocks('getTopStocks',req, res)});
+
+
