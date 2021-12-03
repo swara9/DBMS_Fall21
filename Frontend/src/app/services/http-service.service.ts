@@ -77,4 +77,9 @@ export class HttpService {
     return this.http.get(`${url}`);
   }
 
+  getStockBySymbol(symbol:string): Observable<any> {
+    let url = baseUrl + APIurls.getStockBySymbol;
+    return this.http.post(`${url}`,{"symbol":symbol});
+  }
+
 }
