@@ -15,6 +15,7 @@ import { HttpService } from '../../services/http-service.service';
 
 export class PortfolioComponent implements OnInit {
 
+  numRows!: number;
   frameworkComponents: any;
   profile: any;
   public allStocks : any;
@@ -90,6 +91,13 @@ export class PortfolioComponent implements OnInit {
     }
   ];
 
+  getNumberOfRows(){
+    this.http.getTotalTuples()
+      .subscribe(tuples => {
+        this.numRows = tuples;
+        console.log("rows = "+this.numRows)
+      });
+  }
   rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
 }
