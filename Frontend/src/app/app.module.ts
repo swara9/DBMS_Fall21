@@ -24,6 +24,7 @@ import { BuyBtnRendererComponent } from './components/customCells/buy-btn-render
 import { SellBtnRendererComponent } from './components/customCells/sell-btn-renderer/sell-btn-renderer.component';
 import { SInfoComponent } from './components/sinfo/sinfo.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

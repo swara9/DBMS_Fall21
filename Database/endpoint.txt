@@ -68,7 +68,8 @@ Yo what up?
           calculate new p&L = (avgPrice-CMP) * qty
         }
     ** CALCULATE NEW NET_P&l for entire profile w.r.t new entry 
-    ** UPDATE PROFILE BY ADDING price to totalInvestment, and update net_PL according to calculated value and subtract that price from funds
+    ** UPDATE PROFILE BY ADDING price to totalInvestment, and update net_PL according to 
+    calculated value and subtract that price from funds
     
     output:       //basically invoke the getPortfolio function
     {

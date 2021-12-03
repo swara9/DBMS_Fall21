@@ -13,6 +13,7 @@ import {
 } from "ng-apexcharts";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
+
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -41,6 +42,8 @@ export class SInfoComponent implements OnInit {
   
   history: any[]= [];
   sym: any[] =[];
+  symbol:any;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HttpService
@@ -55,7 +58,7 @@ export class SInfoComponent implements OnInit {
 
     var isin = 'US0378331005';
     var symbol = 'ABCD';
-    
+
     this.http.getStockHistory(isin)
     .subscribe(history => {
       this.initSeries(history)
@@ -74,6 +77,7 @@ export class SInfoComponent implements OnInit {
       this.low=sym[0][6]
       console.log("sym1  "+this.sisin)
     });
+
   }    
 
   initSeries(history:any){
