@@ -207,7 +207,7 @@ var UserConn = (async function(flag,req,res) {
   });
 
 
-  var UserPortfolioConn = (async function(flag,req,res) {
+var UserPortfolioConn = (async function(flag,req,res) {
     try{
        connection = await oracledb.getConnection({
             user : 'lawande.s',
@@ -260,7 +260,7 @@ var UserConn = (async function(flag,req,res) {
       }
     });
 
-    var StockBasicConn = (async function(flag,req,res) {
+var StockBasicConn = (async function(flag,req,res) {
       try{
          connection = await oracledb.getConnection({
               user : 'lawande.s',
@@ -308,7 +308,40 @@ var UserConn = (async function(flag,req,res) {
             }
           }
         }
-      });
+    });
+
+var makeTrade = (async function(flag,req,res) {
+  const {SSN,type,symbol,price,qty} = req.body;
+         connection = await oracledb.getConnection({
+              user : 'lawande.s',
+              password : '384RwI5dGKdQT1Ek3yFKECYI',
+              //hostname oracle.cise.ufl.edu
+              //port 1521
+              //SID orcl
+              connectString : "oracle.cise.ufl.edu:1521/orcl"
+         });
+         var query;
+         queries=`Select ISIN from stocks where symbol='${symbol}'`
+        var ISIN=connection.execute(
+           query,[],  
+         function(err, result) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+            return (result.rows[0]);
+          });
+            if(result.rows.length==0){
+              res.json('No data, check input');
+
+          
+      
+});
+      
+
+
+
+
 
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
@@ -326,4 +359,4 @@ app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio',req, res)});
 app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
-app.get('/makeTrade',(req, res) => {StockBasicConn('makeTrade',req, res)});
+app.get('/makeTrade',(req, res) => {makeTrade('makeTrade',req, res)});
