@@ -104,6 +104,13 @@ try{
     console.log('Reached is user there! And SSN is: ',SSN);
     query=`Select SSN from investors where SSN='${SSN}'`
   }
+  else if(flag=='getStockBySymbol'){
+    const {Symbol}=req.body;
+    query=
+   `SELECT *
+   FROM stocks
+   Where symbol='${Symbol}'`
+  }
    connection.execute(
      query,[],  
    function(err, result) {
@@ -312,3 +319,5 @@ app.post('/getTotalTuples',(req, res) => {conn('getTotalTuples',req, res)});
 app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio',req, res)});
 app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
+app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
+app.get('/makeTrade',(req, res) => {StockBasicConn('makeTrade',req, res)});
