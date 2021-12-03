@@ -39,7 +39,7 @@ export class ProfileService {
       this.http.getAllStocks()
         .subscribe(allStocks => {
           this.allStocks.next(allStocks);
-        })
+        });
   }
 
   changeProfile(ssn: string){
@@ -50,9 +50,6 @@ export class ProfileService {
         });    
   }
 
-  setAllStocks(){
-
-  }
 }
 
 

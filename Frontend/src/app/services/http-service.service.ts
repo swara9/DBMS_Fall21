@@ -11,7 +11,6 @@ const baseUrl = APIurls.baseURL;
 export class HttpService {
   private _loginURL="http://localhost:8080/isUserThere";
 
-
   constructor(private http: HttpClient) { }
 
   loginUser(user: any){
@@ -75,6 +74,11 @@ export class HttpService {
   getAllStocks(): Observable<any> {
     let url = baseUrl + APIurls.getAllStocks;
     return this.http.get(`${url}`);
+  }
+
+  getStockBySymbol(symbol:string): Observable<any>{
+    let url = baseUrl + APIurls.getStockBySymbol;
+    return this.http.post(`${url}`, {"symbol": symbol});
   }
 
 }

@@ -9,7 +9,12 @@ import { ActivatedRoute } from '@angular/router';
 export class SInfoComponent implements OnInit {
 
   symbol:any;
-
+  cmp: any;
+  open: any;
+  close: any;
+  high: any;
+  low: any;
+  
   constructor(
     private activatedRoute: ActivatedRoute
   ) { }
