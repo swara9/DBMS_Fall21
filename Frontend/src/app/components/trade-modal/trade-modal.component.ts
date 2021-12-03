@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 export class TradeModalComponent implements OnInit {
 
   data:any;
+  qty: number = 0;
+  tradeType: string="";
   profile: any;
   allStocks : any = [];
   subscription: Subscription = new Subscription;
