@@ -35,7 +35,7 @@
 </div>
 
 
-<div id="content">
+<div id="content" class="xyz">
   <div id="left">
      <div ><font color="#191970">HIGH</font></div>
      <br>
@@ -48,49 +48,31 @@
      <div id="large">{{data.low}}</div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <ul>
-  <li>
-    <input type="radio" id="f-option" name="selector">
-    <label for="f-option">Buy</label>
+    <br>
     
-    <div class="check"></div>
-  </li>
-  
-  <li>
-    <input type="radio" id="s-option" name="selector">
-    <label for="s-option">Sell</label>
+
+    <mat-radio-group [(ngModel)]="tradeType" aria-label="Trade type">
+      <mat-radio-button value="buy">BUY</mat-radio-button>
+      <mat-radio-button value="sell">SELL</mat-radio-button>
+    </mat-radio-group>
+
+    <br>
+    <br>
     
-    <div class="check"><div class="inside"></div></div>
-  </li>
-  
-  
-</ul>
+   
 
+<div class="two-col">
+   <div class="col1">
+      
+         <label for="Qty">Quantity</label>
+         <input id="name"  [(ngModel)]="qty" type="text">
+      
+   </div>
 
-<button type="submit" class="btn btn-danger btn-lg btn-block">Execute</button>
+   <div class="col2">
+      <p>Total Amount: {{data.cmp * qty}} </p>
+   </div>
+</div>
+<br>
+<br>
+<button type="submit" class="btn btn-success btn-lg btn-block">Execute</button>

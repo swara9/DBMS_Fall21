@@ -10,7 +10,8 @@ import { HttpService } from '../../services/http-service.service';
 export class TradeModalComponent implements OnInit {
 
   data:any;
-  
+  qty: number = 0;
+  tradeType: string="";
   constructor(
     private dialogRef: MatDialogRef<TradeModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: any,

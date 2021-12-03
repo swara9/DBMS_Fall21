@@ -14,6 +14,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
 import { AgGridModule } from 'ag-grid-angular';
@@ -45,6 +46,7 @@ import { SInfoComponent } from './components/sinfo/sinfo.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatRadioModule,
     NgApexchartsModule,
     MatToolbarModule,
     MatButtonModule,
