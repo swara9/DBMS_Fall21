@@ -76,5 +76,7 @@ module.exports = {
             mf[any] = round(((close[cv()]- low[cv()])-(high[cv()]- close[cv()])/(high[cv()]-low[cv()])),3),\
             ad[any] = ((mf[cv()] * volume[cv()]) + nvl(ad[cv()-1], 0)),\
             ad[1] = (mf[cv()] * volume[cv()])\
-            )"
+            )",
+
+    getTrade: "select t.*, st.symbol from trade t, stocks st where SSN='${SSN}' and st.isin = t.isin"
 }

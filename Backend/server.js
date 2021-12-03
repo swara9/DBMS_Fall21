@@ -299,6 +299,53 @@ var UserConn = (async function(flag,req,res) {
         }
       });
 
+      var getTradeConn = (async function(flag,req,res) {
+        try{
+           connection = await oracledb.getConnection({
+                user : 'lawande.s',
+                password : '384RwI5dGKdQT1Ek3yFKECYI',
+                connectString : "oracle.cise.ufl.edu:1521/orcl"
+           });
+           console.log("Successfully connected to Oracle!")
+           var query;
+      
+         
+          const { SSN } = req.body;
+          query= queries.getTrade.replace("${SSN}", SSN);           
+          
+          connection.execute(
+             query,[],  
+           function(err, result) {
+              if (err) {
+                console.error(err.message);
+                return;
+              }
+              if(result.rows.length==0){
+                res.json('No data, check input');
+              }
+              var trades=[];
+              for (var i=0;i<result.rows.length;i++){
+                trades[i]={"trade_date":result.rows[i][5],"symbol":result.rows[i][8], "qty":result.rows[i][3], 
+                "price":result.rows[i][6], "amt":result.rows[i][7], "type":result.rows[i][4]};              
+              }
+          
+              res.json(trades);
+              
+        });
+        
+        } catch(err) {
+            console.log("Error: ", err);
+          } finally {
+            if (connection) {
+              try { 
+                await connection.close();
+              } catch(err) {
+                console.log("Error when closing the database connection: ", err);
+              }
+            }
+          }
+        });
+
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
 app.post('/getUserProfile',(req, res) => {UserConn('getUserProfile',req, res)});
@@ -316,3 +363,4 @@ app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio'
 app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
 app.get('/makeTrade',(req, res) => {StockBasicConn('makeTrade',req, res)});
+app.post('/getTrade',(req, res) => {getTradeConn('getTrade',req, res)});
