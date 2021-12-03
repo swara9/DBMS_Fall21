@@ -9,17 +9,8 @@ import {
   ApexChart,
   ApexYAxis,
   ApexXAxis,
-  ApexTitleSubtitle,
-  ApexDataLabels,
-  ApexFill,
-  ApexMarkers,
-  ApexTooltip,
-  ApexLegend,
-  ApexGrid,
-  ApexStroke,
-  ApexAnnotations
+  ApexTitleSubtitle
 } from "ng-apexcharts";
-import { SortController } from 'ag-grid-community';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -57,29 +48,57 @@ export class SInfoComponent implements OnInit {
     var symbol = 'ABCD';
     this.http.getStockHistory(isin)
     .subscribe(history => {
-      this.history = history
-      this.initHistory(history);
-      // console.log(history)
+      this.initSeries(history)
+      // console.log(this.history)
+      this.initChartOptions()
     });
   }    
 
-  initHistory(historySeries: any[][]){
-    console.log(historySeries[0][0].substring(0,10))
-    console.log(historySeries.length+" LENGTH")
-    for(var entry of historySeries){
-      // console.log(entry[0])
-      // let date = new Date(entry[0].substring(0,10));
-      // console.log(date)
-      let ohlc = [entry[1], entry[2], entry[3], entry[4]];
-      let listObj = {
-        // x: date,
-        y: ohlc
-      }      
-      this.history.push(listObj);
-      // console.log(this.history)
-    }
+  initSeries(history:any){
+      for(var entry of history){
+        let date = new Date(entry[0].substring(0,10))
+        let ohlc = [entry[1], entry[2], entry[3], entry[4]];
+        let listObj = {
+          x: date,
+          y: ohlc
+        }      
+        this.history.push(listObj)
+      }
   }
 
-
-
+  initChartOptions(){
+    this.chartOptions = {
+      series: [
+        {
+          name: "candle",
+          data: this.history
+        }
+      ],
+      chart: {
+        type: "candlestick",
+        height: 350
+      },
+      title: {
+        text: "CandleStick Chart",
+        align: "left"
+      },
+      xaxis: {
+        type: "datetime"
+      },
+      yaxis: {
+        labels: {
+          formatter: function (value: number) {
+            return value.toFixed(2);
+          }
+        },
+        title: {
+          text: "Price"
+        },
+      
+        tooltip: {
+          enabled: true
+        }      
+      }
+    };
+  }
 }
