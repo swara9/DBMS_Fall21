@@ -15,6 +15,7 @@ export const APIurls = {
     checkStockInPortfolio: 'checkPortfolio',
     enterInPortfolio: 'enterInPortfolio',
     updatePortfolio: 'updatePortfolio',
-    getTrade: 'getTrade'
+    getTrade: 'getTrade',
+    getTotalTuples: 'getTotalTuples'
 
 }

@@ -24,7 +24,7 @@ import { ChartBtnRendererComponent } from './components/customCells/chart-btn-re
 import { BuyBtnRendererComponent } from './components/customCells/buy-btn-renderer/buy-btn-renderer.component';
 import { SellBtnRendererComponent } from './components/customCells/sell-btn-renderer/sell-btn-renderer.component';
 import { SInfoComponent } from './components/sinfo/sinfo.component';
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -52,6 +52,7 @@ import { SInfoComponent } from './components/sinfo/sinfo.component';
     MatButtonModule,
     MatSelectModule,
     FormsModule,
+    ToastrModule.forRoot(),
     AgGridModule.withComponents([ChartBtnRendererComponent, BuyBtnRendererComponent, SellBtnRendererComponent])
   ],
   providers: [],

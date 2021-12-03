@@ -38,9 +38,8 @@ export class StocksComponent implements OnInit {
     
     columnDefs=[
 
-      {headerName:"ISIN", field:"isin",width:80, headerClass:"head", filter:true},
-      {headerName:"Stock", field:"stock",width:80, headerClass:"head", filter:true},
-      
+      {headerName:"Stock", field:"stockName",width:80, headerClass:"head", filter:true},      
+      {headerName:"Symbol", field:"symbol",width:80, headerClass:"head", filter:true},      
       {headerName:"Current Market Price", 
       field:"cmp", 
       headerClass:"head"},
@@ -56,22 +55,12 @@ export class StocksComponent implements OnInit {
       width:80,
       headerClass:"head"},
   
-      {headerName:"Buy", 
+    {
+      headerName:"Actions", 
       field:"buy", 
-      width:80,
+      width:200,
       cellRenderer: "btnCellRenderer",
-      cellRendererParams: {
-        clicked: function(field: any) {
-          //alert(`${field} was clicked`);
-        }
-      },
       headerClass:"head"},
-
-    {headerName:"Actions", 
-    field:"buy", 
-    width:200,
-    cellRenderer: "btnCellRenderer",
-    headerClass:"head"},
 
     {headerName:"View Chart", 
     field:"chart", 

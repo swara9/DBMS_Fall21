@@ -472,7 +472,9 @@ var getTopStocks = (async function(flag,req,res) {
               }
             }
           }
-      });
+      }
+    }
+  });
            
 var enterTrade = (async function(flag,req,res) {
   const {ISIN,SSN,qty,type,price}=req.body;
@@ -530,8 +532,8 @@ var enterInPortfolio = (async function(flag,req,res) {
                    console.log("Successfully connected to Oracle!")
                    var query;
                     query=
-                   `INSERT INTO portfolio
-                   VALUES ('${SSN}','${ISIN}',${qty},'${avg_price}',0)`
+                   `INSERT INTO portfolio(ISIN,SSN,qty,avg_price)
+                   VALUES ('${ISIN}','${SSN}',${qty},${avg_price})`
         
                   connection.execute(
                      query,[],{ autoCommit: true },
@@ -571,7 +573,7 @@ var updatePortfolio = (async function(flag,req,res) {
                     query=
                    `UPDATE portfolio
                     SET qty='${qty}',avg_price='${avg_price}'
-                    where SSN='${SSN}' and ISIN='${ISIN}`;
+                    where SSN='${SSN}' and ISIN='${ISIN}'`;
         
                   connection.execute(
                      query,[],{ autoCommit: true },
@@ -608,14 +610,13 @@ app.post('/getAccumulationDistribution',(req, res) => {conn('getAccumulationDist
 app.post('/getAllStock',(req, res) => {conn('getAllStock',req, res)});
 app.post('/getStockByISIN',(req, res) => {conn('getStockByISIN',req, res)});
 app.post('/getStockBySymbol',(req, res) => {conn('getStockBySymbol',req, res)});
-app.post('/getTotalTuples',(req, res) => {conn('getTotalTuples',req, res)});
+app.get('/getTotalTuples',(req, res) => {conn('getTotalTuples',req, res)});
 app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio',req, res)});
 app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
 app.post('/makeTrade',(req, res) => {makeTrade('makeTrade',req, res)});
 app.post('/getTrade',(req, res) => {getTradeConn('getTrade',req, res)});
-
 app.post('/enterTrade',(req, res) => {enterTrade('enterTrade',req, res)});
 app.post('/getISIN',(req, res) => {conn('getISIN',req, res)});
 app.post('/checkPortfolio',(req, res) => {conn('checkPortfolio',req, res)});

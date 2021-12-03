@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpService } from '../../services/http-service.service';
 import { ProfileService } from "../../services/profile-service.service";
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-trade-modal',
@@ -24,7 +25,8 @@ export class TradeModalComponent implements OnInit {
     private dialogRef: MatDialogRef<TradeModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: any,
     private http: HttpService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private toastr: ToastrService
     ) { 
       this.data = data;
       console.log(data)
@@ -44,13 +46,16 @@ export class TradeModalComponent implements OnInit {
 
   executeTrade(){
     this.makeTrade();
-    this.updatePortfolio();
-    this.updateProfile();
+    this.toastr.success("Trade Excuted!");
+    this.close();
+    // this.updatePortfolio();
+    // this.updateProfile();
   }
 
   //make entry in trade table
   makeTrade(){
     console.log("Execute Clicked");
+
     let trade = {
       "ISIN" : this.data.isin,
       "SSN" : this.profile.SSN,
@@ -58,9 +63,11 @@ export class TradeModalComponent implements OnInit {
       "price" : this.data.cmp,
       "type": "buy"
     }
-    this.amt = this.data.cmp * 10;
+    console.log(trade)
 
     this.http.enterTrade(trade);
+      
+
     //check if stock already there
       //if no then add to portfolio
       //else get stock from portfolio
@@ -117,6 +124,9 @@ export class TradeModalComponent implements OnInit {
   }
 
   close() {
+    console.log("Close called")
+    this.makeTrade();
+    this.toastr.success("Trade Excuted!");
     this.dialogRef.close();
   }
 }
