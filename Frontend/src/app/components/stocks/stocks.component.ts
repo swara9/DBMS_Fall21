@@ -20,7 +20,7 @@ export class StocksComponent implements OnInit {
   selectedStock: string = '';
   frameworkComponents: any;
   profile: any;
-  allStocks : any;
+  allStocks : any = [];
   subscription: Subscription = new Subscription;
   stocksSubscription: Subscription = new Subscription;
 
@@ -55,21 +55,10 @@ export class StocksComponent implements OnInit {
     width:100,
     headerClass:"head"},
 
-    {headerName:"Buy", 
+    {headerName:"Actions", 
     field:"buy", 
     width:200,
     cellRenderer: "btnCellRenderer",
-    cellRendererParams: {
-      clicked: function(field: any) {
-        //alert(`${field} was clicked`);
-      }
-    },
-    headerClass:"head"},
-
-    {headerName:"Sell", 
-    field:"sell", 
-    width:200,
-    cellRenderer: "sellBtnRenderer",
     cellRendererParams: {
       clicked: function(field: any) {
         //alert(`${field} was clicked`);
@@ -104,10 +93,28 @@ export class StocksComponent implements OnInit {
     this.stocksSubscription = this.profileService.currAllStocks.subscribe(
       allStocks => this.allStocks = allStocks
     )
+
+    console.log(this.allStocks[0])
   }
 
   goToStock(){
     this.router.navigate(['/sinfo/'+this.selectedStock]);
   }
 
+//   select * from stocks where 
+// symbol='AAPL' 
+// or symbol = 'GOOG'
+// or symbol = 'AMZN'
+// or symbol = 'NFLX'
+// or symbol = 'FB'
+// or symbol = 'MSFT'
+// or symbol = 'BAC'
+// or symbol = 'EBAY'
+// or symbol = 'TSLA'
+// or symbol = 'CSCO'
+// or symbol = 'WMT'
+// or symbol = 'MCD'
+// or symbol = 'TGT'
+// or symbol = 'WFC'
+// ;
 }

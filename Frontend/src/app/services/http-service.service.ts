@@ -81,4 +81,8 @@ export class HttpService {
     return this.http.post(`${url}`, {"symbol": symbol});
   }
 
+  getUserPortfolio(ssn: string): Observable<any>{
+    let url = baseUrl+ APIurls.getUserPortfolio;
+    return this.http.post(`${url}`, {"SSN": ssn});
+  }
 }
