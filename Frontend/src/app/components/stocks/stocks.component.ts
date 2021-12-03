@@ -66,31 +66,6 @@ export class StocksComponent implements OnInit {
         }
       },
       headerClass:"head"},
-    {headerName:"Stock", field:"stockName", headerClass:"head", filter:true},
-    
-    {headerName:"Current Market Price", 
-    field:"cmp", 
-    headerClass:"head"},
-
-    {headerName:"Open", 
-    field:"open", 
-    width:100,
-    headerClass:"head"},
-
-    {headerName:"High", 
-    field:"high", 
-    width:100,
-    headerClass:"head"},
-
-    {headerName:"Low", 
-    field:"low", 
-    width:100,
-    headerClass:"head"},
-
-    {headerName:"Close", 
-    field:"close", 
-    width:100,
-    headerClass:"head"},
 
     {headerName:"Actions", 
     field:"buy", 
