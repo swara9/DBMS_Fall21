@@ -26,8 +26,9 @@ export class SellBtnRendererComponent implements ICellRendererAngularComp{
     console.log(this.params)
   }
 
-  openTradeDialog() {
+  openTradeDialog(type:string) {
     console.log(this.params.data.symbol)
+    
     this.http.getStockBySymbol(this.params.data.symbol)
       .subscribe(response =>{
         console.log("DATA "+ response[0][0])
@@ -41,11 +42,15 @@ export class SellBtnRendererComponent implements ICellRendererAngularComp{
         var open= response[0][3];
         var close= response[0][4];
         var isin= response[0][0];
+        var tradeType = 'buy';
         // this.http.getStockHistory(isin)
         // .subscribe(history => {
           console.log(this.data.high)
           dialogConfig.autoFocus = true;
           dialogConfig.width = '1000px';
+          if(type=='sell'){
+            tradeType = 'sell'
+          }
           dialogConfig.data = {
             // history : history,
             isin: isin,
@@ -54,7 +59,8 @@ export class SellBtnRendererComponent implements ICellRendererAngularComp{
             open:open,
             close:close,
             high:high,
-            low:low
+            low:low,
+            type: tradeType
           };      
           this.dialog.open(TradeModalComponent, dialogConfig);
       });

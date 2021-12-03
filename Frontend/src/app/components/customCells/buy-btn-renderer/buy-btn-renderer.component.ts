@@ -26,7 +26,7 @@ export class BuyBtnRendererComponent implements ICellRendererAngularComp{
     console.log(this.params)
   }
 
-  openTradeDialog() {
+  openTradeDialog(type: string) {
     const dialogConfig = new MatDialogConfig();
     //should come from row
     // var isin = 'US0378331005';
@@ -37,12 +37,14 @@ export class BuyBtnRendererComponent implements ICellRendererAngularComp{
     var open= this.data.open;
     var close= this.data.close;
     var isin= this.data.isin;
+    var tradeType = 'buy';
      //var low = this.data.stock;
      // this.http.getStockHistory(isin)
      // .subscribe(history => {
        console.log(this.data.high)
        dialogConfig.autoFocus = true;
        dialogConfig.width = '1000px';
+       if(type=='sell')
        dialogConfig.data = {
          isin: isin,
          symbol : symbol,
@@ -50,7 +52,8 @@ export class BuyBtnRendererComponent implements ICellRendererAngularComp{
          open:open,
          close:close,
          high:high,
-         low:low
+         low:low,
+         type:tradeType
       };      
       this.dialog.open(TradeModalComponent, dialogConfig);
     // });

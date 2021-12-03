@@ -14,7 +14,7 @@ export class TradeModalComponent implements OnInit {
 
   data:any;
   qty: number = 0;
-  tradeType: string="";
+  tradeType: string="buy";
   profile: any;
   allStocks : any = [];
   subscription: Subscription = new Subscription;
@@ -30,6 +30,9 @@ export class TradeModalComponent implements OnInit {
     ) { 
       this.data = data;
       console.log(data)
+      if(this.data.type=='sell'){
+        this.tradeType = 'sell';
+      }
     }
 
   ngOnInit(): void {
