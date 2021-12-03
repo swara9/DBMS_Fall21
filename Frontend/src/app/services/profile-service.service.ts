@@ -16,8 +16,8 @@ export class ProfileService {
     'currValue' : 18500
   }
 
-  defaultSSN = '123456789';
-  private ssn = new BehaviorSubject('123456789');
+  defaultSSN = '1029384756';
+  private ssn = new BehaviorSubject('1029384756');
   currentSSN = this.ssn.asObservable();
 
   private profile = new BehaviorSubject(this.defaultProfile);

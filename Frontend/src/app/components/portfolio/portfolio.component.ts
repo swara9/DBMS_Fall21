@@ -4,6 +4,7 @@ import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn
 import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
 import { ProfileService } from "../../services/profile-service.service";
 import { Subscription } from 'rxjs';
+import { HttpService } from '../../services/http-service.service';
 
 @Component({
   selector: 'app-portfolio',
@@ -21,8 +22,12 @@ export class PortfolioComponent implements OnInit {
   name: any;
   funds: any;
   inv: any;
+  portfolio: any;
 
-  constructor(private profileService: ProfileService) { 
+  constructor(
+    private profileService: ProfileService,
+    private http: HttpService
+    ) { 
     this.frameworkComponents = {
       btnCellRenderer: BuyBtnRendererComponent,
       chartBtnRenderer: ChartBtnRendererComponent,
@@ -41,12 +46,20 @@ export class PortfolioComponent implements OnInit {
     this.inv=(this.profile.totalInv);
 
     this.stocksSubscription = this.profileService.currAllStocks.subscribe(
-      allStocks => this.allStocks = allStocks
+      allStocks => {
+        this.allStocks = allStocks
+        console.log("All stocks " + this.allStocks[0].ISIN)
+      }
     )
+
     //this.isin1 = this.allStocks[0].ISIN;
+    this.http.getUserProfile(this.profile.SSN)
+      .subscribe(portfolio =>  {
+        this.portfolio = portfolio;
+        console.log(portfolio.portfolio +"============")
+    });
 
     console.log(this.profile.funds+" ===== "+this.profile.SSN+"======"+this.profile.name.toString())   
-    console.log("All stocks " + this.allStocks[0].ISIN)
   }  
 
  rowData=[
@@ -90,8 +103,8 @@ export class PortfolioComponent implements OnInit {
 
   //console.log(this.name);
 
-  changeProfile(){
-    this.profileService.changeProfile("12456987");
-  }
+  // changeProfile(){
+  //   this.profileService.changeProfile("12456987");
+  // }
 
 }
