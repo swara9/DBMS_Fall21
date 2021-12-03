@@ -252,12 +252,9 @@ var UserPortfolioConn = (async function(flag,req,res) {
 var StockBasicConn = (async function(flag,req,res) {
       try{
          connection = await oracledb.getConnection({
-              user : 'lawande.s',
-              password : '384RwI5dGKdQT1Ek3yFKECYI',
-              //hostname oracle.cise.ufl.edu
-              //port 1521
-              //SID orcl
-              connectString : "oracle.cise.ufl.edu:1521/orcl"
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
          });
          console.log("Successfully connected to Oracle!")
          var query;
@@ -304,12 +301,9 @@ var makeTrade = (async function(flag,req,res) {
   let date_ob = new Date();
   try{
          connection = await oracledb.getConnection({
-              user : 'lawande.s',
-              password : '384RwI5dGKdQT1Ek3yFKECYI',
-              //hostname oracle.cise.ufl.edu
-              //port 1521
-              //SID orcl
-              connectString : "oracle.cise.ufl.edu:1521/orcl"
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
          });
          var query;
          queries=`Select ISIN from stocks where symbol='${symbol}'`
@@ -367,13 +361,8 @@ var makeTrade = (async function(flag,req,res) {
   });
         
       
-
-
-
-
-
-      var getTradeConn = (async function(flag,req,res) {
-        try{
+var getTradeConn = (async function(flag,req,res) {
+       try{
            connection = await oracledb.getConnection({
                 user : 'lawande.s',
                 password : '384RwI5dGKdQT1Ek3yFKECYI',
