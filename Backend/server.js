@@ -331,9 +331,22 @@ var makeTrade = (async function(flag,req,res) {
             }
             return (result.rows[0]);
           });
-            if(result.rows.length==0){
-              res.json('No data, check input');
-
+          
+          query=`Select * from portfolio where SSN='${SSN}' AND ISIN='${ISIN}'`;
+          var q1=connection.execute(
+            query,[],  
+          function(err, result) {
+             if (err) {
+               console.error(err.message);
+               return;
+             }
+             if(result.rows.length==0){
+              return('NewEntry');
+              }
+              else{
+                return('Update');
+              }
+            });
           
       
 });
