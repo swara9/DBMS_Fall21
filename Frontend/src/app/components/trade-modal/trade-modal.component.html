@@ -49,6 +49,12 @@
   </div>
 </div>
     <br>
+
+
+  <ul>
+  <li>
+    <input type="radio" id="f-option" name="selector">
+    <label for="f-option">Buy</label>
     
 
     <mat-radio-group [(ngModel)]="tradeType" aria-label="Trade type">
@@ -75,4 +81,4 @@
 </div>
 <br>
 <br>
-<button type="submit" class="btn btn-success btn-lg btn-block">Execute</button>
+<button type="submit" (click)="makeTrade()" class="btn btn-danger btn-lg btn-block">Execute</button>

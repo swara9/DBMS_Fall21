@@ -90,4 +90,32 @@ export class HttpService {
     let url = baseUrl+ APIurls.getTopStocks;
     return this.http.get(`${url}`);
   }
+
+  //takes isin, ssn, qty, type, price, amt
+  enterTrade(trade: any): Observable<any>{
+    let url = baseUrl+ APIurls.getUserPortfolio;
+    return this.http.post(`${url}`, trade);
+  }
+
+  //takes isin and ssn
+  checkStockInPortfolio(data: any): Observable<any>{
+    let url = baseUrl+ APIurls.checkStockInPortfolio;
+    return this.http.post(`${url}`, data);
+  }
+
+  //takes isin and ssn
+  enterInPortfolio(data: any): Observable<any>{
+    let url = baseUrl+ APIurls.enterInPortfolio;
+    return this.http.post(`${url}`, data);
+  }
+
+  updatePortfolio(data: any): Observable<any>{
+    let url = baseUrl+ APIurls.updatePortfolio;
+    return this.http.post(`${url}`, data);
+  }
+
+  getTrade(SSN: string): Observable<any>{
+    let url = baseUrl+ APIurls.getTrade;
+    return this.http.post(`${url}`, {"SSN": SSN});
+  }
 }

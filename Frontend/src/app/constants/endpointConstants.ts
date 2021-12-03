@@ -10,6 +10,11 @@ export const APIurls = {
     getAllStocks : 'getStockBasic',
     getStockBySymbol: 'getStockBySymbol',
     getUserPortfolio: 'getUserPortfolio',
-    getTopStocks: 'getTopStocks'
+    getTopStocks: 'getTopStocks',
+    enterTrade: 'enterTrade',
+    checkStockInPortfolio: 'checkPortfolio',
+    enterInPortfolio: 'enterInPortfolio',
+    updatePortfolio: 'updatePortfolio',
+    getTrade: 'getTrade'
 
 }
