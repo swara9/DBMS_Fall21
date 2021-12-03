@@ -67,9 +67,9 @@ export class PortfolioComponent implements OnInit {
   }  
 
   columnDefs=[
-    {headerName:"Stock", field:"symbol", headerClass:"sell", filter:true, width:150},
-    {headerName:"Quantity", field:"qty", headerClass:"sell" , width:120},
-    {headerName:"Avg Price", field:"avg_price", headerClass:"sell", width:150},
+    {headerName:"Stock", field:"symbol", headerClass:"sell", filter:true, width:200},
+    {headerName:"Quantity", field:"qty", headerClass:"sell" , width:200},
+    {headerName:"Avg Price", field:"avg_price", headerClass:"sell", width:200},
     {
       headerName:"Actions",
       field:"buy",

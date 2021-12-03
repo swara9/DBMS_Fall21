@@ -60,3 +60,7 @@ hr{
     border-right: solid 1px grey; 
   }
   #right { float:right; } 
+
+  .ag-cell{
+    height: 100px !important
+  }
