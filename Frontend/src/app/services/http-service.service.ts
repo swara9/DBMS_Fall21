@@ -9,8 +9,14 @@ const baseUrl = APIurls.baseURL;
   providedIn: 'root'
 })
 export class HttpService {
+  private _loginURL="http://localhost:8080/isUserThere";
+
 
   constructor(private http: HttpClient) { }
+
+  loginUser(user: any){
+    return this.http.post<any>(this._loginURL, user)
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -61,5 +67,18 @@ export class HttpService {
     return this.http.post(`${url}`, {"ISIN": isin});
   }
 
+  getUserProfile(ssn: string): Observable<any>{
+    let url = baseUrl+ APIurls.getUserProfile;
+    return this.http.post(`${url}`, {"SSN": ssn});
+  }
 
+  getAllStocks(): Observable<any> {
+    let url = baseUrl + APIurls.getAllStocks;
+    return this.http.get(`${url}`);
+  }
+
+  getUserPortfolio(ssn: string): Observable<any>{
+    let url = baseUrl+ APIurls.getUserPortfolio;
+    return this.http.post(`${url}`, {"SSN": ssn});
+  }
 }

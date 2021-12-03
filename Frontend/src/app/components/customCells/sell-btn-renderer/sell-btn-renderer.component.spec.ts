@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileComponent } from './profile.component';
+import { SellBtnRendererComponent } from './sell-btn-renderer.component';
 
-describe('ProfileComponent', () => {
-  let component: ProfileComponent;
-  let fixture: ComponentFixture<ProfileComponent>;
+describe('SellBtnRendererComponent', () => {
+  let component: SellBtnRendererComponent;
+  let fixture: ComponentFixture<SellBtnRendererComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ]
+      declarations: [ SellBtnRendererComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileComponent);
+    fixture = TestBed.createComponent(SellBtnRendererComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

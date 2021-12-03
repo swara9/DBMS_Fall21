@@ -1,13 +1,31 @@
-<button (click)="openDialog()">Popup</button>
+
+<div class="form-group">
+   <label for ="Stocks">
+    Stocks
+   </label>
+   
+   <select id= "Stocks" name="Stocks"
+        [(ngModel)]="selectedStock" (change)="goToStock()" class="form-control">
+   
+        <option *ngFor=" let sto of allStocks" [value] = "sto.Symbol">
+            {{sto.Symbol}}
+        </option>
+    
+    
+    </select>
+   <button >Search</button>
+    
+</div>
 
 <div style="position: relative;">
-    <div style="position: absolute; top:50px; left:30px ">
+    <div style="position: absolute; top:40px; left:40px ">
         <ag-grid-angular
-        style="height:450px; width:1200px;"
+        style="height:450px; width:1202px;"
         class="ag-theme-balham"
         [rowData]="rowData"
         [columnDefs]="columnDefs"
         [animateRows]="true"
+        [rowStyle]="rowStyle"
         [frameworkComponents]="frameworkComponents">
         </ag-grid-angular>
     </div>

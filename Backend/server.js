@@ -1,7 +1,7 @@
 //for db
 var oracledb = require('oracledb');
 const queries = require('./sql/queries');
-
+const dbconfig = require('./config/dbConfig');
 //for server creation
 const express = require("express");
 const cors = require("cors");
@@ -30,12 +30,10 @@ var conn = (async function(flag,req,res) {
 try{
   console.log('Reached First function');
    connection = await oracledb.getConnection({
-        user : 'lawande.s',
-        password : '384RwI5dGKdQT1Ek3yFKECYI',
-        //hostname oracle.cise.ufl.edu
-        //port 1521
-        //SID orcl
-        connectString : "oracle.cise.ufl.edu:1521/orcl"
+        user : dbconfig.USER,
+        password : dbconfig.PASSWORD,
+        connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+        //"oracle.cise.ufl.edu:1521/orcl"
    });
    console.log("Successfully connected to Oracle!")
    var query;
@@ -92,28 +90,25 @@ try{
     console.log('Reached here');
     query=`Select sum(data) from (select Count(*) as data from stock_history UNION select Count(*) as data from stocks UNION select Count(*) as data from trade UNION select Count(*) as data from investors UNION select Count(*) as data from email UNION select Count(*) as data from portfolio)`
   }
-  else if(flag=='isUserThere'){
-    const { SSN } = req.body;
-    query=`Select SSN from investors where SSN='${SSN}'`
-  }
   else if(flag=='getUserPortfolio'){
     const { SSN } = req.body;
     console.log('SSN is: ',SSN);
     query=`SELECT investors.SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds, symbol,qty, avg_price
-    FROM investors join (select SSN, symbol, qty, avg_price from stocks join portfolio on stocks.ISIN=portfolio.ISIN) abc on investors.SSN=abc.SSN 
+    FROM investors join (select SSN, symbol, qty, avg_price from stocks join portfolio on stocks.ISIN=portfolio.ISIN) abc on investors.SSN=abc.SSN
     where investors.SSN='${SSN}'`
-  }else if(flag=='getStockBasic'){
-    query=
-   `SELECT ISIN,symbol
-   FROM stocks`
   }
-  else if(flag=='getStockBySymbol'){
-    const {Symbol}=req.body;
-    query=
-   `SELECT *
-   FROM stocks
-   Where symbol='${Symbol}'`
+  else if(flag=='isUserThere'){
+    const { SSN } = req.body;
+    console.log('Reached is user there! And SSN is: ',SSN);
+    query=`Select SSN from investors where SSN='${SSN}'`
   }
+  // else if(flag=='getStockBySymbol'){
+  //   const {Symbol}=req.body;
+  //   query=
+  //  `SELECT *
+  //  FROM stocks
+  //  Where symbol='${Symbol}'`
+  // }
    connection.execute(
      query,[],  
    function(err, result) {
@@ -164,12 +159,9 @@ try{
 var UserConn = (async function(flag,req,res) {
   try{
      connection = await oracledb.getConnection({
-          user : 'lawande.s',
-          password : '384RwI5dGKdQT1Ek3yFKECYI',
-          //hostname oracle.cise.ufl.edu
-          //port 1521
-          //SID orcl
-          connectString : "oracle.cise.ufl.edu:1521/orcl"
+        user : dbconfig.USER,
+        password : dbconfig.PASSWORD,
+        connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
      });
      console.log("Successfully connected to Oracle!")
      var query;
@@ -210,12 +202,9 @@ var UserConn = (async function(flag,req,res) {
 var UserPortfolioConn = (async function(flag,req,res) {
     try{
        connection = await oracledb.getConnection({
-            user : 'lawande.s',
-            password : '384RwI5dGKdQT1Ek3yFKECYI',
-            //hostname oracle.cise.ufl.edu
-            //port 1521
-            //SID orcl
-            connectString : "oracle.cise.ufl.edu:1521/orcl"
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
        });
        console.log("Successfully connected to Oracle!")
        var query;
@@ -383,6 +372,53 @@ var makeTrade = (async function(flag,req,res) {
 
 
 
+      var getTradeConn = (async function(flag,req,res) {
+        try{
+           connection = await oracledb.getConnection({
+                user : 'lawande.s',
+                password : '384RwI5dGKdQT1Ek3yFKECYI',
+                connectString : "oracle.cise.ufl.edu:1521/orcl"
+           });
+           console.log("Successfully connected to Oracle!")
+           var query;
+      
+         
+          const { SSN } = req.body;
+          query= queries.getTrade.replace("${SSN}", SSN);           
+          
+          connection.execute(
+             query,[],  
+           function(err, result) {
+              if (err) {
+                console.error(err.message);
+                return;
+              }
+              if(result.rows.length==0){
+                res.json('No data, check input');
+              }
+              var trades=[];
+              for (var i=0;i<result.rows.length;i++){
+                trades[i]={"trade_date":result.rows[i][5],"symbol":result.rows[i][8], "qty":result.rows[i][3], 
+                "price":result.rows[i][6], "amt":result.rows[i][7], "type":result.rows[i][4]};              
+              }
+          
+              res.json(trades);
+              
+        });
+        
+        } catch(err) {
+            console.log("Error: ", err);
+          } finally {
+            if (connection) {
+              try { 
+                await connection.close();
+              } catch(err) {
+                console.log("Error when closing the database connection: ", err);
+              }
+            }
+          }
+        });
+
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
 app.post('/getUserProfile',(req, res) => {UserConn('getUserProfile',req, res)});
@@ -399,4 +435,6 @@ app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio',req, res)});
 app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
-app.post('/makeTrade',(req, res) => {makeTrade('makeTrade',req, res)});
+app.get('/makeTrade',(req, res) => {StockBasicConn('makeTrade',req, res)});
+app.post('/getTrade',(req, res) => {getTradeConn('getTrade',req, res)});
+

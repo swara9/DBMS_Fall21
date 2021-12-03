@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ChartModalComponent } from '../chart-modal/chart-modal.component';
 import { HttpService } from '../../services/http-service.service';
-import { BtnCellRenderer} from 'src/app/button-cell-renderer.component';
-import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
+import { Router} from  '@angular/router';
+import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
+import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn-renderer.component';
+import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
+import { ProfileService } from "../../services/profile-service.service";
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-stocks',
   templateUrl: './stocks.component.html',
@@ -12,92 +16,105 @@ import { ChartBtnRenderer} from 'src/app/chart-btn-renderer.component';
 })
 
 export class StocksComponent implements OnInit {
- 
-  frameworkComponents: any;
 
-  constructor(private dialog: MatDialog,
-    private http: HttpService) { 
+  selectedStock: string = '';
+  frameworkComponents: any;
+  profile: any;
+  allStocks : any = [];
+  subscription: Subscription = new Subscription;
+  stocksSubscription: Subscription = new Subscription;
+
+  constructor(
+    private dialog: MatDialog,
+    private http: HttpService, 
+    private router: Router,
+    private profileService: ProfileService
+    ) { 
       this.frameworkComponents = {
-        btnCellRenderer: BtnCellRenderer,
-        chartBtnRenderer: ChartBtnRenderer
+        btnCellRenderer: BuyBtnRendererComponent,
+        chartBtnRenderer: ChartBtnRendererComponent,
+        sellBtnRenderer: SellBtnRendererComponent
       }
     }
-
     
   columnDefs=[
-    {
-      headerName:"Stock", 
-      field:"stock", 
-      headerClass:"h1", 
-      filter:true
+
+    {headerName:"Stock", field:"stock", headerClass:"head", filter:true},
+    
+    {headerName:"Current Market Price", 
+    field:"cmp", 
+    headerClass:"head"},
+
+    {headerName:"High", 
+    field:"high", 
+    width:100,
+    headerClass:"head"},
+
+    {headerName:"Low", 
+    field:"low", 
+    width:100,
+    headerClass:"head"},
+
+    {headerName:"Actions", 
+    field:"buy", 
+    width:200,
+    cellRenderer: "btnCellRenderer",
+    cellRendererParams: {
+      clicked: function(field: any) {
+        //alert(`${field} was clicked`);
+      }
     },
-    {
-      headerName:"Buy/Sell", 
-      field:"qty", 
-      cellRenderer: "btnCellRenderer",
-      cellRendererParams: {
-        clicked: function(field: any) {
-          //alert(`${field} was clicked`);
-        }
-      },
-      headerClass:"h1"
+    headerClass:"head"},
+
+    {headerName:"View Chart", 
+    field:"chart", 
+    width:200,   
+    cellRenderer: "chartBtnRenderer",  
+    cellRendererParams: {
+      clicked: function(field: any) {
+      }
     },
-    {
-      headerName:"Current Market Price", 
-      field:"cmp", 
-      headerClass:"h1"
-    },
-    {
-      headerName:"High", 
-      field:"high", 
-      headerClass:"h1"
-    },
-    { 
-      headerName:"Low", 
-      field:"low", 
-      headerClass:"h1"
-    },
-    {
-      headerName:"Chart", 
-      field:"chart",   
-      cellRenderer: "chartBtnRenderer",  
-      cellRendererParams: {
-        clicked: function(field: any) {
-        }
-      },
-      headerClass:"h1"
-    }
+    headerClass:"head"},
+    
   ];
 
   rowData=[
     {stock:'aapl', net_profit_loss:'111',},
     {stock:'jj', net_profit_loss:'1411',},
   ];
+  
+  rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
 
   ngOnInit(): void {
+    this.subscription = this.profileService.currentProfile.subscribe(
+      profile => this.profile = profile
+    )
+    this.stocksSubscription = this.profileService.currAllStocks.subscribe(
+      allStocks => this.allStocks = allStocks
+    )
+
+    console.log(this.allStocks[0])
   }
 
-  openDialog() {
-    const dialogConfig = new MatDialogConfig();
-    //should come from row
-    var isin = 'US0378331005';
-    var symbol = 'ABCD';
-    this.http.getStockHistory(isin)
-    .subscribe(history => {
-      console.log(history)
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '1000px';
-      dialogConfig.data = {
-        history : history,
-        isin : isin,
-        symbol : symbol
-      };      
-      this.dialog.open(ChartModalComponent, dialogConfig);
-    });
-    
-    // dialogConfig.disableClose = true;
-   
+  goToStock(){
+    this.router.navigate(['/sinfo/'+this.selectedStock]);
   }
 
+//   select * from stocks where 
+// symbol='AAPL' 
+// or symbol = 'GOOG'
+// or symbol = 'AMZN'
+// or symbol = 'NFLX'
+// or symbol = 'FB'
+// or symbol = 'MSFT'
+// or symbol = 'BAC'
+// or symbol = 'EBAY'
+// or symbol = 'TSLA'
+// or symbol = 'CSCO'
+// or symbol = 'WMT'
+// or symbol = 'MCD'
+// or symbol = 'TGT'
+// or symbol = 'WFC'
+// ;
 }
