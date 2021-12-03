@@ -614,4 +614,3 @@ export class ChartModalComponent implements OnInit {
     this.dialogRef.close();
   }
 }
-

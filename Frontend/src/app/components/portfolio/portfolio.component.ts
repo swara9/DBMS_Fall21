@@ -27,7 +27,6 @@ export class PortfolioComponent implements OnInit {
     }
   }
 
-
   columnDefs=[
     {headerName:"Stock", field:"stock", headerClass:"sell", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
     {headerName:"Net Profit & Loss", field:"net_profit_loss", headerClass:"sell"},

@@ -14,12 +14,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { ProfileComponent } from './components/profile/profile.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { TradehistoryComponent } from './components/tradehistory/tradehistory.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { LoginComponent } from './components/login/login.component';
-
 import { TradeModalComponent } from './components/trade-modal/trade-modal.component';
 import { ChartBtnRendererComponent } from './components/customCells/chart-btn-renderer/chart-btn-renderer.component';
 import { BuyBtnRendererComponent } from './components/customCells/buy-btn-renderer/buy-btn-renderer.component';
@@ -33,7 +31,6 @@ import { SellBtnRendererComponent } from './components/customCells/sell-btn-rend
     StocksComponent,
     ChartModalComponent,
     NavbarComponent,
-    ProfileComponent,
     PortfolioComponent,
     TradehistoryComponent,
     LoginComponent,

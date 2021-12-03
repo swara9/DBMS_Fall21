@@ -1,4 +1,22 @@
 
+<div class="form-group">
+   <label for ="Stocks">
+    Stocks
+   </label>
+   
+   <select id= "Stocks" name="Stocks"
+        [(ngModel)]="selectedStock" (change)="goToStock()" class="form-control">
+   
+        <option *ngFor=" let sto of allStocks" [value] = "sto.Symbol">
+            {{sto.Symbol}}
+        </option>
+    
+    
+    </select>
+   <button >Search</button>
+    
+</div>
+
 <div style="position: relative;">
     <div style="position: absolute; top:40px; left:40px ">
         <ag-grid-angular
