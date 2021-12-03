@@ -312,6 +312,7 @@ var StockBasicConn = (async function(flag,req,res) {
 
 var makeTrade = (async function(flag,req,res) {
   const {SSN,type,symbol,price,qty} = req.body;
+  let date_ob = new Date();
          connection = await oracledb.getConnection({
               user : 'lawande.s',
               password : '384RwI5dGKdQT1Ek3yFKECYI',
@@ -331,7 +332,7 @@ var makeTrade = (async function(flag,req,res) {
             }
             return (result.rows[0]);
           });
-          
+
           query=`Select * from portfolio where SSN='${SSN}' AND ISIN='${ISIN}'`;
           var q1=connection.execute(
             query,[],  
@@ -347,6 +348,21 @@ var makeTrade = (async function(flag,req,res) {
                 return('Update');
               }
             });
+            if(q1=='NewEntry'){
+              query=`INSERT INTO TRADE(tradeID,ISIN,SSN,qty,type,trade_date,price,amt)
+                    VALUES(tradeID.nxtvalue,'${ISIN}','${SSN}','${qty}','${type}','${date_ob}','${price}','${price*qty}')`;
+            }
+            connection.execute(
+              query,[],  
+            function(err, result) {
+               if (err) {
+                 console.error(err.message);
+                 return;
+               }
+               else{
+                 console.log('Trade successful!');
+               }
+              });
           
       
 });
