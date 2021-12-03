@@ -1,7 +1,7 @@
 //for db
 var oracledb = require('oracledb');
 const queries = require('./sql/queries');
-
+const dbconfig = require('./config/dbConfig');
 //for server creation
 const express = require("express");
 const cors = require("cors");
@@ -30,12 +30,10 @@ var conn = (async function(flag,req,res) {
 try{
   console.log('Reached First function');
    connection = await oracledb.getConnection({
-        user : 'lawande.s',
-        password : '384RwI5dGKdQT1Ek3yFKECYI',
-        //hostname oracle.cise.ufl.edu
-        //port 1521
-        //SID orcl
-        connectString : "oracle.cise.ufl.edu:1521/orcl"
+        user : dbconfig.USER,
+        password : dbconfig.PASSWORD,
+        connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+        //"oracle.cise.ufl.edu:1521/orcl"
    });
    console.log("Successfully connected to Oracle!")
    var query;
@@ -104,13 +102,13 @@ try{
     console.log('Reached is user there! And SSN is: ',SSN);
     query=`Select SSN from investors where SSN='${SSN}'`
   }
-  else if(flag=='getStockBySymbol'){
-    const {Symbol}=req.body;
-    query=
-   `SELECT *
-   FROM stocks
-   Where symbol='${Symbol}'`
-  }
+  // else if(flag=='getStockBySymbol'){
+  //   const {Symbol}=req.body;
+  //   query=
+  //  `SELECT *
+  //  FROM stocks
+  //  Where symbol='${Symbol}'`
+  // }
    connection.execute(
      query,[],  
    function(err, result) {
@@ -161,9 +159,9 @@ try{
 var UserConn = (async function(flag,req,res) {
   try{
      connection = await oracledb.getConnection({
-          user : 'lawande.s',
-          password : '384RwI5dGKdQT1Ek3yFKECYI',
-          connectString : "oracle.cise.ufl.edu:1521/orcl"
+        user : dbconfig.USER,
+        password : dbconfig.PASSWORD,
+        connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
      });
      console.log("Successfully connected to Oracle!")
      var query;
@@ -204,12 +202,9 @@ var UserConn = (async function(flag,req,res) {
   var UserPortfolioConn = (async function(flag,req,res) {
     try{
        connection = await oracledb.getConnection({
-            user : 'lawande.s',
-            password : '384RwI5dGKdQT1Ek3yFKECYI',
-            //hostname oracle.cise.ufl.edu
-            //port 1521
-            //SID orcl
-            connectString : "oracle.cise.ufl.edu:1521/orcl"
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
        });
        console.log("Successfully connected to Oracle!")
        var query;
