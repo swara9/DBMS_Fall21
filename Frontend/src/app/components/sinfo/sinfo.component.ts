@@ -99,8 +99,8 @@ export class SInfoComponent implements OnInit {
       ],
       chart: {
         type: "candlestick",
-        height: 350,
-        width: 1250
+        height: 500,
+        width: 800
       },
       title: {
         text: "CandleStick Chart",
