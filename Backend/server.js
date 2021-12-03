@@ -362,51 +362,98 @@ var makeTrade = (async function(flag,req,res) {
         
       
 var getTradeConn = (async function(flag,req,res) {
-       try{
-           connection = await oracledb.getConnection({
-                user : 'lawande.s',
-                password : '384RwI5dGKdQT1Ek3yFKECYI',
-                connectString : "oracle.cise.ufl.edu:1521/orcl"
-           });
-           console.log("Successfully connected to Oracle!")
-           var query;
+    try{
+        connection = await oracledb.getConnection({
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+        });
+        console.log("Successfully connected to Oracle!")
+        var query;
+  
       
-         
-          const { SSN } = req.body;
-          query= queries.getTrade.replace("${SSN}", SSN);           
-          
-          connection.execute(
-             query,[],  
-           function(err, result) {
-              if (err) {
-                console.error(err.message);
-                return;
-              }
-              if(result.rows.length==0){
-                res.json('No data, check input');
-              }
-              var trades=[];
-              for (var i=0;i<result.rows.length;i++){
-                trades[i]={"trade_date":result.rows[i][5],"symbol":result.rows[i][8], "qty":result.rows[i][3], 
-                "price":result.rows[i][6], "amt":result.rows[i][7], "type":result.rows[i][4]};              
-              }
-          
-              res.json(trades);
-              
-        });
-        
-        } catch(err) {
-            console.log("Error: ", err);
-          } finally {
-            if (connection) {
-              try { 
-                await connection.close();
-              } catch(err) {
-                console.log("Error when closing the database connection: ", err);
-              }
-            }
+      const { SSN } = req.body;
+      query= queries.getTrade.replace("${SSN}", SSN);           
+      
+      connection.execute(
+          query,[],  
+        function(err, result) {
+          if (err) {
+            console.error(err.message);
+            return;
           }
-        });
+          if(result.rows.length==0){
+            res.json('No data, check input');
+          }
+          var trades=[];
+          for (var i=0;i<result.rows.length;i++){
+            trades[i]={"trade_date":result.rows[i][5],"symbol":result.rows[i][8], "qty":result.rows[i][3], 
+            "price":result.rows[i][6], "amt":result.rows[i][7], "type":result.rows[i][4]};              
+          }
+      
+          res.json(trades);
+          
+    });
+    
+    } catch(err) {
+        console.log("Error: ", err);
+      } finally {
+        if (connection) {
+          try { 
+            await connection.close();
+          } catch(err) {
+            console.log("Error when closing the database connection: ", err);
+          }
+        }
+      }
+  });
+
+        
+var getTopStocks = (async function(flag,req,res) {
+  try{
+      connection = await oracledb.getConnection({
+          user : dbconfig.USER,
+          password : dbconfig.PASSWORD,
+          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+      });
+    console.log("Successfully connected to Oracle!")
+    var query;
+    var topStocksList = ["Target", "Walmart", "Wells Fargo", "Google", "Amazon", "Apple Inc.","Bank of America", "Cisco", "Ebay", "Facebook", "McDonalds", "Microsoft", "Netflix"];
+   
+    query= queries.getTopStocks;           
+    
+    connection.execute(
+        query,[],  
+      function(err, result) {
+        if (err) {
+          console.error(err.message);
+          return;
+        }
+        if(result.rows.length==0){
+          res.json('No data, check input');
+        }
+        var topStocks = []
+        for (var i=0;i<result.rows.length;i++){
+          topStocks[i]={"stockName":topStocksList[i],"isin":result.rows[i][0],"symbol":result.rows[i][1],"cmp":result.rows[i][2], 
+          "open":result.rows[i][3], "close":result.rows[i][4],"high":result.rows[i][4], "low":result.rows[i][6]};              
+        }
+    
+        res.json(topStocks);
+        
+  });
+  
+  } catch(err) {
+      console.log("Error: ", err);
+    } finally {
+      if (connection) {
+        try { 
+          await connection.close();
+        } catch(err) {
+          console.log("Error when closing the database connection: ", err);
+        }
+      }
+    }
+});
 
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
@@ -426,4 +473,6 @@ app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
 app.post('/makeTrade',(req, res) => {makeTrade('makeTrade',req, res)});
 app.post('/getTrade',(req, res) => {getTradeConn('getTrade',req, res)});
+app.get('/getTopStocks',(req, res) => {getTopStocks('getTopStocks',req, res)});
+
 

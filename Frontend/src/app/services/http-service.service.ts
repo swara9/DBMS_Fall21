@@ -81,4 +81,9 @@ export class HttpService {
     let url = baseUrl+ APIurls.getUserPortfolio;
     return this.http.post(`${url}`, {"SSN": ssn});
   }
+
+  getTopStocks(): Observable<any>{
+    let url = baseUrl+ APIurls.getTopStocks;
+    return this.http.get(`${url}`);
+  }
 }
