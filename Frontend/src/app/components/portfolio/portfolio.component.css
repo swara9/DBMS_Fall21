@@ -64,3 +64,6 @@ hr{
   .ag-cell{
     height: 100px !important
   }
+  .ag-row{
+    height: 40px !important
+}
