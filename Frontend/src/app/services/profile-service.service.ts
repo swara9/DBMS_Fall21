@@ -26,6 +26,10 @@ export class ProfileService {
   private allStocks = new BehaviorSubject([]);
   currAllStocks = this.allStocks.asObservable();
 
+  private name = new BehaviorSubject(this.defaultProfile);
+  currName = this.name.asObservable();
+
+
   constructor(private http: HttpService) {
       this.http.getUserProfile(this.defaultSSN)
         .subscribe(newProfile => {

@@ -15,9 +15,12 @@ export class PortfolioComponent implements OnInit {
 
   frameworkComponents: any;
   profile: any;
-  allStocks : any;
+  public allStocks : any;
   subscription: Subscription = new Subscription;
   stocksSubscription: Subscription = new Subscription;
+  name: any;
+  funds: any;
+  inv: any;
 
   constructor(private profileService: ProfileService) { 
     this.frameworkComponents = {
@@ -26,6 +29,31 @@ export class PortfolioComponent implements OnInit {
       sellBtnRenderer: SellBtnRendererComponent
     }
   }
+  isin1:any;
+  
+  ngOnInit(): void {
+    
+    this.subscription = this.profileService.currentProfile.subscribe(
+      profile => this.profile = profile
+    )
+    this.name=(this.profile.name);
+    this.funds=(this.profile.funds);
+    this.inv=(this.profile.totalInv);
+
+    this.stocksSubscription = this.profileService.currAllStocks.subscribe(
+      allStocks => this.allStocks = allStocks
+    )
+    //this.isin1 = this.allStocks[0].ISIN;
+
+    console.log(this.profile.funds+" ===== "+this.profile.SSN+"======"+this.profile.name.toString())   
+    console.log("All stocks " + this.allStocks[0].ISIN)
+  }  
+
+ rowData=[
+    {stock:'aapl', net_profit_loss:'111'},
+    {stock:'jj', net_profit_loss:'1411'},
+
+  ];
 
   columnDefs=[
     {headerName:"Stock", field:"stock", headerClass:"sell", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
@@ -56,23 +84,11 @@ export class PortfolioComponent implements OnInit {
     headerClass:"sell"}
   ];
 
-  rowData=[
-    {stock:'aapl', net_profit_loss:'111'},
-    {stock:'jj', net_profit_loss:'1411'},
 
-  ];
   rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
-  ngOnInit(): void {
-    this.subscription = this.profileService.currentProfile.subscribe(
-      profile => this.profile = profile
-    )
-    this.stocksSubscription = this.profileService.currAllStocks.subscribe(
-      allStocks => this.allStocks = allStocks
-    )
-    console.log(this.profile.funds+" ===== "+this.profile.SSN)   
-    console.log("All stocks " + this.allStocks[0].ISIN)
-  }
+
+  //console.log(this.name);
 
   changeProfile(){
     this.profileService.changeProfile("12456987");
