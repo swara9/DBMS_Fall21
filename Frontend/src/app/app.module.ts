@@ -22,7 +22,8 @@ import { TradeModalComponent } from './components/trade-modal/trade-modal.compon
 import { ChartBtnRendererComponent } from './components/customCells/chart-btn-renderer/chart-btn-renderer.component';
 import { BuyBtnRendererComponent } from './components/customCells/buy-btn-renderer/buy-btn-renderer.component';
 import { SellBtnRendererComponent } from './components/customCells/sell-btn-renderer/sell-btn-renderer.component';
-import { SInfoComponent } from './components/sinfo/sinfo.component'
+import { SInfoComponent } from './components/sinfo/sinfo.component';
+
 
 @NgModule({
   declarations: [

@@ -8,6 +8,8 @@ export const APIurls = {
     getPC : 'getPercentChange',
     getUserProfile : 'getUserProfile',
     getAllStocks : 'getStockBasic',
+    getStockBySymbol:'getStockBySymbol'
     getUserPortfolio: 'getUserPortfolio',
     getTopStocks: 'getTopStocks'
+
 }
