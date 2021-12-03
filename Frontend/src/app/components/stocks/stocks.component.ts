@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HttpService } from '../../services/http-service.service';
 import { Router} from  '@angular/router';
 import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
@@ -18,6 +17,7 @@ import { Subscription } from 'rxjs';
 export class StocksComponent implements OnInit {
 
   selectedStock: string = '';
+  topStocks: any = [];
   frameworkComponents: any;
   profile: any;
   allStocks : any = [];
@@ -25,7 +25,6 @@ export class StocksComponent implements OnInit {
   stocksSubscription: Subscription = new Subscription;
 
   constructor(
-    private dialog: MatDialog,
     private http: HttpService, 
     private router: Router,
     private profileService: ProfileService
@@ -37,33 +36,41 @@ export class StocksComponent implements OnInit {
       }
     }
     
-  columnDefs=[
+    columnDefs=[
 
-    {headerName:"Stock", field:"stock", headerClass:"head", filter:true},
-    
-    {headerName:"Current Market Price", 
-    field:"cmp", 
-    headerClass:"head"},
-
-    {headerName:"High", 
-    field:"high", 
-    width:100,
-    headerClass:"head"},
-
-    {headerName:"Low", 
-    field:"low", 
-    width:100,
-    headerClass:"head"},
+      {headerName:"ISIN", field:"isin",width:80, headerClass:"head", filter:true},
+      {headerName:"Stock", field:"stock",width:80, headerClass:"head", filter:true},
+      
+      {headerName:"Current Market Price", 
+      field:"cmp", 
+      headerClass:"head"},
+      {headerName:"Open", field:"open",width:80 ,headerClass:"head", filter:true},
+      {headerName:"Close", field:"close",width:80, headerClass:"head", filter:true},
+      {headerName:"High", 
+      field:"high", 
+      width:80,
+      headerClass:"head"},
+  
+      {headerName:"Low", 
+      field:"low", 
+      width:80,
+      headerClass:"head"},
+  
+      {headerName:"Buy", 
+      field:"buy", 
+      width:80,
+      cellRenderer: "btnCellRenderer",
+      cellRendererParams: {
+        clicked: function(field: any) {
+          //alert(`${field} was clicked`);
+        }
+      },
+      headerClass:"head"},
 
     {headerName:"Actions", 
     field:"buy", 
     width:200,
     cellRenderer: "btnCellRenderer",
-    cellRendererParams: {
-      clicked: function(field: any) {
-        //alert(`${field} was clicked`);
-      }
-    },
     headerClass:"head"},
 
     {headerName:"View Chart", 
@@ -83,6 +90,7 @@ export class StocksComponent implements OnInit {
     {stock:'jj', net_profit_loss:'1411',},
   ];
   
+    
   rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
 
@@ -94,6 +102,12 @@ export class StocksComponent implements OnInit {
       allStocks => this.allStocks = allStocks
     )
 
+    this.http.getTopStocks()
+      .subscribe(topStocks => {
+        this.topStocks = topStocks
+        console.log(this.topStocks)
+      });
+
     console.log(this.allStocks[0])
   }
 
@@ -101,20 +115,4 @@ export class StocksComponent implements OnInit {
     this.router.navigate(['/sinfo/'+this.selectedStock]);
   }
 
-//   select * from stocks where 
-// symbol='AAPL' 
-// or symbol = 'GOOG'
-// or symbol = 'AMZN'
-// or symbol = 'NFLX'
-// or symbol = 'FB'
-// or symbol = 'MSFT'
-// or symbol = 'BAC'
-// or symbol = 'EBAY'
-// or symbol = 'TSLA'
-// or symbol = 'CSCO'
-// or symbol = 'WMT'
-// or symbol = 'MCD'
-// or symbol = 'TGT'
-// or symbol = 'WFC'
-// ;
 }

@@ -1,5 +1,39 @@
-<p>sinfo for {{symbol}} works!</p>
-something
+<br>
+<div id="content">
+<span class="sym">{{symbol}}</span>
+<br>
+<span class="s1">ISIN: {{sisin}}</span>
+<span class="s2">Current Market Price {{cmp}}</span>
+
+<div id="content">
+    <div id="left">
+       <div >Open</div>
+       <br>
+       <div id="large">{{open}}</div>
+    </div>
+  
+    <div id="right">
+       <div >Close</div>
+       <br>
+       <div id="large">{{close}}</div>
+    </div>
+  </div>
+
+  
+<div id="content">
+    <div id="left">
+       <div >High</div>
+       <br>
+       <div id="large">{{high}}</div>
+    </div>
+  
+    <div id="right">
+       <div >Low</div>
+       <br>
+       <div id="large">{{low}}</div>
+       </div>
+    </div>
+
 <div id="chart">
     <apx-chart
       [series]="chartOptions.series"

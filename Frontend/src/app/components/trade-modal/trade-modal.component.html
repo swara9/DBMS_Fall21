@@ -1,2 +1,96 @@
-<p>trade-modal works!</p>
-<h1>{{data.symbol}}</h1>
+<div class="alert">
+	<h2>MAKE A TRADE!!</h2>
+	
+</div>
+
+
+
+<div id="content">
+  <div id="left">
+     <div ><font color="#191970">SYMBOL</font></div>
+     <br>
+     <div id="large">{{data.symbol}}</div>
+  </div>
+
+  <div id="right">
+     <div ><font color="#191970">CURRENT PRICE</font></div>
+     <br>
+     <div id="large">{{data.cmp}}</div>
+  </div>
+</div>
+
+
+<div id="content">
+  <div id="left">
+     <div ><font color="#191970">OPEN</font></div>
+     <br>
+     <div id="large">{{data.open}}</div>
+  </div>
+
+  <div id="right">
+     <div ><font color="#191970">CLOSE</font></div>
+     <br>
+     <div id="large">{{data.close}}</div>
+  </div>
+</div>
+
+
+<div id="content">
+  <div id="left">
+     <div ><font color="#191970">HIGH</font></div>
+     <br>
+     <div id="large">{{data.high}}</div>
+  </div>
+
+  <div id="right">
+     <div ><font color="#191970">LOW</font></div>
+     <br>
+     <div id="large">{{data.low}}</div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+  <li>
+    <input type="radio" id="f-option" name="selector">
+    <label for="f-option">Buy</label>
+    
+    <div class="check"></div>
+  </li>
+  
+  <li>
+    <input type="radio" id="s-option" name="selector">
+    <label for="s-option">Sell</label>
+    
+    <div class="check"><div class="inside"></div></div>
+  </li>
+  
+  
+</ul>
+
+
+<button type="submit" class="btn btn-danger btn-lg btn-block">Execute</button>
