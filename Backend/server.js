@@ -313,6 +313,7 @@ var StockBasicConn = (async function(flag,req,res) {
 var makeTrade = (async function(flag,req,res) {
   const {SSN,type,symbol,price,qty} = req.body;
   let date_ob = new Date();
+  try{
          connection = await oracledb.getConnection({
               user : 'lawande.s',
               password : '384RwI5dGKdQT1Ek3yFKECYI',
@@ -363,9 +364,19 @@ var makeTrade = (async function(flag,req,res) {
                  console.log('Trade successful!');
                }
               });
-          
-      
-});
+            } catch(err) {
+              console.log("Error: ", err);
+            } finally {
+              if (connection) {
+                try { 
+                  await connection.close();
+                } catch(err) {
+                  console.log("Error when closing the database connection: ", err);
+            }
+        }
+      }
+  });
+        
       
 
 
@@ -388,4 +399,4 @@ app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio',req, res)});
 app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
-app.get('/makeTrade',(req, res) => {makeTrade('makeTrade',req, res)});
+app.post('/makeTrade',(req, res) => {makeTrade('makeTrade',req, res)});
