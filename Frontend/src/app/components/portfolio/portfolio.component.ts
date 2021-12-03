@@ -78,7 +78,7 @@ export class PortfolioComponent implements OnInit {
       headerName:"Actions",
       field:"buy",
       headerClass:"sell", 
-      cellRenderer: "btnCellRenderer", 
+      cellRenderer: "sellBtnRenderer", 
       width:200
     },   
     {

@@ -37,52 +37,65 @@ export class StocksComponent implements OnInit {
       }
     }
     
-  columnDefs=[
+    columnDefs=[
 
-    {headerName:"Stock", field:"stock", headerClass:"head", filter:true},
-    
-    {headerName:"Current Market Price", 
-    field:"cmp", 
-    headerClass:"head"},
-
-    {headerName:"High", 
-    field:"high", 
-    width:100,
-    headerClass:"head"},
-
-    {headerName:"Low", 
-    field:"low", 
-    width:100,
-    headerClass:"head"},
-
-    {headerName:"Actions", 
-    field:"buy", 
-    width:200,
-    cellRenderer: "btnCellRenderer",
-    cellRendererParams: {
-      clicked: function(field: any) {
-        //alert(`${field} was clicked`);
-      }
-    },
-    headerClass:"head"},
-
-    {headerName:"View Chart", 
-    field:"chart", 
-    width:200,   
-    cellRenderer: "chartBtnRenderer",  
-    cellRendererParams: {
-      clicked: function(field: any) {
-      }
-    },
-    headerClass:"head"},
-    
-  ];
-
-  rowData=[
-    {stock:'aapl', net_profit_loss:'111',},
-    {stock:'jj', net_profit_loss:'1411',},
-  ];
+      {headerName:"ISIN", field:"isin",width:80, headerClass:"head", filter:true},
+      {headerName:"Stock", field:"stock",width:80, headerClass:"head", filter:true},
+      
+      {headerName:"Current Market Price", 
+      field:"cmp", 
+      headerClass:"head"},
+      {headerName:"Open", field:"open",width:80 ,headerClass:"head", filter:true},
+      {headerName:"Close", field:"close",width:80, headerClass:"head", filter:true},
+      {headerName:"High", 
+      field:"high", 
+      width:80,
+      headerClass:"head"},
   
+      {headerName:"Low", 
+      field:"low", 
+      width:80,
+      headerClass:"head"},
+  
+      {headerName:"Buy", 
+      field:"buy", 
+      width:80,
+      cellRenderer: "btnCellRenderer",
+      cellRendererParams: {
+        clicked: function(field: any) {
+          //alert(`${field} was clicked`);
+        }
+      },
+      headerClass:"head"},
+  
+      {headerName:"Sell", 
+      field:"sell", 
+      width:200,
+      cellRenderer: "sellBtnRenderer",
+      cellRendererParams: {
+        clicked: function(field: any) {
+          //alert(`${field} was clicked`);
+        }
+      },
+      headerClass:"head"},
+  
+      {headerName:"View Chart", 
+      field:"chart", 
+      width:200,   
+      cellRenderer: "chartBtnRenderer",  
+      cellRendererParams: {
+        clicked: function(field: any) {
+        }
+      },
+      headerClass:"head"},
+      
+    ];
+  
+    rowData=[
+      {isin:'1223',stock:'aapl', cmp:'2',open:'44',close:'33',high:'4',low:'2'},
+      {isin:'222',stock:'jj',cmp:'2',open:'44',close:'33',high:'2',low:'2'}
+    ];
+    
   rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
 
