@@ -41,3 +41,14 @@ hr{
     border-right: solid 1px grey; 
   }
   #right { float:right; }
+
+  #chart{
+    width: 20px !important;
+    margin-top: 100px;
+    margin-left: 10px
+  }
+
+  .container{
+    margin-left: 200px;
+    margin-top: 30px
+  }

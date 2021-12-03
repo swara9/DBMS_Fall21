@@ -1,10 +1,11 @@
 <br>
+<div class="stocks">
 <div class="form-group">
    <label class="s1" for ="Stocks">
     Stocks
    </label>
    
-   <select id= "Stocks" name="Stocks" style="width:200px; margin-left:40px"
+   <select id= "Stocks" name="Stocks" style="width:500px; margin-left:40px"
         [(ngModel)]="selectedStock" (change)="goToStock()" class="form-control">
    
         <option *ngFor=" let sto of allStocks" [value] = "sto.Symbol">
@@ -31,4 +32,4 @@
         </ag-grid-angular>
     </div>
     </div>
-    
+</div>

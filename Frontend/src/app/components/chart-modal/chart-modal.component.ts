@@ -294,7 +294,7 @@ export class ChartModalComponent implements OnInit {
         ],
         chart: {
           type: "area",
-          height: 350,
+          height: 500,
           zoom: {
             type: "x",
             enabled: true,
@@ -340,7 +340,7 @@ export class ChartModalComponent implements OnInit {
           size: 0 
         },
         title: {
-          text: "Line Chart",
+          text: "Relative Strength Index",
           align: "left"
         },
         fill: {
@@ -360,7 +360,7 @@ export class ChartModalComponent implements OnInit {
             }
           },
           title: {
-            text: "Price"
+            text: "RSI"
           }
         },
         xaxis: {
@@ -400,7 +400,7 @@ export class ChartModalComponent implements OnInit {
         ],
         chart: {
           type: "area",
-          height: 350,
+          height: 500,
           zoom: {
             type: "x",
             enabled: true,
@@ -417,7 +417,7 @@ export class ChartModalComponent implements OnInit {
           size: 0 
         },
         title: {
-          text: "Line Chart",
+          text: "On-balance Volume",
           align: "left"
         },
         fill: {
@@ -437,7 +437,7 @@ export class ChartModalComponent implements OnInit {
             }
           },
           title: {
-            text: "Price"
+            text: "OBV"
           }
         },
         xaxis: {
@@ -477,7 +477,7 @@ export class ChartModalComponent implements OnInit {
         ],
         chart: {
           type: "area",
-          height: 350,
+          height: 500,
           zoom: {
             type: "x",
             enabled: true,
@@ -494,7 +494,7 @@ export class ChartModalComponent implements OnInit {
           size: 0 
         },
         title: {
-          text: "Line Chart",
+          text: "Accumulation-Distribution Indicator",
           align: "left"
         },
         fill: {
@@ -514,7 +514,7 @@ export class ChartModalComponent implements OnInit {
             }
           },
           title: {
-            text: "Price"
+            text: "A/D"
           }
         },
         xaxis: {
@@ -554,7 +554,7 @@ export class ChartModalComponent implements OnInit {
         ],
         chart: {
           type: "area",
-          height: 350,
+          height: 500,
           zoom: {
             type: "x",
             enabled: true,
@@ -571,7 +571,7 @@ export class ChartModalComponent implements OnInit {
           size: 0 
         },
         title: {
-          text: "Line Chart",
+          text: "Percent Change",
           align: "left"
         },
         fill: {
@@ -591,7 +591,7 @@ export class ChartModalComponent implements OnInit {
             }
           },
           title: {
-            text: "Price"
+            text: "Percent Change"
           }
         },
         xaxis: {
