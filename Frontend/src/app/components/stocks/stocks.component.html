@@ -5,10 +5,10 @@
    </label>
    
    <select id= "Stocks" name="Stocks"
-        [(ngModel)]="Stocks" (change)="navigateTo()" class="form-control">
+        [(ngModel)]="selectedStock" (change)="goToStock()" class="form-control">
    
-        <option *ngFor=" let sto of stocks" [value] = "sto.id">
-            {{sto.name}}
+        <option *ngFor=" let sto of allStocks" [value] = "sto.Symbol">
+            {{sto.Symbol}}
         </option>
     
     

@@ -24,6 +24,7 @@
       [title]="chartOptions.title"
     ></apx-chart>
   </div>
+
   <div *ngIf="selectedIndicator=='rsi'" id="lineChart">
     <apx-chart
       [series]="rsiChartOptions.series"
@@ -39,6 +40,7 @@
       [autoUpdateSeries]="true"
     ></apx-chart>
   </div>
+
   <div *ngIf="selectedIndicator=='macd'" id="macdChart">
       <apx-chart
         [series]="macdChartOptions.series"
@@ -53,10 +55,57 @@
         [yaxis]="macdChartOptions.yaxis"
         [title]="macdChartOptions.title"
       ></apx-chart>
-    </div>
+  </div>
+    
+  <div *ngIf="selectedIndicator=='ad'" id="lineChart">
+    <apx-chart
+      [series]="adChartOptions.series"
+      [chart]="adChartOptions.chart"
+      [dataLabels]="adChartOptions.dataLabels"
+      [markers]="adChartOptions.markers"
+      [title]="adChartOptions.title"
+      [fill]="adChartOptions.fill"
+      [yaxis]="adChartOptions.yaxis"
+      [xaxis]="adChartOptions.xaxis"
+      [tooltip]="adChartOptions.tooltip"
+      [annotations]="adChartOptions.annotations"
+      [autoUpdateSeries]="true"
+    ></apx-chart>
+  </div>
+
+  <div *ngIf="selectedIndicator=='obv'" id="lineChart">
+    <apx-chart
+      [series]="obvChartOptions.series"
+      [chart]="obvChartOptions.chart"
+      [dataLabels]="obvChartOptions.dataLabels"
+      [markers]="obvChartOptions.markers"
+      [title]="obvChartOptions.title"
+      [fill]="obvChartOptions.fill"
+      [yaxis]="obvChartOptions.yaxis"
+      [xaxis]="obvChartOptions.xaxis"
+      [tooltip]="obvChartOptions.tooltip"
+      [annotations]="obvChartOptions.annotations"
+      [autoUpdateSeries]="true"
+    ></apx-chart>
+  </div>
+
+  <div *ngIf="selectedIndicator=='pg'" id="lineChart">
+    <apx-chart
+      [series]="pcChartOptions.series"
+      [chart]="pcChartOptions.chart"
+      [dataLabels]="pcChartOptions.dataLabels"
+      [markers]="pcChartOptions.markers"
+      [title]="pcChartOptions.title"
+      [fill]="pcChartOptions.fill"
+      [yaxis]="pcChartOptions.yaxis"
+      [xaxis]="pcChartOptions.xaxis"
+      [tooltip]="pcChartOptions.tooltip"
+      [annotations]="pcChartOptions.annotations"
+      [autoUpdateSeries]="true"
+    ></apx-chart>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
     <button class="mat-raised-button"(click)="close()">Close</button>
-    <!-- <button class="mat-raised-button mat-primary"(click)="save()">Save</button> -->
 </mat-dialog-actions>

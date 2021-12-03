@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'portfolio', pathMatch: 'full'},
   { path: 'dashboard', component: DashboardComponent },
   { path: 'stocks', component: StocksComponent },
-  { path: 'sinfo', component: SInfoComponent}, 
+  { path: 'sinfo/:symbol', component: SInfoComponent}, 
   { path: 'trade', component:TradeModalComponent },
   { path: 'chart', component:ChartModalComponent},
   { path: 'login', component:LoginComponent },
