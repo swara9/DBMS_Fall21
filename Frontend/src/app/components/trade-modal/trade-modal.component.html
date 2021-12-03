@@ -9,28 +9,76 @@
 </div>
 
 
-	
-	<font face="Arial" size="3px" color="#0096FF"><b>ISIN</b></font>:{{data.isin}}
-    <br>
-    <br>
-    <font face="Arial" size="3px" color="#0096FF"><b>Symbol</b></font>: {{data.symbol}}
-  <br>
-  <br>
-    <font face="Arial" size="3px" color="#0096FF"><b>Current Market Price</b></font>: {{data.cmp}}
-    <br>
-    <br>
-    <font face="Arial" size="3px" color="#0096FF"><b>Open Price</b></font>: {{data.open}}
-    <br>
-    <br>
-    <font face="Arial" size="3px" color="#0096FF"><b>closing Price</b></font>: {{data.close}}
-    <br>
-    <br>
-    <font face="Arial" size="3px" color="#0096FF"><b>High</b></font>: {{data.high}}
-    <br>
-    <br>
-    <font face="Arial" size="3px" color="#0096FF"><b>Low</b></font>: {{data.low}}
 
-	
+<div id="content">
+  <div id="left">
+     <div ><font color="#191970">SYMBOL</font></div>
+     <br>
+     <div id="large">{{data.symbol}}</div>
+  </div>
+
+  <div id="right">
+     <div ><font color="#191970">CURRENT PRICE</font></div>
+     <br>
+     <div id="large">{{data.cmp}}</div>
+  </div>
+</div>
+
+
+<div id="content">
+  <div id="left">
+     <div ><font color="#191970">OPEN</font></div>
+     <br>
+     <div id="large">{{data.open}}</div>
+  </div>
+
+  <div id="right">
+     <div ><font color="#191970">CLOSE</font></div>
+     <br>
+     <div id="large">{{data.close}}</div>
+  </div>
+</div>
+
+
+<div id="content">
+  <div id="left">
+     <div ><font color="#191970">HIGH</font></div>
+     <br>
+     <div id="large">{{data.high}}</div>
+  </div>
+
+  <div id="right">
+     <div ><font color="#191970">LOW</font></div>
+     <br>
+     <div id="large">{{data.low}}</div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <ul>
   <li>
     <input type="radio" id="f-option" name="selector">

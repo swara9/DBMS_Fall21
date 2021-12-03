@@ -159,7 +159,7 @@ by the way it is so weird when you look at your code a couple of years after you
 
 .alert {
 	box-sizing: border-box;
-	background-color: #BDFFE1;
+	background-color: #89CFF0;
 	width: 100%;
 	position: relative; 
 	top: 0;
@@ -183,4 +183,47 @@ by the way it is so weird when you look at your code a couple of years after you
 .alert a {
 	color: #232323;
 	font-weight: bold;
+}
+th,td {
+  padding: 17px;
+}
+#content { 
+  margin-left:75px;
+  overflow:auto; 
+  font-family: Sans-serif;
+  width: 1100px; 
+} 
+
+#left, #right { 
+  width: 40%; 
+  margin:5px; 
+  padding: 1em; 
+  font-size: 20px;
+} 
+#large{
+    color:darkgrey;
+    font-size: 40px;
+  }
+
+#left  { 
+  float:left;     
+  border-right: solid 1px grey; 
+}
+#right { float:right; } 
+bg-cover {
+  background-size: cover !important;
+}
+
+
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+body {
+  min-height: 100vh;
 }

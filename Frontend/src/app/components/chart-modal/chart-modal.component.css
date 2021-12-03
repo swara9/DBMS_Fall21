@@ -42,3 +42,10 @@ apx-chart {
     padding: 5px;
     font-size: 12px
   }
+
+  body {
+    background-color: lightblue;
+  }
+  .boxed {
+    border: 1px solid green ;
+  }
