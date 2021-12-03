@@ -112,7 +112,29 @@ try{
         return;
       }
       console.log(result.rows);
+      if(flag=='getRSI'){
+        var finalData=[];
+        var x=0;
+        for (var i=0;i<result.rows.length;i++){
+          if(result.rows[i][1]!=0){
+            finalData[x]=result.rows[i];
+            x++;
+          }
+        }
+        res.json(finalData);
+      }else if(flag=='getMACD'){
+        var finalData=[];
+        var x=0;
+        for (var i=0;i<result.rows.length;i++){
+          if(result.rows[i][7]!=0){
+            finalData[x]=result.rows[i];
+            x++;
+          }
+        }
+        res.json(finalData);
+      }else{
       res.json(result.rows);
+      }
 });
 
 } catch(err) {
