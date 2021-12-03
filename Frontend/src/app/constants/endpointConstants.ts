@@ -9,8 +9,6 @@ export const APIurls = {
     getUserProfile : 'getUserProfile',
     getAllStocks : 'getStockBasic',
     getStockBySymbol: 'getStockBySymbol',
-    getUserPortfolio: 'getUserPortfolio'
-    getStockBySymbol:'getStockBySymbol'
     getUserPortfolio: 'getUserPortfolio',
     getTopStocks: 'getTopStocks'
 

@@ -115,33 +115,6 @@ export class StocksComponent implements OnInit {
     {stock:'jj', net_profit_loss:'1411',},
   ];
   
-      {headerName:"Sell", 
-      field:"sell", 
-      width:200,
-      cellRenderer: "sellBtnRenderer",
-      cellRendererParams: {
-        clicked: function(field: any) {
-          //alert(`${field} was clicked`);
-        }
-      },
-      headerClass:"head"},
-  
-      {headerName:"View Chart", 
-      field:"chart", 
-      width:200,   
-      cellRenderer: "chartBtnRenderer",  
-      cellRendererParams: {
-        clicked: function(field: any) {
-        }
-      },
-      headerClass:"head"},
-      
-    ];
-  
-    rowData=[
-      {isin:'1223',stock:'aapl', cmp:'2',open:'44',close:'33',high:'4',low:'2'},
-      {isin:'222',stock:'jj',cmp:'2',open:'44',close:'33',high:'2',low:'2'}
-    ];
     
   rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
 
