@@ -159,7 +159,7 @@ by the way it is so weird when you look at your code a couple of years after you
 
 .alert {
 	box-sizing: border-box;
-background-color: #89CFF0;
+background-color: #045FB4;
 	width: 100%;
 	position: relative; 
 	top: 0;
@@ -171,7 +171,7 @@ background-color: #89CFF0;
 
 .alert h2 {
 	font-size: 22px;
-	color: #232323;
+	color: #fffafa;
 	margin-top: 0;
 }
 
