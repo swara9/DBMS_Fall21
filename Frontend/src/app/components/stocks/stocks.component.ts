@@ -39,6 +39,7 @@ export class StocksComponent implements OnInit {
     columnDefs=[
 
       {headerName:"Stock", field:"stockName",width:80, headerClass:"head", filter:true},      
+      {headerName:"Symbol", field:"symbol",width:80, headerClass:"head", filter:true},      
       {headerName:"Current Market Price", 
       field:"cmp", 
       headerClass:"head"},

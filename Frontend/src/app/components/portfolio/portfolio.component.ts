@@ -5,6 +5,7 @@ import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-
 import { ProfileService } from "../../services/profile-service.service";
 import { Subscription } from 'rxjs';
 import { HttpService } from '../../services/http-service.service';
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-portfolio',
@@ -28,7 +29,8 @@ export class PortfolioComponent implements OnInit {
   stocksPortfolio: any
   constructor(
     private profileService: ProfileService,
-    private http: HttpService
+    private http: HttpService,
+    private toastr: ToastrService
     ) { 
     this.frameworkComponents = {
       btnCellRenderer: BuyBtnRendererComponent,
@@ -64,17 +66,10 @@ export class PortfolioComponent implements OnInit {
     console.log(this.profile.funds+" ===== "+this.profile.SSN+"======"+this.profile.name)   
   }  
 
- rowData=[
-    {stock:'aapl', qty:3, avg_price: 123, net_profit_loss:'111'},
-    {stock:'jj',  qty:3, avg_price: 123, net_profit_loss:'1411'},
-
-  ];
-
   columnDefs=[
     {headerName:"Stock", field:"symbol", headerClass:"sell", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
     {headerName:"Quantity", field:"qty", headerClass:"sell"},
     {headerName:"Avg Price", field:"avg_price", headerClass:"sell"},
-    {headerName:"Net Profit & Loss", field:"net_profit_loss", headerClass:"sell"},    
     {
       headerName:"Actions",
       field:"buy",
@@ -96,6 +91,7 @@ export class PortfolioComponent implements OnInit {
       .subscribe(tuples => {
         this.numRows = tuples;
         console.log("rows = "+this.numRows)
+        this.toastr.info("Total Rows = "+ this.numRows)
       });
   }
   rowStyle = { fontFamily:" sans-serif", textAlign:"center"};
