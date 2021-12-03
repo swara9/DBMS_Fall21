@@ -199,7 +199,7 @@ var UserConn = (async function(flag,req,res) {
   });
 
 
-  var UserPortfolioConn = (async function(flag,req,res) {
+var UserPortfolioConn = (async function(flag,req,res) {
     try{
        connection = await oracledb.getConnection({
           user : dbconfig.USER,
@@ -249,7 +249,7 @@ var UserConn = (async function(flag,req,res) {
       }
     });
 
-    var StockBasicConn = (async function(flag,req,res) {
+var StockBasicConn = (async function(flag,req,res) {
       try{
          connection = await oracledb.getConnection({
               user : 'lawande.s',
@@ -297,7 +297,80 @@ var UserConn = (async function(flag,req,res) {
             }
           }
         }
-      });
+    });
+
+var makeTrade = (async function(flag,req,res) {
+  const {SSN,type,symbol,price,qty} = req.body;
+  let date_ob = new Date();
+  try{
+         connection = await oracledb.getConnection({
+              user : 'lawande.s',
+              password : '384RwI5dGKdQT1Ek3yFKECYI',
+              //hostname oracle.cise.ufl.edu
+              //port 1521
+              //SID orcl
+              connectString : "oracle.cise.ufl.edu:1521/orcl"
+         });
+         var query;
+         queries=`Select ISIN from stocks where symbol='${symbol}'`
+        var ISIN=connection.execute(
+           query,[],  
+         function(err, result) {
+            if (err) {
+              console.error(err.message);
+              return;
+            }
+            return (result.rows[0]);
+          });
+
+          query=`Select * from portfolio where SSN='${SSN}' AND ISIN='${ISIN}'`;
+          var q1=connection.execute(
+            query,[],  
+          function(err, result) {
+             if (err) {
+               console.error(err.message);
+               return;
+             }
+             if(result.rows.length==0){
+              return('NewEntry');
+              }
+              else{
+                return('Update');
+              }
+            });
+            if(q1=='NewEntry'){
+              query=`INSERT INTO TRADE(tradeID,ISIN,SSN,qty,type,trade_date,price,amt)
+                    VALUES(tradeID.nxtvalue,'${ISIN}','${SSN}','${qty}','${type}','${date_ob}','${price}','${price*qty}')`;
+            }
+            connection.execute(
+              query,[],  
+            function(err, result) {
+               if (err) {
+                 console.error(err.message);
+                 return;
+               }
+               else{
+                 console.log('Trade successful!');
+               }
+              });
+            } catch(err) {
+              console.log("Error: ", err);
+            } finally {
+              if (connection) {
+                try { 
+                  await connection.close();
+                } catch(err) {
+                  console.log("Error when closing the database connection: ", err);
+            }
+        }
+      }
+  });
+        
+      
+
+
+
+
 
       var getTradeConn = (async function(flag,req,res) {
         try{
@@ -364,3 +437,4 @@ app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
 app.get('/makeTrade',(req, res) => {StockBasicConn('makeTrade',req, res)});
 app.post('/getTrade',(req, res) => {getTradeConn('getTrade',req, res)});
+
