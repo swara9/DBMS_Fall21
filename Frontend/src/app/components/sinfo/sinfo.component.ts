@@ -41,7 +41,6 @@ export class SInfoComponent implements OnInit {
   
   history: any[]= [];
   sym: any[] =[];
-  symbol:any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HttpService
