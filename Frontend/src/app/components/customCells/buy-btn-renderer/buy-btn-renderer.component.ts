@@ -30,7 +30,7 @@ export class BuyBtnRendererComponent implements ICellRendererAngularComp{
     const dialogConfig = new MatDialogConfig();
     //should come from row
     // var isin = 'US0378331005';
-    var symbol = this.data.stock;
+    var symbol = this.data.symbol;
     var cmp= this.data.cmp;
     var high= this.data.high;
     var low= this.data.low;

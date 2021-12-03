@@ -118,4 +118,9 @@ export class HttpService {
     let url = baseUrl+ APIurls.getTrade;
     return this.http.post(`${url}`, {"SSN": SSN});
   }
+
+  getTotalTuples(): Observable<any>{
+    let url = baseUrl+ APIurls.getTotalTuples;
+    return this.http.get(`${url}`);
+  }
 }
