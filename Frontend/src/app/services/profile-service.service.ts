@@ -8,12 +8,43 @@ import { HttpService } from '../services/http-service.service';
 export class ProfileService {
 
   defaultProfile = {
-    'SSN': '123456789',
-    'name' : 'Swara',
-    'funds' : 30000,
-    'netPL' : 3500,
-    'totalInv' : 15000,
-    'currValue' : 18500
+      "SSN": "1029384756",
+      "net_profit_loss": 144.20000000000002,
+      "totalInv": 6,
+      "currentValue": 150.20000000000002,
+      "funds": 2000,
+      "portfolio": [
+          {
+              "symbol": "AAPL",
+              "qty": 3,
+              "avg_price": 161.02
+          },
+          {
+              "symbol": "BKNG",
+              "qty": 2,
+              "avg_price": 2935.14
+          },
+          {
+              "symbol": "BSX",
+              "qty": 2,
+              "avg_price": 45.46
+          },
+          {
+              "symbol": "CSCO",
+              "qty": 5,
+              "avg_price": 54.6
+          },
+          {
+              "symbol": "HP",
+              "qty": 15,
+              "avg_price": 39.49
+          },
+          {
+              "symbol": "EBAY",
+              "qty": 6,
+              "avg_price": 21.89
+          }
+      ]
   }
 
   defaultSSN = '1029384756';
