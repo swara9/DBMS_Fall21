@@ -31,14 +31,26 @@ export class SellBtnRendererComponent implements ICellRendererAngularComp{
     //should come from row
     // var isin = 'US0378331005';
     var symbol = this.data.stock;
-    // this.http.getStockHistory(isin)
-    // .subscribe(history => {
-      console.log(history)
-      dialogConfig.autoFocus = true;
-      dialogConfig.width = '1000px';
-      dialogConfig.data = {
-        // history : history,
-        symbol : symbol
+    var cmp= this.data.cmp;
+    var high= this.data.high;
+    var low= this.data.low;
+    var open= this.data.open;
+    var close= this.data.close;
+    var isin= this.data.isin;
+     // this.http.getStockHistory(isin)
+     // .subscribe(history => {
+       console.log(this.data.high)
+       dialogConfig.autoFocus = true;
+       dialogConfig.width = '1000px';
+       dialogConfig.data = {
+         // history : history,
+         isin: isin,
+         symbol : symbol,
+         cmp:cmp,
+         open:open,
+         close:close,
+         high:high,
+         low:low
       };      
       this.dialog.open(TradeModalComponent, dialogConfig);
     // });

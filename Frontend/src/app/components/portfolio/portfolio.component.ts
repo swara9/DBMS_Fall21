@@ -29,12 +29,31 @@ export class PortfolioComponent implements OnInit {
 
 
   columnDefs=[
+    {headerName:"ISIN", field:"isin",width:80, headerClass:"head", filter:true},
+   
+    
     {headerName:"Stock", field:"stock", headerClass:"sell", filter:true, cellStyle: {borderLeft:"solid 2px #1597E5"}},
+
+
+    {headerName:"Current Market Price", 
+    field:"cmp", 
+    headerClass:"head"},
+    {headerName:"Open", field:"open",width:80 ,headerClass:"head", filter:true},
+    {headerName:"Close", field:"close",width:80, headerClass:"head", filter:true},
+    {headerName:"High", 
+    field:"high", 
+    width:80,
+    headerClass:"head"},
+
+    {headerName:"Low", 
+    field:"low", 
+    width:80,
+    headerClass:"head"},
     {headerName:"Net Profit & Loss", field:"net_profit_loss", headerClass:"sell"},
     
     {field:"buy",
     headerClass:"sell", 
-    cellRenderer: "btnCellRenderer", width:200,
+    cellRenderer: "btnCellRenderer", width:80,
     cellRendererParams: {
       clicked: function(field: any) {
         //alert(`${field} was clicked`);
@@ -58,8 +77,8 @@ export class PortfolioComponent implements OnInit {
   ];
 
   rowData=[
-    {stock:'aapl', net_profit_loss:'111'},
-    {stock:'jj', net_profit_loss:'1411'},
+    {isin:'1223',stock:'aapl', cmp:'2',open:'44',close:'33',high:'4',low:'2',net_profit_loss:'111'},
+    {isin:'1223',stock:'aapl', cmp:'2',open:'44',close:'33',high:'4',low:'2',net_profit_loss:'1411'},
 
   ];
   rowStyle = { fontFamily:" sans-serif", textAlign:"center"};

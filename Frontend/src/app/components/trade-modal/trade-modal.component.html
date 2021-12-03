@@ -1,2 +1,54 @@
-<p>trade-modal works!</p>
-<h1>{{data.symbol}}</h1>
+
+
+
+
+
+ <div class="alert">
+	<h2>MAKE A TRADE!!</h2>
+	
+</div>
+
+
+	
+	<font face="Arial" size="3px" color="#0096FF"><b>ISIN</b></font>:{{data.isin}}
+    <br>
+    <br>
+    <font face="Arial" size="3px" color="#0096FF"><b>Symbol</b></font>: {{data.symbol}}
+  <br>
+  <br>
+    <font face="Arial" size="3px" color="#0096FF"><b>Current Market Price</b></font>: {{data.cmp}}
+    <br>
+    <br>
+    <font face="Arial" size="3px" color="#0096FF"><b>Open Price</b></font>: {{data.open}}
+    <br>
+    <br>
+    <font face="Arial" size="3px" color="#0096FF"><b>closing Price</b></font>: {{data.close}}
+    <br>
+    <br>
+    <font face="Arial" size="3px" color="#0096FF"><b>High</b></font>: {{data.high}}
+    <br>
+    <br>
+    <font face="Arial" size="3px" color="#0096FF"><b>Low</b></font>: {{data.low}}
+
+	
+  <ul>
+  <li>
+    <input type="radio" id="f-option" name="selector">
+    <label for="f-option">Buy</label>
+    
+    <div class="check"></div>
+  </li>
+  
+  <li>
+    <input type="radio" id="s-option" name="selector">
+    <label for="s-option">Sell</label>
+    
+    <div class="check"><div class="inside"></div></div>
+  </li>
+  
+  
+</ul>
+
+
+<button type="submit" class="btn btn-danger btn-lg btn-block">Execute</button>
+
