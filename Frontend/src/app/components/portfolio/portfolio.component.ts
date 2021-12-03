@@ -29,7 +29,6 @@ export class PortfolioComponent implements OnInit {
       sellBtnRenderer: SellBtnRendererComponent
     }
   }
-
   isin1:any;
   
   ngOnInit(): void {

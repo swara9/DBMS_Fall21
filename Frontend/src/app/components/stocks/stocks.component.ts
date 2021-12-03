@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HttpService } from '../../services/http-service.service';
+import { Router} from  '@angular/router';
 import { ChartBtnRendererComponent } from '../customCells/chart-btn-renderer/chart-btn-renderer.component';
 import { BuyBtnRendererComponent } from '../customCells/buy-btn-renderer/buy-btn-renderer.component';
 import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-btn-renderer.component';
+import { ProfileService } from "../../services/profile-service.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-stocks',
@@ -13,11 +16,20 @@ import { SellBtnRendererComponent } from '../customCells/sell-btn-renderer/sell-
 })
 
 export class StocksComponent implements OnInit {
- 
-  frameworkComponents: any;
 
-  constructor(private dialog: MatDialog,
-    private http: HttpService) { 
+  selectedStock: string = '';
+  frameworkComponents: any;
+  profile: any;
+  allStocks : any;
+  subscription: Subscription = new Subscription;
+  stocksSubscription: Subscription = new Subscription;
+
+  constructor(
+    private dialog: MatDialog,
+    private http: HttpService, 
+    private router: Router,
+    private profileService: ProfileService
+    ) { 
       this.frameworkComponents = {
         btnCellRenderer: BuyBtnRendererComponent,
         chartBtnRenderer: ChartBtnRendererComponent,
@@ -86,6 +98,16 @@ export class StocksComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.subscription = this.profileService.currentProfile.subscribe(
+      profile => this.profile = profile
+    )
+    this.stocksSubscription = this.profileService.currAllStocks.subscribe(
+      allStocks => this.allStocks = allStocks
+    )
+  }
+
+  goToStock(){
+    this.router.navigate(['/sinfo/'+this.selectedStock]);
   }
 
 }
