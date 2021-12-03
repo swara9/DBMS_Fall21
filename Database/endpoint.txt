@@ -87,4 +87,4 @@ Yo what up?
    }
     
    Stuff left: 
-   makeTrade(),filter RSI and MACD
+   makeTrade()
