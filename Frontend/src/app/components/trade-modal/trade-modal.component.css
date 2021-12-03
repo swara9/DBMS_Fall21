@@ -188,7 +188,7 @@ th,td {
   padding: 17px;
 }
 #content { 
-  margin-left:75px;
+  margin-left:20px;
   overflow:auto; 
   font-family: Sans-serif;
   width: 1100px; 
@@ -198,11 +198,11 @@ th,td {
   width: 40%; 
   margin:5px; 
   padding: 1em; 
-  font-size: 20px;
+  font-size: 15ppx;
 } 
 #large{
     color:darkgrey;
-    font-size: 40px;
+    font-size: 20px;
   }
 
 #left  { 
@@ -224,6 +224,91 @@ bg-cover {
 *
 */
 
-body {
-  min-height: 100vh;
+.sell .ag-header-cell-label{
+  color:#1597E5;
+  text-align: center;
+  display: inline-grid;
+  font-family: Sans-serif;
+
+}
+.chart{
+  color:green;
+  text-align: center;
+  display: inline-grid;
+}
+.username{
+  font-size: 20px;
+  margin: 80px;
+  font-family: Sans-serif;
+  color:black;
+}
+hr{
+  color:darkgrey;
+  text-align: center;
+  width:1100px;
+}
+.t1{
+  font-size: 20px;
+  margin-left: 200px;
+  font-family: Sans-serif;
+  color:black;
+  width:400px;
+}
+.xyz{
+  font-size: 10px;
+}
+.t2{
+  font-size: 20px;
+  margin-left: 30px;
+  padding-left: 20px;
+  font-family: Sans-serif;
+  color:black;
+  border-left: darkgrey 1px solid;
+}
+#content { 
+  margin-left:20px;
+  overflow:auto; 
+  font-family: Sans-serif;
+  width: 800px; 
+} 
+#left, #right { 
+  width: 40%; 
+  margin:5px; 
+  padding: 1em; 
+  font-size: 10px;
+} 
+#large{
+    color:darkgrey;
+    font-size: 20px;
+  }
+
+#left  { 
+  float:left;     
+  border-right: solid 1px grey; 
+}
+#right { float:right; } 
+.two-col {
+  overflow: hidden;/* Makes this div contain its floats */
+}
+
+.two-col .col1,
+.two-col .col2 {
+  width: 50%;
+}
+
+.two-col .col1 {
+  float: left;
+}
+
+.two-col .col2 {
+  float: right;
+}
+
+.two-col label {
+  display: block;
+}
+
+.radio{
+  margin-left:50px;
+
 }

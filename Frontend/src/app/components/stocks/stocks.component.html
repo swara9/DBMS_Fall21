@@ -1,10 +1,10 @@
-
+<br>
 <div class="form-group">
-   <label for ="Stocks">
+   <label class="s1" for ="Stocks">
     Stocks
    </label>
    
-   <select id= "Stocks" name="Stocks"
+   <select id= "Stocks" name="Stocks" style="width:200px; margin-left:40px"
         [(ngModel)]="selectedStock" (change)="goToStock()" class="form-control">
    
         <option *ngFor=" let sto of allStocks" [value] = "sto.Symbol">
@@ -13,7 +13,8 @@
     
     
     </select>
-   <button >Search</button>
+    <br>
+   <button style="margin-left: 40px;" class="btn btn-primary">Search</button>
     
 </div>
 

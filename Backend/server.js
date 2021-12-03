@@ -1,10 +1,10 @@
 //for db
 var oracledb = require('oracledb');
-const queries = require('./sql/queries');
-const dbconfig = require('./config/dbConfig');
+var queries = require('./sql/queries');
+var dbconfig = require('./config/dbConfig');
 //for server creation
-const express = require("express");
-const cors = require("cors");
+var express = require("express");
+var cors = require("cors");
 var app = express();
 
 app.use(cors());
@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}.`);
 });
@@ -40,7 +40,7 @@ try{
 
 
    if(flag=='getStockHistory'){
-    const { ISIN } = req.body;
+    var { ISIN } = req.body;
      query = queries.getStockHistory.replace("${ISIN}", ISIN);
    }
    else if(flag=='getStockDetails'){
@@ -50,40 +50,40 @@ try{
     FROM stocks`
    }
    else if(flag=='getUserProfile'){
-    const { SSN } = req.body;
+    var { SSN } = req.body;
     query=
    `SELECT SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds
    FROM investors
    where SSN='${SSN}'`
   }
   else if(flag=='getPercentChange'){
-    const { ISIN } = req.body;
+    var { ISIN } = req.body;
     query=queries.percent_change.replace("${ISIN}", ISIN);
   }
   else if(flag=='getRSI'){
-    const { ISIN } = req.body;
+    var { ISIN } = req.body;
     query=queries.RSI.replace("${ISIN}", ISIN);
   }
   else if(flag=='getOBV'){
-    const { ISIN } = req.body;
+    var { ISIN } = req.body;
     query=queries.OBV.replace("${ISIN}", ISIN);
   }
   else if(flag=='getMACD'){
-    const { ISIN } = req.body;
+    var { ISIN } = req.body;
     query=queries.MACD.replace("${ISIN}", ISIN);
   }else if(flag=='getAccumulationDistribution'){
-    const { ISIN } = req.body;
+    var { ISIN } = req.body;
     query=queries.AD.replace("${ISIN}", ISIN);
   }
   else if(flag=='getAllStocks'){
     query=`Select * from stocks`;
   }
   else if(flag=='getStockByISIN'){
-    const { ISIN } = req.body;
+    var { ISIN } = req.body;
     query=`select * from stocks where isin='${ISIN}'`;
   }
   else if(flag=='getStockBySymbol'){
-    const { symbol } = req.body;
+    var { symbol } = req.body;
     query=`select * from stocks where symbol='${symbol}'`;
   }
   else if(flag=='getTotalTuples'){
@@ -91,19 +91,28 @@ try{
     query=`Select sum(data) from (select Count(*) as data from stock_history UNION select Count(*) as data from stocks UNION select Count(*) as data from trade UNION select Count(*) as data from investors UNION select Count(*) as data from email UNION select Count(*) as data from portfolio)`
   }
   else if(flag=='getUserPortfolio'){
-    const { SSN } = req.body;
+    var { SSN } = req.body;
     console.log('SSN is: ',SSN);
     query=`SELECT investors.SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds, symbol,qty, avg_price
     FROM investors join (select SSN, symbol, qty, avg_price from stocks join portfolio on stocks.ISIN=portfolio.ISIN) abc on investors.SSN=abc.SSN
     where investors.SSN='${SSN}'`
   }
   else if(flag=='isUserThere'){
-    const { SSN } = req.body;
+    var { SSN } = req.body;
     console.log('Reached is user there! And SSN is: ',SSN);
     query=`Select SSN from investors where SSN='${SSN}'`
   }
+  else if(flag=='getISIN'){
+    var { symbol } = req.body;
+    query=`Select ISIN from stocks where symbol='${symbol}'`;
+  }
+  else if(flag=='checkPortfolio'){
+    var { ISIN,SSN } = req.body;
+    query=`Select * from portfolio where ISIN='${ISIN}' AND SSN='${SSN}'`;
+  }
+  
   // else if(flag=='getStockBySymbol'){
-  //   const {Symbol}=req.body;
+  //   var {Symbol}=req.body;
   //   query=
   //  `SELECT *
   //  FROM stocks
@@ -167,7 +176,7 @@ var UserConn = (async function(flag,req,res) {
      var query;
 
     if(flag=='getUserProfile'){
-      const { SSN } = req.body;
+      var { SSN } = req.body;
       query=
      `SELECT SSN,name,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds
      FROM investors
@@ -210,7 +219,7 @@ var UserPortfolioConn = (async function(flag,req,res) {
        var query;
   
       if(flag=='getUserPortfolio'){
-        const { SSN } = req.body;
+        var { SSN } = req.body;
         query=
         `SELECT investors.SSN,net_profit_loss, totalInv, net_profit_loss+totalInv as currentValue, funds, symbol,qty, avg_price
           FROM investors join (select SSN, symbol, qty, avg_price from stocks join portfolio on stocks.ISIN=portfolio.ISIN) abc on investors.SSN=abc.SSN 
@@ -260,7 +269,7 @@ var StockBasicConn = (async function(flag,req,res) {
          var query;
     
         if(flag=='getStockBasic'){
-          const { SSN } = req.body;
+          var { SSN } = req.body;
           query=
           `SELECT ISIN,symbol
           FROM stocks`
@@ -297,9 +306,12 @@ var StockBasicConn = (async function(flag,req,res) {
     });
 
 var makeTrade = (async function(flag,req,res) {
-  const {SSN,type,symbol,price,qty} = req.body;
+  var {SSN,type,symbol,price,qty} = req.body;
   let date_ob = new Date();
+  var ISIN;
+  var query=`Select ISIN from stocks where symbol='${symbol}'`;
   try{
+
          connection = await oracledb.getConnection({
           user : dbconfig.USER,
           password : dbconfig.PASSWORD,
@@ -449,11 +461,143 @@ var getTopStocks = (async function(flag,req,res) {
         try { 
           await connection.close();
         } catch(err) {
-          console.log("Error when closing the database connection: ", err);
-        }
+
+            console.log("Error: ", err);
+          } finally {
+            if (connection) {
+              try { 
+                await connection.close();
+              } catch(err) {
+                console.log("Error when closing the database connection: ", err);
+              }
+            }
+          }
       }
     }
-});
+  });
+           
+var enterTrade = (async function(flag,req,res) {
+  const {ISIN,SSN,qty,type,price}=req.body;
+  var today = new Date();
+  var month;
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  if(mm==1){month='JAN'}else if(mm==2){month='FEB'}else if(mm==3){month='MAR'}else if(mm==4){month='APR'}else if(mm==5){month='MAY'}else if(mm==6){month='JUN'}else if(mm==7){month='JUL'}else if(mm==8){month='AUG'}else if(mm==9){month='SEPT'}else if(mm==10){month='OCT'}else if(mm==11){month='NOV'}else if(mm==12){month='DEC'}else if(mm==11){month='DEC'}
+      today = dd + '-' + month + '-' + yyyy;
+        try{
+           connection = await oracledb.getConnection({
+              user : dbconfig.USER,
+              password : dbconfig.PASSWORD,
+              connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+           });
+           console.log("Successfully connected to Oracle!")
+           var query;
+            query=
+           `INSERT INTO trade
+           VALUES (IDtrade.nextval,'${ISIN}','${SSN}',${qty},'${type}','${today}',${price},${price*qty})`
+
+          connection.execute(
+             query,[],{ autoCommit: true },
+           function(err, result) {
+              if (err) {
+                console.error(err.message);
+                return;
+              }
+              console.log(result.rows);
+              res.json('Added!');
+        });
+        
+        } catch(err) {
+            console.log("Error: ", err);
+          } finally {
+            if (connection) {
+              try { 
+                await connection.close();
+              } catch(err) {
+                console.log("Error when closing the database connection: ", err);
+              }
+            }
+          }
+        });
+
+var enterInPortfolio = (async function(flag,req,res) {
+          const {SSN,ISIN,qty,avg_price}=req.body;
+                try{
+                   connection = await oracledb.getConnection({
+                      user : dbconfig.USER,
+                      password : dbconfig.PASSWORD,
+                      connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+                   });
+                   console.log("Successfully connected to Oracle!")
+                   var query;
+                    query=
+                   `INSERT INTO portfolio(ISIN,SSN,qty,avg_price)
+                   VALUES ('${ISIN}','${SSN}',${qty},${avg_price})`
+        
+                  connection.execute(
+                     query,[],{ autoCommit: true },
+                   function(err, result) {
+                      if (err) {
+                        console.error(err.message);
+                        return;
+                      }
+                      console.log(result.rows);
+                      res.json('Added!');
+                });
+                
+                } catch(err) {
+                    console.log("Error: ", err);
+                  } finally {
+                    if (connection) {
+                      try { 
+                        await connection.close();
+                      } catch(err) {
+                        console.log("Error when closing the database connection: ", err);
+                      }
+                    }
+                  }
+        });
+
+
+var updatePortfolio = (async function(flag,req,res) {
+              const {SSN,ISIN,qty,avg_price}=req.body;
+                try{
+                   connection = await oracledb.getConnection({
+                      user : dbconfig.USER,
+                      password : dbconfig.PASSWORD,
+                      connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+                   });
+                   console.log("Successfully connected to Oracle!")
+                   var query;
+                    query=
+                   `UPDATE portfolio
+                    SET qty='${qty}',avg_price='${avg_price}'
+                    where SSN='${SSN}' and ISIN='${ISIN}'`;
+        
+                  connection.execute(
+                     query,[],{ autoCommit: true },
+                   function(err, result) {
+                      if (err) {
+                        console.error(err.message);
+                        return;
+                      }
+                      console.log(result.rows);
+                      res.json('Added!');
+                });
+                
+                } catch(err) {
+                    console.log("Error: ", err);
+                  } finally {
+                    if (connection) {
+                      try { 
+                        await connection.close();
+                      } catch(err) {
+                        console.log("Error when closing the database connection: ", err);
+                      }
+                    }
+                  }
+        });
 
 app.post('/getStockHistory',(req, res) => {conn('getStockHistory',req, res)});
 app.post('/getStockDetails',(req, res) => {conn('getStockDetails',req, res)});
@@ -473,6 +617,9 @@ app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
 app.post('/makeTrade',(req, res) => {makeTrade('makeTrade',req, res)});
 app.post('/getTrade',(req, res) => {getTradeConn('getTrade',req, res)});
+app.post('/enterTrade',(req, res) => {enterTrade('enterTrade',req, res)});
+app.post('/getISIN',(req, res) => {conn('getISIN',req, res)});
+app.post('/checkPortfolio',(req, res) => {conn('checkPortfolio',req, res)});
+app.post('/updatePortfolio',(req, res) => {updatePortfolio('updatePortfolio',req, res)});
+app.post('/enterInPortfolio',(req, res) => {enterInPortfolio('enterInPortfolio',req, res)});
 app.get('/getTopStocks',(req, res) => {getTopStocks('getTopStocks',req, res)});
-
-

@@ -60,10 +60,10 @@ export class PortfolioComponent implements OnInit {
       .subscribe(portfolio =>  {
         this.portfolio = portfolio;
         this.stocksPortfolio = portfolio.portfolio
-        console.log(this.portfolio.portfolio[0].symbol +"============")
+        console.log(this.portfolio.portfolio[0].symbol +"============"+this.portfolio.portfolio[3].currentValue)
     });
 
-    console.log(this.profile.funds+" ===== "+this.profile.SSN+"======"+this.profile.name)   
+   // console.log(this.profile.funds+" ===== "+this.profile.SSN+"======"+this.profile.name)   
   }  
 
   columnDefs=[
