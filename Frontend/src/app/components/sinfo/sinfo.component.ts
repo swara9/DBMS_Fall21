@@ -13,7 +13,6 @@ import {
 } from "ng-apexcharts";
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
-
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
@@ -43,7 +42,6 @@ export class SInfoComponent implements OnInit {
   history: any[]= [];
   sym: any[] =[];
   symbol:any;
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HttpService
