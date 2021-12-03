@@ -435,6 +435,6 @@ app.post('/isUserThere',(req, res) => {conn('isUserThere',req, res)});
 app.post('/getUserPortfolio',(req, res) => {UserPortfolioConn('getUserPortfolio',req, res)});
 app.get('/getStockBasic',(req, res) => {StockBasicConn('getStockBasic',req, res)});
 app.get('/getStockBySymbol',(req, res) => {StockBasicConn('getStockBySymbol',req, res)});
-app.get('/makeTrade',(req, res) => {StockBasicConn('makeTrade',req, res)});
+app.post('/makeTrade',(req, res) => {StockBasicConn('makeTrade',req, res)});
 app.post('/getTrade',(req, res) => {getTradeConn('getTrade',req, res)});
 
