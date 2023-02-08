@@ -1,18 +1,19 @@
 //for db
+
+var dbconfig = require('./config/dbConfig');
 var oracledb = require('oracledb');
 var queries = require('./sql/queries');
-var dbconfig = require('./config/dbConfig');
 //for server creation
 var express = require("express");
 var cors = require("cors");
 var app = express();
 
-app.use(cors());
+
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors());
 // simple route
 app.get("/", (req, res) => {
   console.log("Request received")
@@ -258,52 +259,7 @@ var UserPortfolioConn = (async function(flag,req,res) {
       }
     });
 
-var StockBasicConn = (async function(flag,req,res) {
-      try{
-         connection = await oracledb.getConnection({
-          user : dbconfig.USER,
-          password : dbconfig.PASSWORD,
-          connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
-         });
-         console.log("Successfully connected to Oracle!")
-         var query;
-    
-        if(flag=='getStockBasic'){
-          var { SSN } = req.body;
-          query=
-          `SELECT ISIN,symbol
-          FROM stocks`
-        }
-        connection.execute(
-           query,[],  
-         function(err, result) {
-            if (err) {
-              console.error(err.message);
-              return;
-            }
-            if(result.rows.length==0){
-              res.json('No data, check input');
-            }
-            var stock=[];
-          for (var i=0;i<result.rows.length;i++){
-            stock[i]={"ISIN":result.rows[i][0],"Symbol":result.rows[i][1]};
-          }
-          console.log(stock);
-          res.json(stock);
-      });
-      
-      } catch(err) {
-          console.log("Error: ", err);
-        } finally {
-          if (connection) {
-            try { 
-              await connection.close();
-            } catch(err) {
-              console.log("Error when closing the database connection: ", err);
-            }
-          }
-        }
-    });
+
 
 var makeTrade = (async function(flag,req,res) {
   var {SSN,type,symbol,price,qty} = req.body;
@@ -372,7 +328,53 @@ var makeTrade = (async function(flag,req,res) {
       }
   });
         
-      
+  var StockBasicConn = (async function(flag,req,res) {
+    try{
+       connection = await oracledb.getConnection({
+        user : dbconfig.USER,
+        password : dbconfig.PASSWORD,
+        connectString : dbconfig.HOST+":"+dbconfig.PORT+"/"+dbconfig.SID 
+       });
+       console.log("Successfully connected to Oracle!")
+       var query;
+  
+      if(flag=='getStockBasic'){
+        var { SSN } = req.body;
+        query=
+        `SELECT ISIN,symbol
+        FROM stocks`
+      }
+      connection.execute(
+         query,[],  
+       function(err, result) {
+          if (err) {
+            console.error(err.message);
+            return;
+          }
+          if(result.rows.length==0){
+            res.json('No data, check input');
+          }
+          var stock=[];
+        for (var i=0;i<result.rows.length;i++){
+          stock[i]={"ISIN":result.rows[i][0],"Symbol":result.rows[i][1]};
+        }
+        console.log(stock);
+        res.json(stock);
+    });
+    
+    } catch(err) {
+        console.log("Error: ", err);
+      } finally {
+        if (connection) {
+          try { 
+            await connection.close();
+          } catch(err) {
+            console.log("Error when closing the database connection: ", err);
+          }
+        }
+      }
+  });
+   
 var getTradeConn = (async function(flag,req,res) {
     try{
         connection = await oracledb.getConnection({
